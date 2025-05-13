@@ -180,11 +180,6 @@ export default function EventsPage() {
           </div>
         </div>
 
-        <div className="text-center mt-16">
-          <p className="text-lg mb-4">We&apos;ll be providing transportation</p>
-          <p className="text-lg mb-4">We&apos;re thrilled to have you join us</p>
-          <p className="text-lg">Don&apos;t worry about bringing gifts</p>
-        </div>
       </div>
     </div>
   );
