@@ -13,8 +13,18 @@ export default function SubpagesLayout({
       <div className="flex-1">
         {children}
       </div>
-      <section className="bg-[#0A1A3B]/60 py-12 relative">
-        <div className="container mx-auto px-4">
+      <section className="relative py-12">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/lilies.jpeg"
+            alt="Lilies Background"
+            fill
+            className="object-cover"
+            quality={90}
+          />
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
+        </div>
+        <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-2xl mx-auto text-center space-y-6">
             <div className="w-32 h-32 mx-auto mb-8 relative">
               <Link href="/">
