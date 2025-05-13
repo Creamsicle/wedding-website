@@ -7,31 +7,36 @@ import {
 
 export default function FAQPage() {
   return (
-    <div className="min-h-screen subpage-gradient">
-      <div className="container mx-auto px-4 py-16">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl font-serif mb-4 text-white">Frequently Asked Questions</h1>
-          <p className="text-lg text-[var(--rust-light)] max-w-2xl mx-auto">
-            Find answers to common questions about our wedding celebration.
-          </p>
-        </div>
+    <div className="min-h-screen bg-[#0A1A3B]">
+      <div className="container mx-auto px-4 py-24">
+        <h1 className="text-5xl font-serif mb-16 text-white text-center">FAQ</h1>
 
         <div className="max-w-3xl mx-auto">
-          <Accordion type="single" collapsible className="space-y-4">
-            <AccordionItem value="children" className="card-hover border-none rounded-lg">
-              <AccordionTrigger className="px-6 py-4 text-white hover:text-[var(--rust-light)] transition-colors">
-                Can I bring my kids?
+          <Accordion type="single" collapsible className="space-y-6">
+            <AccordionItem value="children" className="border-b border-white/10 pb-6">
+              <AccordionTrigger className="hover:no-underline group">
+                <div className="flex items-baseline gap-4 text-left">
+                  <span className="text-[var(--rust-light)] opacity-60">(01)</span>
+                  <span className="text-xl text-white group-hover:text-[var(--rust-light)] transition-colors">
+                    Can I bring my kids?
+                  </span>
+                </div>
               </AccordionTrigger>
-              <AccordionContent className="px-6 pb-4 text-white/80">
+              <AccordionContent className="pt-4 pl-12 text-white/80">
                 No, while we love your little ones, both wedding celebrations will be adults-only except for our immediate nieces and nephews. We hope that you will understand this decision and that you will still be able to join us to celebrate.
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="dress-code" className="card-hover border-none rounded-lg">
-              <AccordionTrigger className="px-6 py-4 text-white hover:text-[var(--rust-light)] transition-colors">
-                What should I wear?
+            <AccordionItem value="dress-code" className="border-b border-white/10 pb-6">
+              <AccordionTrigger className="hover:no-underline group">
+                <div className="flex items-baseline gap-4 text-left">
+                  <span className="text-[var(--rust-light)] opacity-60">(02)</span>
+                  <span className="text-xl text-white group-hover:text-[var(--rust-light)] transition-colors">
+                    What should I wear?
+                  </span>
+                </div>
               </AccordionTrigger>
-              <AccordionContent className="px-6 pb-4 text-white/80">
+              <AccordionContent className="pt-4 pl-12 text-white/80">
                 <p className="mb-4"><strong>Friday:</strong> For the Hindu ceremony at Queen&apos;s Manor Event Centre, the dress code is Indian formal (shalwars, sarees, kurthas, sherwanis, lehengas)! If you do not have any Indian attire, please know that western formal is also alright! What&apos;s most important is that you feel comfortable to come celebrate with us.</p>
                 <p>
                   <strong>Saturday:</strong> For the wedding at the Art Gallery of Hamilton, the dress code is formal and vibrant. We&apos;ll check the weather leading up to the day to adjust if needed, but note that we&apos;re hoping the ceremony can be outside (unless it rains).
@@ -39,86 +44,131 @@ export default function FAQPage() {
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="arrival" className="card-hover border-none rounded-lg">
-              <AccordionTrigger className="px-6 py-4 text-white hover:text-[var(--rust-light)] transition-colors">
-                When should I arrive?
+            <AccordionItem value="arrival" className="border-b border-white/10 pb-6">
+              <AccordionTrigger className="hover:no-underline group">
+                <div className="flex items-baseline gap-4 text-left">
+                  <span className="text-[var(--rust-light)] opacity-60">(03)</span>
+                  <span className="text-xl text-white group-hover:text-[var(--rust-light)] transition-colors">
+                    When should I arrive?
+                  </span>
+                </div>
               </AccordionTrigger>
-              <AccordionContent className="px-6 pb-4 text-white/80">
+              <AccordionContent className="pt-4 pl-12 text-white/80">
                 <p className="mb-4"><strong>Friday:</strong> Please arrive at Queen&apos;s Manor Event Centre at least 15 minutes before the ceremony start time to ensure you&apos;re comfortably seated.</p>
                 <p><strong>Saturday:</strong> For the Art Gallery of Hamilton ceremony, we recommend arriving 15-20 minutes early to find parking and make your way to the ceremony location.</p>
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="photos" className="card-hover border-none rounded-lg">
-              <AccordionTrigger className="px-6 py-4 text-white hover:text-[var(--rust-light)] transition-colors">
-                Can I take photos during the ceremony?
+            <AccordionItem value="photos" className="border-b border-white/10 pb-6">
+              <AccordionTrigger className="hover:no-underline group">
+                <div className="flex items-baseline gap-4 text-left">
+                  <span className="text-[var(--rust-light)] opacity-60">(04)</span>
+                  <span className="text-xl text-white group-hover:text-[var(--rust-light)] transition-colors">
+                    Can I take photos during the ceremony?
+                  </span>
+                </div>
               </AccordionTrigger>
-              <AccordionContent className="px-6 pb-4 text-white/80">
+              <AccordionContent className="pt-4 pl-12 text-white/80">
                 We kindly ask that you refrain from taking photos during the ceremonies - we have professional photographers who will capture these special moments. We encourage you to be present with us during the ceremonies and enjoy taking photos during the reception celebrations!
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="parking" className="card-hover border-none rounded-lg">
-              <AccordionTrigger className="px-6 py-4 text-white hover:text-[var(--rust-light)] transition-colors">
-                Where should I park?
+            <AccordionItem value="parking" className="border-b border-white/10 pb-6">
+              <AccordionTrigger className="hover:no-underline group">
+                <div className="flex items-baseline gap-4 text-left">
+                  <span className="text-[var(--rust-light)] opacity-60">(05)</span>
+                  <span className="text-xl text-white group-hover:text-[var(--rust-light)] transition-colors">
+                    Where should I park?
+                  </span>
+                </div>
               </AccordionTrigger>
-              <AccordionContent className="px-6 pb-4 text-white/80">
+              <AccordionContent className="pt-4 pl-12 text-white/80">
                 <p className="mb-4"><strong>Friday (Queen&apos;s Manor):</strong> There is ample free parking available at the venue.</p>
                 <p><strong>Saturday (Art Gallery):</strong> Parking is available in the Art Gallery of Hamilton parkade and several nearby municipal lots. More detailed parking information can be found on our Travel & Accommodations page.</p>
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="cancel" className="card-hover border-none rounded-lg">
-              <AccordionTrigger className="px-6 py-4 text-white hover:text-[var(--rust-light)] transition-colors">
-                What if I need to cancel?
+            <AccordionItem value="cancel" className="border-b border-white/10 pb-6">
+              <AccordionTrigger className="hover:no-underline group">
+                <div className="flex items-baseline gap-4 text-left">
+                  <span className="text-[var(--rust-light)] opacity-60">(06)</span>
+                  <span className="text-xl text-white group-hover:text-[var(--rust-light)] transition-colors">
+                    What if I need to cancel?
+                  </span>
+                </div>
               </AccordionTrigger>
-              <AccordionContent className="px-6 pb-4 text-white/80">
+              <AccordionContent className="pt-4 pl-12 text-white/80">
                 We understand that circumstances can change. If you need to cancel your attendance, please let us know as soon as possible through the RSVP form or by contacting us directly. This helps us with our planning and arrangements with the venues and caterers.
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="registry" className="card-hover border-none rounded-lg">
-              <AccordionTrigger className="px-6 py-4 text-white hover:text-[var(--rust-light)] transition-colors">
-                Gifts Registry
+            <AccordionItem value="registry" className="border-b border-white/10 pb-6">
+              <AccordionTrigger className="hover:no-underline group">
+                <div className="flex items-baseline gap-4 text-left">
+                  <span className="text-[var(--rust-light)] opacity-60">(07)</span>
+                  <span className="text-xl text-white group-hover:text-[var(--rust-light)] transition-colors">
+                    Gifts Registry
+                  </span>
+                </div>
               </AccordionTrigger>
-              <AccordionContent className="px-6 pb-4 text-white/80">
+              <AccordionContent className="pt-4 pl-12 text-white/80">
                 <p className="mb-4">Gifts! We do not have a registry, as we have everything we need. ♥ Should you wish to give us a gift, we would gratefully accept contributions to a honeymoon fund, or for dangerous adventures abroad.</p>
                 <p>Since cash can be hard, our e-transfer joint account is here: [ ] or we will have a box at the venues for cards as well.</p>
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="one-event" className="card-hover border-none rounded-lg">
-              <AccordionTrigger className="px-6 py-4 text-white hover:text-[var(--rust-light)] transition-colors">
-                Is it ok if I only attend one of the events?
+            <AccordionItem value="one-event" className="border-b border-white/10 pb-6">
+              <AccordionTrigger className="hover:no-underline group">
+                <div className="flex items-baseline gap-4 text-left">
+                  <span className="text-[var(--rust-light)] opacity-60">(08)</span>
+                  <span className="text-xl text-white group-hover:text-[var(--rust-light)] transition-colors">
+                    Is it ok if I only attend one of the events?
+                  </span>
+                </div>
               </AccordionTrigger>
-              <AccordionContent className="px-6 pb-4 text-white/80">
+              <AccordionContent className="pt-4 pl-12 text-white/80">
                 Of course! We love and appreciate all of you, and totally understand if you can&apos;t come to both. You are all very welcome to come to either event, or both! If you can&apos;t make it, totally understand just let us know.
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="dietary" className="card-hover border-none rounded-lg">
-              <AccordionTrigger className="px-6 py-4 text-white hover:text-[var(--rust-light)] transition-colors">
-                Allergies / Dietary restrictions
+            <AccordionItem value="dietary" className="border-b border-white/10 pb-6">
+              <AccordionTrigger className="hover:no-underline group">
+                <div className="flex items-baseline gap-4 text-left">
+                  <span className="text-[var(--rust-light)] opacity-60">(09)</span>
+                  <span className="text-xl text-white group-hover:text-[var(--rust-light)] transition-colors">
+                    Allergies / Dietary restrictions
+                  </span>
+                </div>
               </AccordionTrigger>
-              <AccordionContent className="px-6 pb-4 text-white/80">
+              <AccordionContent className="pt-4 pl-12 text-white/80">
                 We should be able to accommodate for all of your allergies or dietary restrictions (for both events), however please make sure to let us know in your RSVP. You can reach out to us also if you have any other concerns.
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="travel" className="card-hover border-none rounded-lg">
-              <AccordionTrigger className="px-6 py-4 text-white hover:text-[var(--rust-light)] transition-colors">
-                Accommodation / Parking / Travel
+            <AccordionItem value="travel" className="border-b border-white/10 pb-6">
+              <AccordionTrigger className="hover:no-underline group">
+                <div className="flex items-baseline gap-4 text-left">
+                  <span className="text-[var(--rust-light)] opacity-60">(10)</span>
+                  <span className="text-xl text-white group-hover:text-[var(--rust-light)] transition-colors">
+                    Accommodation / Parking / Travel
+                  </span>
+                </div>
               </AccordionTrigger>
-              <AccordionContent className="px-6 pb-4 text-white/80">
+              <AccordionContent className="pt-4 pl-12 text-white/80">
                 Check out the &quot;Travel & Accommodations page&quot; :)
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="poem" className="card-hover border-none rounded-lg">
-              <AccordionTrigger className="px-6 py-4 text-white hover:text-[var(--rust-light)] transition-colors">
-                What&apos;s one of your favourite Mary Oliver poems?
+            <AccordionItem value="poem" className="border-b border-white/10 pb-6">
+              <AccordionTrigger className="hover:no-underline group">
+                <div className="flex items-baseline gap-4 text-left">
+                  <span className="text-[var(--rust-light)] opacity-60">(11)</span>
+                  <span className="text-xl text-white group-hover:text-[var(--rust-light)] transition-colors">
+                    What&apos;s one of your favourite Mary Oliver poems?
+                  </span>
+                </div>
               </AccordionTrigger>
-              <AccordionContent className="px-6 pb-4 text-white/80">
+              <AccordionContent className="pt-4 pl-12 text-white/80">
                 <div className="space-y-4">
                   <p className="font-serif text-xl mb-2">Don&apos;t Hesitate</p>
                   <p className="whitespace-pre-line">

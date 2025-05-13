@@ -16,8 +16,8 @@ export default function SubpagesLayout({
       <section className="relative py-12">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/events/bg.webp"
-            alt="Footer Background"
+            src="/images/lilies.jpg"
+            alt="Lilies Background"
             fill
             className="object-cover"
             quality={90}
