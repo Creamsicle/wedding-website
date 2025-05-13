@@ -76,6 +76,12 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  --navy-primary: #0A1A3B;
+  --navy-secondary: #152A54;
+  --navy-light: #1E3A75;
+  --rust-primary: #D4846A;
+  --rust-secondary: #C26B4D;
+  --rust-light: #E39C86;
 }
 
 .dark {
@@ -117,6 +123,62 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-[#0A1A3B] text-white;
   }
+}
+
+.card-hover-area {
+  position: relative;
+  isolation: isolate;
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.card-hover-area::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--bg-image);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 1;
+}
+
+.card-hover-area:hover::before {
+  opacity: 1;
+}
+
+/* Add custom styles for subpage backgrounds */
+.subpage-gradient {
+  background-image: url('/images/events/bg.webp');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.card-hover {
+  @apply transition-all duration-300;
+  background: rgba(10, 26, 59, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.card-hover:hover {
+  background: rgba(21, 42, 84, 0.8);
+  border-color: var(--rust-light);
+  transform: translateY(-2px);
+}
+
+.timeline-dot {
+  background: var(--rust-primary);
+  box-shadow: 0 0 10px var(--rust-light);
+}
+
+.timeline-line {
+  background: linear-gradient(to right, var(--rust-secondary), var(--rust-light));
+  opacity: 0.5;
 }

@@ -40,22 +40,22 @@ export default function NavigationMenu() {
           <SheetTrigger asChild>
             <Button 
               variant="ghost" 
-              className="md:hidden text-white absolute right-4 top-1/2 -translate-y-1/2 p-3 hover:bg-white/10 bg-black/30 rounded-full backdrop-blur-sm border border-white/20 transition-all"
+              className="md:hidden text-white absolute right-6 top-1/2 -translate-y-1/2 p-4 hover:bg-white/10 bg-black/30 rounded-full backdrop-blur-sm border border-white/20 transition-all"
             >
-              <Menu className="h-8 w-8" />
+              <Menu className="h-10 w-10" />
             </Button>
           </SheetTrigger>
           <SheetContent>
             <SheetHeader>
-              <SheetTitle className="text-left">Menu</SheetTitle>
+              <SheetTitle className="text-left text-white/90 text-2xl">Menu</SheetTitle>
             </SheetHeader>
-            <div className="flex flex-col space-y-4 mt-8">
+            <div className="flex flex-col space-y-6 mt-12">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
                   onClick={() => setOpen(false)}
-                  className="text-lg py-2 px-4 rounded-md hover:bg-accent transition-colors"
+                  className="text-xl py-3 px-6 rounded-md text-white hover:bg-[var(--rust-primary)] transition-colors tracking-widest"
                 >
                   {item.name}
                 </Link>

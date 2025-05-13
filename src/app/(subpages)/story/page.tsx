@@ -1,61 +1,27 @@
-import { Timeline } from '@/components/Timeline';
-
-const timelineItems = [
-  {
-    date: "June 15, 2023",
-    title: "Our First Meeting",
-    description: "The day our paths crossed and our story began. A chance encounter that would change everything.",
-    icon: "heart" as const,
-    image: "https://source.unsplash.com/800x600/?couple,meeting"
-  },
-  {
-    date: "July 1, 2023",
-    title: "First Official Date",
-    description: "A magical evening filled with laughter, deep conversations, and the beginning of something beautiful.",
-    icon: "heart" as const,
-    image: "https://source.unsplash.com/800x600/?romantic,dinner"
-  },
-  {
-    date: "August 20, 2023",
-    title: "Weekend Getaway",
-    description: "Our first trip together - a spontaneous adventure that brought us even closer.",
-    icon: "photo" as const,
-    image: "https://source.unsplash.com/800x600/?travel,couple"
-  },
-  {
-    date: "October 31, 2023",
-    title: "Halloween Together",
-    description: "Dressed up as each other's favorite characters, creating memories and sharing laughs.",
-    icon: "photo" as const,
-    image: "https://source.unsplash.com/800x600/?halloween,party"
-  },
-  {
-    date: "December 25, 2023",
-    title: "First Christmas",
-    description: "Celebrating the holidays together, exchanging gifts, and creating new traditions.",
-    icon: "heart" as const,
-    image: "https://source.unsplash.com/800x600/?christmas,couple"
-  },
-  {
-    date: "February 14, 2024",
-    title: "Valentine's Day",
-    description: "A romantic celebration of our love and the journey we've shared so far.",
-    icon: "heart" as const,
-    image: "https://source.unsplash.com/800x600/?valentines,love"
-  }
-];
+import MondrianTimeline from '@/components/MondrianTimeline';
 
 export default function StoryPage() {
   return (
-    <main className="min-h-screen bg-gradient-to-b from-background to-background/80">
+    <main 
+      className="min-h-screen relative"
+      style={{
+        background: `
+          radial-gradient(circle at 20% 20%, rgba(255, 127, 0, 0.85) 0%, transparent 60%),
+          radial-gradient(circle at 80% 30%, rgba(0, 140, 255, 0.95) 0%, transparent 60%),
+          radial-gradient(circle at 40% 70%, rgba(255, 112, 0, 0.85) 0%, transparent 50%),
+          radial-gradient(circle at 70% 60%, rgba(0, 170, 255, 0.95) 0%, transparent 50%),
+          linear-gradient(45deg, #ff8000 0%, #00a2ff 100%)
+        `
+      }}
+    >
       <div className="container mx-auto px-4">
         <div className="text-center py-16">
-          <h1 className="text-4xl font-bold text-primary mb-4">Our Story</h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <h1 className="text-4xl font-serif mb-4 text-white">Our Story</h1>
+          <p className="text-lg text-white/90 max-w-2xl mx-auto">
             Every love story is beautiful, but ours is my favorite. Here's a journey through our most cherished moments together.
           </p>
         </div>
-        <Timeline items={timelineItems} />
+        <MondrianTimeline />
       </div>
     </main>
   );

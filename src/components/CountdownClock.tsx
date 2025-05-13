@@ -75,7 +75,7 @@ export default function CountdownClock() {
 
   return (
     <div className="text-center space-y-8">
-      <h2 className="text-3xl font-serif text-[#FFF8E7]">The First Event Begins In</h2>
+      <h2 className="text-3xl font-serif text-[#FFF8E7]">The First Ceremony Begins In</h2>
       <div className="flex flex-wrap justify-center gap-4">
         <TimeUnit value={timeLeft.months} label="Months" />
         <TimeUnit value={timeLeft.days} label="Days" />

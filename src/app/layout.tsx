@@ -19,13 +19,6 @@ export default function RootLayout({
     <html lang="en">
       <body className={cn(inter.className, "min-h-screen bg-background")}>
         <main>{children}</main>
-        <footer className="border-t mt-20">
-          <div className="container mx-auto px-4 h-16 flex items-center justify-center">
-            <p className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} Chelsea & Neil. All rights reserved.
-            </p>
-          </div>
-        </footer>
       </body>
     </html>
   );
