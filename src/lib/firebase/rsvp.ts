@@ -29,61 +29,74 @@ export interface RSVPResponse {
 }
 
 export async function searchGuests(searchName: string): Promise<GuestParty[]> {
-  const guestsRef = collection(db, 'guests');
-  const searchTerms = searchName.toLowerCase().split(' ');
-  
-  const parties: { [key: string]: GuestParty } = {};
-  const foundPartyIds = new Set<string>();
-  
-  for (const term of searchTerms) {
-    const firstNameQuery = query(
-      guestsRef,
-      where('firstName_lower', '>=', term),
-      where('firstName_lower', '<=', term + '\uf8ff')
-    );
+  try {
+    console.log('Starting guest search for:', searchName);
+    const guestsRef = collection(db, 'guests');
+    const searchTerms = searchName.toLowerCase().split(' ');
     
-    const lastNameQuery = query(
-      guestsRef,
-      where('lastName_lower', '>=', term),
-      where('lastName_lower', '<=', term + '\uf8ff')
-    );
+    console.log('Search terms:', searchTerms);
+    const parties: { [key: string]: GuestParty } = {};
+    const foundPartyIds = new Set<string>();
     
-    const [firstNameResults, lastNameResults] = await Promise.all([
-      getDocs(firstNameQuery),
-      getDocs(lastNameQuery)
-    ]);
+    for (const term of searchTerms) {
+      console.log('Searching for term:', term);
+      const firstNameQuery = query(
+        guestsRef,
+        where('firstName_lower', '>=', term),
+        where('firstName_lower', '<=', term + '\uf8ff')
+      );
+      
+      const lastNameQuery = query(
+        guestsRef,
+        where('lastName_lower', '>=', term),
+        where('lastName_lower', '<=', term + '\uf8ff')
+      );
+      
+      const [firstNameResults, lastNameResults] = await Promise.all([
+        getDocs(firstNameQuery),
+        getDocs(lastNameQuery)
+      ]);
 
-    // Get all party IDs from the search results
-    const matchedPartyIds = new Set<string>();
-    [...firstNameResults.docs, ...lastNameResults.docs].forEach(doc => {
-      const guest = doc.data();
-      matchedPartyIds.add(guest.partyId);
-    });
+      console.log('First name results:', firstNameResults.size);
+      console.log('Last name results:', lastNameResults.size);
 
-    // Fetch all guests from matched parties
-    for (const partyId of matchedPartyIds) {
-      if (!foundPartyIds.has(partyId)) {
-        foundPartyIds.add(partyId);
-        const partyQuery = query(guestsRef, where('partyId', '==', partyId));
-        const partySnapshot = await getDocs(partyQuery);
-        
-        partySnapshot.docs.forEach(doc => {
-          const guest = { id: doc.id, ...doc.data() } as Guest;
-          if (!parties[guest.partyId]) {
-            parties[guest.partyId] = {
-              id: guest.partyId,
-              partyMembers: []
-            };
-          }
-          if (!parties[guest.partyId].partyMembers.find(member => member.id === guest.id)) {
-            parties[guest.partyId].partyMembers.push(guest);
-          }
-        });
+      // Get all party IDs from the search results
+      const matchedPartyIds = new Set<string>();
+      [...firstNameResults.docs, ...lastNameResults.docs].forEach(doc => {
+        const guest = doc.data();
+        console.log('Found guest:', guest);
+        matchedPartyIds.add(guest.partyId);
+      });
+
+      // Fetch all guests from matched parties
+      for (const partyId of matchedPartyIds) {
+        if (!foundPartyIds.has(partyId)) {
+          foundPartyIds.add(partyId);
+          const partyQuery = query(guestsRef, where('partyId', '==', partyId));
+          const partySnapshot = await getDocs(partyQuery);
+          
+          partySnapshot.docs.forEach(doc => {
+            const guest = { id: doc.id, ...doc.data() } as Guest;
+            if (!parties[guest.partyId]) {
+              parties[guest.partyId] = {
+                id: guest.partyId,
+                partyMembers: []
+              };
+            }
+            if (!parties[guest.partyId].partyMembers.find(member => member.id === guest.id)) {
+              parties[guest.partyId].partyMembers.push(guest);
+            }
+          });
+        }
       }
     }
+    
+    console.log('Final results:', Object.values(parties));
+    return Object.values(parties);
+  } catch (error) {
+    console.error('Error in searchGuests:', error);
+    throw error;
   }
-  
-  return Object.values(parties);
 }
 
 export async function submitRSVP(guestId: string, response: RSVPResponse): Promise<void> {
