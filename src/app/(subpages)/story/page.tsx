@@ -20,6 +20,9 @@ export default function StoryPage() {
           <p className="text-lg text-white/90 max-w-2xl mx-auto">
             Every love story is beautiful, but ours is my favorite. Here's a journey through our most cherished moments together.
           </p>
+          <p className="text-lg mb-4">
+            We&apos;re so excited to share our story with you!
+          </p>
         </div>
         <MondrianTimeline />
       </div>

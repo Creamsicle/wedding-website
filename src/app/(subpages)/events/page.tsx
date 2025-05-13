@@ -66,8 +66,8 @@ export default function EventsPage() {
                   </div>
                   <p className="text-white/80">
                     Indian formal wear is encouraged (think shalwars, sarees, kurtas, sherwanis, or lehengas)! 
-                    If you don't have traditional Indian attire, western formal wear is perfectly fine too. 
-                    Most importantly, wear whatever makes you feel comfortable. :) We're just excited to have you there to celebrate with us!
+                    If you don&apos;t have traditional Indian attire, western formal wear is perfectly fine too. 
+                    Most importantly, wear whatever makes you feel comfortable. :) We&apos;re just excited to have you there to celebrate with us!
                   </p>
                 </section>
 
@@ -77,7 +77,7 @@ export default function EventsPage() {
                     <h3 className="text-xl font-serif text-white">Parking & Travel</h3>
                   </div>
                   <p className="text-white/80">
-                    There is a lot of parking at the Queen's Manor Event Centre, and bus routes close by. 
+                    There&apos;s a lot of parking at the Queen&apos;s Manor Event Centre, and bus routes close by. 
                     If you need a ride please let us know!
                   </p>
                 </section>
