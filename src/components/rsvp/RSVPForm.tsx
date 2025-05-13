@@ -4,6 +4,8 @@ import { useState, FormEvent } from 'react';
 import { searchGuests, submitRSVP } from '@/lib/firebase/rsvp';
 import type { GuestParty, Guest, RSVPResponse } from '@/lib/firebase/rsvp';
 
+type ResponseFieldValue = string | boolean;
+
 interface FormData {
   firstName: string;
   lastName: string;
@@ -57,7 +59,7 @@ export function RSVPForm() {
     setResponses(initialResponses);
   };
 
-  const handleResponseChange = (guestId: string, field: keyof RSVPResponse, value: any) => {
+  const handleResponseChange = (guestId: string, field: keyof RSVPResponse, value: ResponseFieldValue) => {
     setResponses(prev => ({
       ...prev,
       [guestId]: {

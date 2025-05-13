@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import { Calendar, Users, HelpCircle, Send } from "lucide-react";
 import CountdownClock from "@/components/CountdownClock";
 import Image from "next/image";
+import { motion } from 'framer-motion';
 
 export default function Home() {
   return (
