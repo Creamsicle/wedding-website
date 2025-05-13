@@ -8,6 +8,13 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Chelsea & Neil's Wedding",
   description: "Join us on our special day",
+  icons: {
+    icon: [
+      { url: '/pigeon.svg', type: 'image/svg+xml' },
+    ],
+    shortcut: '/pigeon.svg',
+    apple: '/pigeon.svg',
+  },
 };
 
 export default function RootLayout({
