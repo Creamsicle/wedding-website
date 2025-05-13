@@ -16,13 +16,13 @@ export default function SubpagesLayout({
       <section className="relative py-12">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/lilies.jpeg"
-            alt="Lilies Background"
+            src="/images/events/bg.webp"
+            alt="Footer Background"
             fill
             className="object-cover"
             quality={90}
           />
-          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/60 to-black/40 backdrop-blur-[2px]" />
         </div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-2xl mx-auto text-center space-y-6">
