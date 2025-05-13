@@ -43,7 +43,7 @@ export default function EventsPage() {
                 <div className="flex items-start text-[var(--rust-light)]">
                   <MapPin className="w-5 h-5 mr-3 flex-shrink-0 mt-1" />
                   <div>
-                    <div>Queen's Manor Event Centre</div>
+                    <div>Queen&apos;s Manor Event Centre</div>
                     <div className="text-[var(--rust-light)]/80">2 Auction Lane, Brampton, Ontario L6T 0C4</div>
                   </div>
                 </div>

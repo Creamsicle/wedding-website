@@ -2,16 +2,8 @@
 
 import { useState, FormEvent } from 'react';
 import { searchGuests, submitRSVP } from '@/lib/firebase/rsvp';
-import type { GuestParty, Guest, RSVPResponse } from '@/lib/firebase/rsvp';
-
+import type { GuestParty, RSVPResponse } from '@/lib/firebase/rsvp';
 type ResponseFieldValue = string | boolean;
-
-interface FormData {
-  firstName: string;
-  lastName: string;
-  partyId: string;
-  rsvpResponse: RSVPResponse;
-}
 
 export function RSVPForm() {
   const [searchName, setSearchName] = useState('');
@@ -87,6 +79,11 @@ export function RSVPForm() {
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleSubmitClick = () => {
+    const formEvent = new Event('submit', { bubbles: true, cancelable: true }) as unknown as FormEvent<HTMLFormElement>;
+    handleSubmit(formEvent);
   };
 
   if (isSubmitted) {
@@ -342,7 +339,7 @@ export function RSVPForm() {
               Back to Search
             </button>
             <button
-              onClick={handleSubmit}
+              onClick={handleSubmitClick}
               disabled={isSubmitting}
               className="bg-[var(--rust-primary)] hover:bg-[var(--rust-secondary)] text-white font-bold py-2 px-4 rounded transition-colors disabled:opacity-50"
             >

@@ -60,7 +60,7 @@ export default function Timeline({ items }: TimelineProps) {
     });
 
     // Animate remaining items on scroll
-    timelineItemsRef.current.slice(2).forEach((item, index) => {
+    timelineItemsRef.current.slice(2).forEach((item) => {
       if (!item) return;
 
       gsap.to(item, {

@@ -3,8 +3,6 @@ import Link from "next/link";
 import { Calendar, Users, HelpCircle, Send } from "lucide-react";
 import CountdownClock from "@/components/CountdownClock";
 import Image from "next/image";
-import { motion } from 'framer-motion';
-
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
@@ -82,7 +80,7 @@ export default function Home() {
                         <HelpCircle className="w-12 h-12 mx-auto mb-4 text-[#FFF8E7]" />
                         <h3 className="text-3xl font-serif font-bold mb-2 text-[#FFF8E7]">FAQ</h3>
                         <p className="text-white/80 text-lg font-medium">
-                          Questions you haven't asked
+                          Questions you haven&apos;t asked
                         </p>
                       </CardContent>
                     </Card>

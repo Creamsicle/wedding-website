@@ -4,12 +4,6 @@ import fs from 'fs';
 import { parse } from 'csv-parse';
 import path from 'path';
 
-interface GuestImport {
-  firstName: string;
-  lastName: string;
-  partyId: string;
-}
-
 interface CSVRow {
   firstName: string;
   lastName: string;

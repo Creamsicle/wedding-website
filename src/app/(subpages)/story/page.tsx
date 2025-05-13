@@ -18,7 +18,7 @@ export default function StoryPage() {
         <div className="text-center py-16">
           <h1 className="text-4xl font-serif mb-4 text-white">Our Story</h1>
           <p className="text-lg text-white/90 max-w-2xl mx-auto">
-            Every love story is beautiful, but ours is my favorite. Here's a journey through our most cherished moments together.
+            Every love story is beautiful, but ours is my favorite. Here&apos;s a journey through our most cherished moments together.
           </p>
           <p className="text-lg mb-4">
             We&apos;re so excited to share our story with you!

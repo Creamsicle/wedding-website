@@ -1,13 +1,5 @@
 import { db } from '../lib/firebase/config';
-import {
-  collection,
-  getDocs,
-  doc,
-  writeBatch,
-  getDoc,
-  DocumentData,
-  DocumentReference,
-} from 'firebase/firestore';
+import { collection, getDocs, doc, writeBatch } from 'firebase/firestore';
 
 interface MigrationStats {
   total: number;
