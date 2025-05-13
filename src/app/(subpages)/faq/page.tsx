@@ -39,6 +39,44 @@ export default function FAQPage() {
               </AccordionContent>
             </AccordionItem>
 
+            <AccordionItem value="arrival" className="card-hover border-none rounded-lg">
+              <AccordionTrigger className="px-6 py-4 text-white hover:text-[var(--rust-light)] transition-colors">
+                When should I arrive?
+              </AccordionTrigger>
+              <AccordionContent className="px-6 pb-4 text-white/80">
+                <p className="mb-4"><strong>Friday:</strong> Please arrive at Queen&apos;s Manor Event Centre at least 15 minutes before the ceremony start time to ensure you&apos;re comfortably seated.</p>
+                <p><strong>Saturday:</strong> For the Art Gallery of Hamilton ceremony, we recommend arriving 15-20 minutes early to find parking and make your way to the ceremony location.</p>
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="photos" className="card-hover border-none rounded-lg">
+              <AccordionTrigger className="px-6 py-4 text-white hover:text-[var(--rust-light)] transition-colors">
+                Can I take photos during the ceremony?
+              </AccordionTrigger>
+              <AccordionContent className="px-6 pb-4 text-white/80">
+                We kindly ask that you refrain from taking photos during the ceremonies - we have professional photographers who will capture these special moments. We encourage you to be present with us during the ceremonies and enjoy taking photos during the reception celebrations!
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="parking" className="card-hover border-none rounded-lg">
+              <AccordionTrigger className="px-6 py-4 text-white hover:text-[var(--rust-light)] transition-colors">
+                Where should I park?
+              </AccordionTrigger>
+              <AccordionContent className="px-6 pb-4 text-white/80">
+                <p className="mb-4"><strong>Friday (Queen&apos;s Manor):</strong> There is ample free parking available at the venue.</p>
+                <p><strong>Saturday (Art Gallery):</strong> Parking is available in the Art Gallery of Hamilton parkade and several nearby municipal lots. More detailed parking information can be found on our Travel & Accommodations page.</p>
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="cancel" className="card-hover border-none rounded-lg">
+              <AccordionTrigger className="px-6 py-4 text-white hover:text-[var(--rust-light)] transition-colors">
+                What if I need to cancel?
+              </AccordionTrigger>
+              <AccordionContent className="px-6 pb-4 text-white/80">
+                We understand that circumstances can change. If you need to cancel your attendance, please let us know as soon as possible through the RSVP form or by contacting us directly. This helps us with our planning and arrangements with the venues and caterers.
+              </AccordionContent>
+            </AccordionItem>
+
             <AccordionItem value="registry" className="card-hover border-none rounded-lg">
               <AccordionTrigger className="px-6 py-4 text-white hover:text-[var(--rust-light)] transition-colors">
                 Gifts Registry
