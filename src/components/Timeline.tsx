@@ -93,14 +93,14 @@ export default function Timeline({ items }: TimelineProps) {
         <div className="absolute left-8 right-8 top-1/2 h-0.5 -translate-y-1/2 timeline-line" />
 
         {/* Timeline items */}
-        {items.map((item, index) => (
+        {items.map((item) => (
           <div
-            key={index}
+            key={item.title}
             ref={(el) => {
-              timelineItemsRef.current[index] = el;
+              timelineItemsRef.current[items.indexOf(item)] = el;
             }}
             className={`relative w-[300px] ${
-              index % 2 === 0 ? '-mt-[150px]' : 'mt-[150px]'
+              items.indexOf(item) % 2 === 0 ? '-mt-[150px]' : 'mt-[150px]'
             }`}
           >
             {/* Content */}
@@ -128,7 +128,7 @@ export default function Timeline({ items }: TimelineProps) {
             {/* Dot */}
             <div
               className={`absolute left-1/2 h-4 w-4 -translate-x-1/2 rounded-full timeline-dot ${
-                index % 2 === 0 
+                items.indexOf(item) % 2 === 0 
                   ? 'bottom-0 translate-y-1/2' 
                   : 'top-0 -translate-y-1/2'
               }`}
@@ -137,7 +137,7 @@ export default function Timeline({ items }: TimelineProps) {
             {/* Vertical line to dot */}
             <div
               className={`absolute left-1/2 w-0.5 -translate-x-1/2 timeline-line ${
-                index % 2 === 0
+                items.indexOf(item) % 2 === 0
                   ? 'bottom-4 h-8'
                   : 'top-4 h-8'
               }`}
