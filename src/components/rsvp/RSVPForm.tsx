@@ -1,8 +1,15 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, FormEvent } from 'react';
 import { searchGuests, submitRSVP } from '@/lib/firebase/rsvp';
 import type { GuestParty, Guest, RSVPResponse } from '@/lib/firebase/rsvp';
+
+interface FormData {
+  firstName: string;
+  lastName: string;
+  partyId: string;
+  rsvpResponse: RSVPResponse;
+}
 
 export function RSVPForm() {
   const [searchName, setSearchName] = useState('');
@@ -60,7 +67,8 @@ export function RSVPForm() {
     }));
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (!selectedParty) return;
     
     setIsSubmitting(true);

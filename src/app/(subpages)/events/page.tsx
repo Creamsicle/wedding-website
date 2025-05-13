@@ -12,6 +12,7 @@ export default function EventsPage() {
           <p className="text-lg font-semibold text-white max-w-2xl mx-auto">
             Join us in celebrating our special day with these memorable events.
           </p>
+          <p className="text-lg mb-4">We&apos;re excited to celebrate with you!</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-7xl mx-auto">
@@ -177,6 +178,12 @@ export default function EventsPage() {
               </div>
             </div>
           </div>
+        </div>
+
+        <div className="text-center mt-16">
+          <p className="text-lg mb-4">We&apos;ll be providing transportation</p>
+          <p className="text-lg mb-4">We&apos;re thrilled to have you join us</p>
+          <p className="text-lg">Don&apos;t worry about bringing gifts</p>
         </div>
       </div>
     </div>
