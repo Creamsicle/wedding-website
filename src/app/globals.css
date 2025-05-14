@@ -182,3 +182,161 @@
   background: linear-gradient(to right, var(--rust-secondary), var(--rust-light));
   opacity: 0.5;
 }
+
+/* Animated Gallery Background */
+@keyframes gradientFlow1 {
+  0% {
+    background-position: 0% 0%;
+  }
+  25% {
+    background-position: 100% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  75% {
+    background-position: 0% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+@keyframes gradientFlow2 {
+  0% {
+    background-position: 100% 100%;
+  }
+  25% {
+    background-position: 0% 100%;
+  }
+  50% {
+    background-position: 0% 0%;
+  }
+  75% {
+    background-position: 100% 0%;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
+}
+
+.gallery-container {
+  @apply min-h-screen relative overflow-hidden;
+  background: black;
+}
+
+.gallery-gradient-1 {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    45deg,
+    #1E3FA3,
+    #2B5BD9,
+    #4B7BE5,
+    #FFB199,
+    #FF8E6E,
+    #FFAC8C,
+    #1E3FA3
+  );
+  background-size: 200% 200%;
+  animation: gradientFlow1 20s ease infinite;
+  opacity: 0.8;
+  z-index: 1;
+}
+
+.gallery-gradient-2 {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    -45deg,
+    #FFB199,
+    #4B7BE5,
+    #2B5BD9,
+    #FFAC8C,
+    #FF8E6E,
+    #1E3FA3,
+    #FFB199
+  );
+  background-size: 200% 200%;
+  animation: gradientFlow2 15s ease infinite;
+  opacity: 0.6;
+  mix-blend-mode: soft-light;
+  z-index: 1;
+}
+
+.gallery-overlay {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  z-index: 2;
+}
+
+.gallery-noise {
+  @apply absolute inset-0 opacity-[0.15] pointer-events-none z-[3];
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+.gallery-spotlight {
+  @apply absolute pointer-events-none z-[4];
+  background: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, transparent 70%);
+  width: 100vh;
+  height: 100vh;
+  transform: translate(-50%, -50%);
+  transition: all 0.3s ease;
+  mix-blend-mode: soft-light;
+}
+
+.gallery-section {
+  @apply relative z-[5] container mx-auto px-8 py-24;
+}
+
+.exhibition-piece {
+  @apply relative rounded-none overflow-hidden;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 40px rgba(0,0,0,0.3);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.artwork-frame {
+  @apply absolute inset-0 pointer-events-none;
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
+}
+
+.artwork-plaque {
+  @apply bg-black/60 backdrop-blur-md p-8 relative;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.plaque-title {
+  @apply font-serif text-3xl text-white mb-4;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.gallery-heading {
+  @apply text-5xl font-serif text-white mb-12 text-center;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Custom scrollbar for gallery feel */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1C1C1C;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.3);
+}
