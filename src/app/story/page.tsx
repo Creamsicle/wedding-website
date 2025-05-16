@@ -9,7 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Menu as MenuIcon, Info as InfoIconLucide } from 'lucide-react';
+import { Menu as MenuIcon } from 'lucide-react';
 import React, { useState, TouchEvent, useEffect, useRef } from 'react';
 
 // Define the structure for a story item

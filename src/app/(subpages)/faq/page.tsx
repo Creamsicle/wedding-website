@@ -9,8 +9,6 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  DropdownMenuLabel, // Optional: for a title inside the menu
-  DropdownMenuSeparator, // Optional: for a separator line
 } from '@/components/ui/dropdown-menu';
 import { Menu as MenuIcon } from 'lucide-react'; // Using Menu from lucide-react
 import {

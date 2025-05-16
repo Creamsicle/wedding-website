@@ -2,7 +2,7 @@
 
 import { RSVPForm } from '@/components/rsvp/RSVPForm';
 import { Suspense } from 'react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';

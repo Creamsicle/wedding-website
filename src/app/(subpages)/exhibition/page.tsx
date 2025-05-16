@@ -36,7 +36,7 @@ export default function ExhibitionPage() {
       }, 3000);
       return () => clearTimeout(timer);
     }
-  }, []);
+  }, [showInfoHint]);
 
   const nextImage = () => {
     setCurrentIndex((prev) => (prev + 1) % images.length);

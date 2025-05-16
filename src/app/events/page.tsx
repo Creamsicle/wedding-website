@@ -9,8 +9,6 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  DropdownMenuLabel, // Optional: for a title inside the menu
-  DropdownMenuSeparator, // Optional: for a separator line
 } from '@/components/ui/dropdown-menu'; // Ensuring this path is used
 import { Menu as MenuIcon, Info } from 'lucide-react'; // Using Menu from lucide-react and added Info icon
 import {
@@ -18,12 +16,11 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogDescription,
   DialogFooter,
   DialogClose,
 } from '@/components/ui/dialog';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"; // Added Card components
-import { CalendarDays, Clock, MapPin, Shirt, Car, Info as InfoIconLucide } from 'lucide-react'; // Added more icons
+import { CalendarDays, Clock, MapPin, Shirt, Car } from 'lucide-react'; // Added more icons
 
 // Define an interface for the event structure
 interface EventDetail {
