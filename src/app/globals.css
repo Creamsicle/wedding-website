@@ -6,7 +6,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   --font-mono: var(--font-geist-mono);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -123,7 +123,7 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-[#0A1A3B] text-white;
+    @apply bg-[#0A1A3B] text-white font-sans;
   }
 }
 
@@ -302,41 +302,670 @@
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.artwork-frame {
-  @apply absolute inset-0 pointer-events-none;
-  border: 1px solid rgba(255,255,255,0.1);
-  box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
+/* === Start of Mobile Gallery Specific Styles === */
+/* Ensure these styles are specific enough or come after Tailwind base/component styles to take precedence */
+
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden; 
+  font-family: sans-serif; 
 }
 
-.artwork-plaque {
-  @apply bg-black/60 backdrop-blur-md p-8 relative;
-  border-top: 1px solid rgba(255,255,255,0.1);
+/* Overriding Tailwind's body background for this specific page context if needed,
+   or ensure .mobile-gallery-container is the primary full-page wrapper. */
+body {
+  background: none !important; /* Attempt to override Tailwind's body background */
 }
 
-.plaque-title {
-  @apply font-serif text-3xl text-white mb-4;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+.mobile-gallery-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; 
+  width: 100%;
+  background-image: url('/images/home-bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative; 
+  box-sizing: border-box; /* Ensure padding doesn't affect overall width/height calculations */
+  height: 100vh;
+  overflow: hidden;
 }
 
-.gallery-heading {
-  @apply text-5xl font-serif text-white mb-12 text-center;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+.gallery-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  color: white;
+  position: fixed; 
+  top: 50px; /* Raised nav bar */
+  left: 0;
+  width: 100%; 
+  box-sizing: border-box; 
+  z-index: 1000;
+  background-color: transparent; 
 }
 
-/* Custom scrollbar for gallery feel */
-::-webkit-scrollbar {
-  width: 8px;
+.logo span {
+  font-size: 24px;
 }
 
-::-webkit-scrollbar-track {
-  background: #1C1C1C;
+.header-title {
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 1px;
 }
 
-::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.2);
-  border-radius: 4px;
+.menu-icon span {
+  font-size: 24px;
+  cursor: pointer;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(255,255,255,0.3);
+.gallery-main {
+  flex-grow: 1; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;
+  padding-top: 120px; /* Adjusted for raised header */
+  padding-bottom: 100px; 
+  position: relative; 
+  width: 100%;
+  box-sizing: border-box;
+  height: calc(100% - 120px - 100px); /* Attempt to set an explicit height for content area */
+}
+
+.artwork-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative; 
+  width: 100%;
+  margin-top: 20px; /* Add some margin to push content down from lights */
+}
+
+.lights-image {
+  position: fixed; 
+  top: 0; 
+  left: 50%;
+  transform: translateX(-50%) scale(2.5); 
+  transform-origin: top center; 
+  width: 100%; 
+  max-width: 450px; 
+  height: auto; 
+  z-index: 1; 
+}
+
+.framed-artwork {
+  position: relative; 
+  width: 80%; 
+  max-width: 300px; 
+  margin-top: 30px; /* Adjusted for spacing below lights */
+  z-index: 5; 
+}
+
+.artwork-frame { 
+  width: 100%;
+  height: auto; 
+  display: block;
+}
+
+.plaque-image { 
+  margin-top: 15px; 
+  width: 30%; /* Halved size */
+  max-width: 90px; /* Halved size */
+  height: auto; 
+  display: block; 
+  margin-left: auto; 
+  margin-right: auto; 
+  z-index: 5;
+}
+
+.bench-container {
+  position: fixed; 
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 200; 
+  display: flex;
+  justify-content: center;
+  align-items: flex-end; 
+  padding-bottom: 0; 
+  overflow: hidden; 
+  height: 100px; /* Consistent height across all breakpoints */
+}
+
+.bench-image {
+  width: 80%;
+  height: 100px; /* Mobile height for the bench image */
+  object-fit: cover;
+  object-position: center center; /* Ensure the bench is centered */
+  margin-top: 20px;
+}
+
+@media (min-width: 400px) {
+  .gallery-header {
+    padding: 20px 25px;
+  }
+  .header-title {
+    font-size: 20px;
+  }
+  .lights-image {
+    max-width: 500px;
+  }
+  .framed-artwork {
+    max-width: 340px;
+  }
+  .plaque-image {
+    max-width: 100px; /* Halved size for this breakpoint */
+  }
+  .bench-container {
+    height: 100px; /* Consistent height */
+  }
+   .bench-image {
+    width: 250%; /* Slightly less zoom for larger mobile */
+    max-width: none; /* Allow percentage width */
+    height: 100px; /* Consistent height */
+    object-position: center center; /* Ensure consistency */
+    /* transform: scale(1.75); */ /* Removed scale */
+    /* transform-origin: center bottom; is inherited */
+  }
+}
+
+/* Desktop Styles */
+@media (min-width: 1024px) {
+  .lights-image {
+    left: 0;
+    transform: none; 
+    width: 100%;
+    max-width: none; 
+    height: auto; /* Let image aspect ratio determine height */
+    /* object-fit removed to allow natural scaling for full breadth */
+  }
+
+  .bench-container {
+    height: 150px; /* Consistent height */
+  }
+  .bench-image {
+    width: 100%; 
+    height: 150px; /* Consistent height */
+    max-width: none; 
+    object-fit: cover; 
+    object-position: center center; /* Changed from center bottom */
+    /* transform: none; */ /* Scale already removed, ensure no transform */
+    transform: none; /* Explicitly remove any transform */
+    /* object-position: center bottom; is inherited */
+  }
+
+  .gallery-main {
+    padding-top: 120px; /* Keep consistent with mobile or adjust if header changes for desktop */
+    padding-bottom: 150px; /* Adjust for desktop bench height */
+  }
+
+  .framed-artwork {
+    max-width: 450px; /* Allow frame to be a bit larger on desktop */
+  }
+
+  .plaque-image {
+    max-width: 150px; /* Allow plaque to be a bit larger on desktop */
+  }
+}
+
+/* === End of Mobile Gallery Specific Styles === */
+
+/* Styles for .menu-icon-button and .menu-actual-icon remain */
+
+/* It's good practice to ensure the button itself is styled if defaults aren't enough */
+.menu-icon-button {
+  background-color: transparent !important; /* Force transparent background */
+  border: none !important; /* Remove any border */
+  color: white !important; /* Ensure the icon inherits white color */
+  padding: 0.5rem; 
+}
+
+/* Ensure the menu icon itself is visible */
+.menu-actual-icon {
+  color: white !important; 
+  stroke-width: 2; 
+}
+
+.header-logo-image {
+  /* Adjust size as needed, width/height are set on Image component */
+  /* filter: brightness(0) invert(1); /* Uncomment if your logow.png is black and needs to be white */
+}
+
+/* Styles for the new events page layout to fit without scroll */
+.events-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  width: 100%;
+  justify-content: space-around; /* Distribute space between the two event items */
+  flex-grow: 1; /* Allow it to take available space in gallery-main */
+  padding-top: 0; /* Remove previous padding, rely on justify-content */
+  padding-bottom: 0; /* Remove previous padding */
+  overflow: hidden; /* Prevent its own scrollbars if content is still too large */
+}
+
+.event-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 0; /* Remove margin, rely on parent's justify-content */
+  width: 90%; /* Slight reduction to prevent edge cases */
+  /* Max height for an event item can be roughly 45-50% of available space in events-list */
+}
+
+.event-item .framed-artwork {
+  /* max-width is currently 300px on mobile. This might need to be smaller. */
+  /* Let's try reducing it. This will be device-dependent. */
+  max-width: 240px; /* Reduce max-width of frame */
+  margin-top: 10px; /* Reduce top margin */
+}
+
+/* .artwork-frame (the Image component itself) will scale within .framed-artwork */
+
+.event-item .plaque-image {
+  /* width: 30%; max-width: 90px; are existing. */
+  /* These might need to be smaller too. */
+  width: 25%;
+  max-width: 75px; /* Reduce plaque size */
+  margin-top: 8px; /* Reduce margin */
+}
+
+.info-icon-overlay {
+  position: absolute;
+  top: 15px;    /* Adjust for best placement inside the frame area */
+  right: 15px;  /* Adjust for best placement inside the frame area */
+  z-index: 10;   /* Ensure it's above the image */
+  /* The icon itself provides the visuals; no background needed for the div */
+}
+
+/* Styles for the event image to be clickable and have hover/load animations */
+.event-image-clickable {
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out; /* For hover effect */
+  position: relative; /* Needed if we add pseudo-elements for more complex animations later */
+  animation: pulse-attention 2s ease-out 0.5s 2; /* name duration timing-function delay iteration-count */
+}
+
+.event-image-clickable:hover {
+  transform: scale(1.05); /* Grow slightly on hover */
+}
+
+@keyframes pulse-attention {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+    transform: scale(1);
+  }
+  70% {
+    box-shadow: 0 0 10px 15px rgba(255, 255, 255, 0);
+    transform: scale(1.02);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+    transform: scale(1);
+  }
+}
+
+/* Styles for the Event Details Dialog */
+.event-dialog-content {
+  /* shadcn DialogContent is already responsive and centered */
+  /* You can set max-width or width if needed, e.g., max-width: 500px; */
+  /* Default max-width is sm (32rem) for DialogContent if not overridden by shadcn theme */
+  color: black; /* Assuming dialog has a light background from shadcn default theme */
+}
+
+.event-dialog-content .dialog-details-scrollable {
+  max-height: 60vh; /* Adjust as needed, allows content to scroll */
+  overflow-y: auto;
+  padding-right: 10px; /* For scrollbar spacing */
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.event-dialog-content h4 {
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.event-dialog-content ul {
+  list-style-type: disc;
+  padding-left: 20px;
+  margin-bottom: 10px;
+}
+
+.event-dialog-content p {
+  margin-bottom: 10px;
+}
+
+/* Ensure dialog title and description are styled if defaults aren't enough */
+/* .event-dialog-content [role="heading"], .event-dialog-content [id^="radix-dialog-description"] { */
+  /* color: black; // Example */
+/* } */
+
+.click-svg-overlay {
+  position: absolute;
+  bottom: 20px; 
+  right: 20px;  
+  width: 50px;   
+  height: 50px;  
+  z-index: 15;   
+  opacity: 0;    /* Start hidden, animation will make it visible */
+  pointer-events: none; 
+}
+
+.animate-tap-first {
+  animation: finger-tap 2.5s ease-in-out 0.5s 1 forwards;
+  /* name duration timing-function delay iteration-count fill-mode */
+}
+
+.animate-tap-second {
+  animation: finger-tap 2.5s ease-in-out 3.0s 1 forwards; /* 0.5s (initial) + 2.5s (first tap duration) */
+}
+
+@keyframes finger-tap {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.1); opacity: 1; }
+}
+
+/* Styles for the new story page (story-new) */
+.gallery-main-story {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Ensure content is vertically centered */
+  position: relative;
+  width: 100%; /* Explicitly set width */
+  height: 100vh; /* Span full viewport height */
+  padding-top: 130px; /* Adjusted for fixed header (50px offset + ~80px height) */
+  padding-bottom: 100px; /* Adjusted for fixed bench (100px height) */
+  box-sizing: border-box; /* Important for height & padding */
+  overflow-y: auto; /* Add scroll if content unexpectedly overflows */
+}
+
+.story-content-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  margin-top: 0; /* Remove fixed margin, rely on parent flex centering */
+  width: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
+  box-sizing: border-box;
+}
+
+.arrow {
+  font-size: 2.5rem; /* Slightly smaller arrows */
+  cursor: pointer;
+  color: black;
+  user-select: none; /* Prevent text selection on click */
+}
+
+.left-arrow {
+  margin-right: 10px; /* Reduced margin */
+}
+
+.right-arrow {
+  margin-left: 10px; /* Reduced margin */
+}
+
+.framed-artwork-story {
+  border: 22px solid #333; /* Adjusted border (50% thicker than original) */
+  border-radius: 5px;
+  padding: 8px; /* Reduced padding */
+  background-color: white;
+  position: relative;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.25); /* Slightly reduced shadow */
+  display: flex; /* Added to help with image centering if needed */
+  justify-content: center; /* Added to help with image centering */
+  align-items: center; /* Added to help with image centering */
+}
+
+/* Specific class for the image if needed, but Next/Image component might handle responsiveness well */
+.artwork-image-story {
+  display: block; /* Ensure image is block to prevent extra space */
+  max-width: 100%; /* Ensure image is responsive within its container */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.info-icon-on-image {
+  position: absolute;
+  bottom: 10px; /* Adjusted position */
+  right: 10px; /* Adjusted position */
+  cursor: pointer;
+  background-color: rgba(0,0,0,0.5);
+  border-radius: 50%;
+  padding: 5px;
+  display: flex; /* For centering icon if needed */
+  align-items: center;
+  justify-content: center;
+}
+
+.plaque-story {
+  margin-top: 15px; /* Reduced margin */
+  padding: 8px 15px; /* Reduced padding */
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Slightly reduced shadow */
+  text-align: center;
+  z-index: 1;
+  color: #333; /* Ensure text is visible on white background */
+}
+
+.plaque-story h3 {
+  margin: 0;
+  font-size: 0.9rem; /* Reduced font size */
+  font-weight: bold;
+}
+
+.plaque-story p {
+  margin: 4px 0 0; /* Adjusted margin */
+  font-size: 0.7rem; /* Reduced font size */
+}
+
+/* Ensure bench is at the bottom */
+.gallery-main-story .bench-container {
+  margin-top: auto; /* Pushes bench to the bottom if gallery-main-story has enough height */
+  z-index: 1;
+  width: 100%; /* Make bench container take full width */
+  display: flex;
+  justify-content: center;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+  .gallery-main-story {
+    /* padding-top and padding-bottom are inherited from the main rule and should be correct. */
+    /* justify-content: center is inherited. */
+    /* No specific changes needed here now for positioning if base is correct. */
+  }
+
+  .story-content-container {
+    margin-top: 0; /* Ensure no top margin here either */
+    /* Other mobile-specific sizing for arrows, frame, etc., remains */
+  }
+
+  .arrow {
+    font-size: 2rem; /* Smaller arrows on mobile */
+  }
+  .left-arrow {
+    margin-right: 5px;
+  }
+  .right-arrow {
+    margin-left: 5px;
+  }
+
+  .framed-artwork-story {
+    border-width: 15px; /* Adjusted smaller border (50% thicker than original) */
+    padding: 5px; /* Smaller padding */
+    max-width: calc(100% - 60px); /* Ensure it fits, considering arrows */
+  }
+
+  /* The Image component's width/height props might dominate,
+     but we can set max-width/max-height on its child if needed,
+     or ensure its container (.framed-artwork-story) constrains it.
+     Forcing a smaller image via its direct props in TSX might be better.
+     For now, relying on container size.
+  */
+   .artwork-image-story { /* This class should be applied to the Next/Image component for this to work */
+    /* Example: Force smaller image if needed, but usually responsive design is better */
+    /* width: 200px !important; */
+    /* height: 300px !important; */
+  }
+
+
+  .info-icon-on-image {
+    bottom: 8px;
+    right: 8px;
+    padding: 4px;
+  }
+  .info-icon-on-image > svg { /* Target the SVG icon directly */
+    width: 20px;
+    height: 20px;
+  }
+
+  .plaque-story {
+    margin-top: 10px; /* Bring plaque closer to image */
+    padding: 6px 10px; /* Smaller padding */
+    max-width: calc(100% - 40px); /* Ensure plaque fits */
+    box-sizing: border-box;
+  }
+
+  .plaque-story h3 {
+    font-size: 0.8rem; /* Smaller title */
+  }
+
+  .plaque-story p {
+    font-size: 0.65rem; /* Smaller subtitle */
+  }
+  
+  .gallery-main-story .bench-container {
+    margin-top: 2vh; /* Adjust space above bench on mobile */
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery-main-story {
+    /* padding-top and padding-bottom are inherited. */
+    /* justify-content: center is inherited. */
+  }
+  .story-content-container {
+     margin-top: 0; /* Ensure no top margin here either */
+  }
+   .framed-artwork-story {
+    border-width: 12px; /* Adjusted smallest border (50% thicker than original) */
+    padding: 4px;
+    max-width: calc(100% - 50px); /* Adjust for smaller arrows */
+  }
+  .arrow {
+    font-size: 1.8rem;
+  }
+  .plaque-story {
+    margin-top: 8px;
+    padding: 5px 8px;
+  }
+   .plaque-story h3 {
+    font-size: 0.75rem;
+  }
+
+  .plaque-story p {
+    font-size: 0.6rem;
+  }
+}
+
+/* Styles for Image Text Overlay */
+.image-text-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Default: center for short text */
+  padding: 20px;
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+  z-index: 20;
+  cursor: pointer;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+/* If content is scrollable, align text to top */
+.image-text-overlay.has-scrollable-content {
+  justify-content: flex-start;
+}
+
+.image-text-overlay.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.image-text-overlay p {
+  margin: 0; /* Reset paragraph margin if needed */
+  font-size: 0.9rem; /* Adjust as needed */
+  line-height: 1.4;
+}
+
+/* Responsive text size for overlay if needed */
+@media (max-width: 768px) {
+  .image-text-overlay p {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .image-text-overlay p {
+    font-size: 0.75rem;
+  }
+  .image-text-overlay {
+    padding: 15px;
+  }
+}
+
+/* Styles for Clickable Image Hint */
+@keyframes click-hint-animation {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); filter: drop-shadow(0 0 0 transparent); }
+  20% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.5)); } /* Fade in, grow, add shadow */
+  40% { opacity: 1; transform: translate(-50%, -50%) scale(1);   filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.5)); }   /* Settle with shadow */
+  60% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.5)); } /* Pulse again with shadow */
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); filter: drop-shadow(0 0 0 transparent); } /* Fade out, remove shadow */
+}
+
+.clickable-image-hint {
+  position: absolute;
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Adjust for centering based on own size */
+  width: 50px; /* Matches JSX, can be adjusted */
+  height: 50px; /* Matches JSX, can be adjusted */
+  z-index: 15; /* Above image, below text overlay */
+  pointer-events: none; /* So it doesn't interfere with clicks on the image */
+  opacity: 0; /* Start invisible, animation handles fade in/out */
+  /* Apply the animation: name duration timing-function delay iteration-count fill-mode */
+  animation: click-hint-animation 2.5s ease-in-out 0.2s 1 forwards;
+}
+
+/* Added for RSVP card animation */
+@layer utilities {
+  @keyframes subtleFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .animate-subtle-fade-in {
+    animation: subtleFadeIn 0.5s ease-in-out forwards;
+  }
 }

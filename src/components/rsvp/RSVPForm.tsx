@@ -5,7 +5,11 @@ import { searchGuests, submitRSVP } from '@/lib/firebase/rsvp';
 import type { GuestParty, RSVPResponse } from '@/lib/firebase/rsvp';
 type ResponseFieldValue = string | boolean;
 
-export function RSVPForm() {
+interface RSVPFormProps {
+  onPartySelectStateChange: (isPartySelected: boolean) => void;
+}
+
+export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
   const [searchName, setSearchName] = useState('');
   const [searchResults, setSearchResults] = useState<GuestParty[]>([]);
   const [selectedParty, setSelectedParty] = useState<GuestParty | null>(null);
@@ -13,6 +17,7 @@ export function RSVPForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [searchError, setSearchError] = useState('');
+  const [currentGuestCardIndex, setCurrentGuestCardIndex] = useState(0);
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,6 +41,7 @@ export function RSVPForm() {
 
   const handlePartySelect = (party: GuestParty) => {
     setSelectedParty(party);
+    onPartySelectStateChange(true);
     const initialResponses = party.partyMembers.reduce((acc, guest) => ({
       ...acc,
       [guest.id]: {
@@ -49,6 +55,7 @@ export function RSVPForm() {
       }
     }), {});
     setResponses(initialResponses);
+    setCurrentGuestCardIndex(0); // Reset to first guest when a new party is selected
   };
 
   const handleResponseChange = (guestId: string, field: keyof RSVPResponse, value: ResponseFieldValue) => {
@@ -86,6 +93,17 @@ export function RSVPForm() {
     handleSubmit(formEvent);
   };
 
+  // Determine instructional text based on form state
+  let instructionalText = "";
+  if (!selectedParty) {
+    if (searchResults.length > 0) {
+      instructionalText = "Please select your party";
+    } else {
+      instructionalText = "Please enter your name to find your invitation and RSVP for your party.";
+    }
+  }
+  // No specific text needed if a party is selected, as that section has its own heading
+
   if (isSubmitted) {
     return (
       <div className="text-center card-hover p-8 rounded-lg shadow-lg">
@@ -102,36 +120,57 @@ export function RSVPForm() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 rsvp-form-container">
+      {instructionalText && (
+        <p className="text-center text-white/90 mb-6 max-w-lg mx-auto text-lg font-medium">
+          {instructionalText}
+        </p>
+      )}
+
       {!selectedParty ? (
-        <form onSubmit={handleSearch} className="space-y-4">
+        <form onSubmit={handleSearch} className="space-y-6 max-w-md mx-auto">
           <div>
             <input
               type="text"
               value={searchName}
               onChange={(e) => setSearchName(e.target.value)}
               placeholder="Enter your name"
-              className="w-full px-4 py-2 rounded-lg bg-[var(--navy-secondary)] text-white border border-[var(--rust-light)] focus:outline-none focus:ring-2 focus:ring-[var(--rust-primary)]"
-              min={2}
+              className="w-full px-4 py-3 rounded-lg bg-navy-700 text-white placeholder-white border border-navy-500 focus:outline-none focus:ring-2 focus:ring-rust-500 focus:border-rust-500 shadow-md"
+              minLength={2}
             />
             {searchError && (
-              <p className="mt-2 text-red-500">{searchError}</p>
+              <p className="mt-2 text-sm text-red-400">{searchError}</p>
             )}
           </div>
           <button
             type="submit"
-            className="w-full bg-[var(--rust-primary)] hover:bg-[var(--rust-secondary)] text-white font-bold py-2 px-4 rounded transition-colors"
+            className="w-full bg-rust-500 hover:bg-rust-600 text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-150 shadow-lg"
           >
             Search
           </button>
         </form>
       ) : (
         <div className="space-y-6">
-          <div className="card-hover p-6 rounded-lg">
-            <h3 className="text-xl font-bold text-white mb-4">RSVP for Your Party</h3>
-            {selectedParty.partyMembers.map((guest) => (
-              <div key={guest.id} className="mb-8 p-4 border border-[var(--rust-light)] rounded-lg">
-                <h4 className="text-lg font-semibold text-white mb-4">
+          {/* Scrollable container for all guest cards */}
+          <div className="bg-gray-800/80 p-4 md:p-6 rounded-xl shadow-xl max-h-[70vh] overflow-y-auto styled-scrollbar space-y-6">
+            <h3 className="text-2xl font-bold text-white mb-2 text-center">
+              RSVP for Your Party
+            </h3>
+            {/* Guest Counter for Mobile View */}
+            {selectedParty.partyMembers.length > 1 && (
+              <p className="text-center text-white/80 text-sm mb-4 md:hidden">
+                Guest {currentGuestCardIndex + 1} of {selectedParty.partyMembers.length}
+              </p>
+            )}
+
+            {/* Display only the current guest's card */}
+            {selectedParty.partyMembers.map((guest, index) => (
+              <div 
+                key={guest.id} 
+                // Show only current card on mobile, add animation, show all on larger screens (md breakpoint)
+                className={`${index === currentGuestCardIndex ? 'block animate-subtle-fade-in' : 'hidden md:block'} bg-gray-700/90 p-5 rounded-lg shadow-lg mb-6 last:mb-0`}
+              >
+                <h4 className="text-xl font-semibold text-white mb-4 border-b border-gray-600 pb-2">
                   {guest.firstName} {guest.lastName}
                 </h4>
                 <div className="space-y-4">
@@ -328,11 +367,34 @@ export function RSVPForm() {
             ))}
           </div>
 
-          <div className="flex justify-between">
+          {/* Mobile Navigation for Guest Cards - only if multiple guests */}
+          {selectedParty.partyMembers.length > 1 && (
+            <div className="flex justify-between items-center mt-4 md:hidden"> 
+              <button
+                onClick={() => setCurrentGuestCardIndex(prev => Math.max(0, prev - 1))}
+                disabled={currentGuestCardIndex === 0}
+                className="bg-navy-600 hover:bg-navy-500 text-white font-semibold py-2 px-4 rounded-lg disabled:opacity-50 transition-colors"
+              >
+                Previous Guest
+              </button>
+              <button
+                onClick={() => setCurrentGuestCardIndex(prev => Math.min(selectedParty.partyMembers.length - 1, prev + 1))}
+                disabled={currentGuestCardIndex === selectedParty.partyMembers.length - 1}
+                className="bg-navy-600 hover:bg-navy-500 text-white font-semibold py-2 px-4 rounded-lg disabled:opacity-50 transition-colors"
+              >
+                Next Guest
+              </button>
+            </div>
+          )}
+
+          {/* Buttons outside the scrollable area */}
+          <div className="flex flex-col sm:flex-row justify-between gap-4 pt-4">
             <button
               onClick={() => {
                 setSelectedParty(null);
+                onPartySelectStateChange(false);
                 setSearchResults([]);
+                setCurrentGuestCardIndex(0);
               }}
               className="bg-[var(--navy-secondary)] hover:bg-[var(--navy-light)] text-white font-bold py-2 px-4 rounded transition-colors"
             >
@@ -349,28 +411,24 @@ export function RSVPForm() {
         </div>
       )}
 
+      {/* Display search results - styled like mockup cards, now in a scrollable container */}
       {searchResults.length > 0 && !selectedParty && (
-        <div className="mt-8">
-          <h3 className="text-xl font-bold text-white mb-4">Search Results</h3>
-          <div className="space-y-4">
-            {searchResults.map((party) => (
-              <button
-                key={party.id}
-                onClick={() => handlePartySelect(party)}
-                className="w-full text-left p-4 card-hover hover:bg-[var(--navy-light)] rounded-lg transition-colors"
-              >
-                <div className="text-white">
-                  <strong>Party Members:</strong>
-                  <div className="ml-4">
-                    {party.partyMembers.map((member) => (
-                      <div key={member.id}>
-                        {member.firstName} {member.lastName}
-                      </div>
-                    ))}
-                  </div>
+        <div className="max-w-md mx-auto"> {/* Container for centering the scroll box */}
+          <div className="max-h-72 overflow-y-auto border border-gray-600 rounded-lg p-2 bg-gray-800/50 styled-scrollbar"> {/* Scrollable container */}
+            <div className="space-y-3 pr-1"> {/* Inner spacing for items and scrollbar gap */}
+              {searchResults.map((party) => (
+                <div 
+                  key={party.id} 
+                  onClick={() => handlePartySelect(party)}
+                  className="bg-gray-700 p-4 rounded-lg shadow-md cursor-pointer hover:bg-gray-600 transition-colors duration-150 text-white"
+                >
+                  <p className="font-semibold mb-1">Party Members:</p>
+                  {party.partyMembers.map(member => (
+                    <p key={member.id} className="ml-2">{member.firstName} {member.lastName}</p>
+                  ))}
                 </div>
-              </button>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       )}

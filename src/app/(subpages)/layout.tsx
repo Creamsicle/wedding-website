@@ -1,4 +1,3 @@
-import SubpageNavigation from "@/components/SubpageNavigation";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -9,11 +8,11 @@ export default function SubpagesLayout({
 }) {
   return (
     <div className="min-h-screen flex flex-col">
-      <SubpageNavigation />
+      {/* <SubpageNavigation /> */}
       <div className="flex-1">
         {children}
       </div>
-      <section className="relative py-12">
+{/*      <section className="relative py-12">
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/lilies.jpg"
@@ -42,7 +41,7 @@ export default function SubpagesLayout({
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 } 

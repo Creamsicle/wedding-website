@@ -10,9 +10,10 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const navigation = [
+  { name: "EXHIBITION", href: "/exhibition" },
   { name: "EVENTS", href: "/events" },
   { name: "STORY", href: "/story" },
   { name: "FAQ", href: "/faq" },
@@ -21,10 +22,32 @@ const navigation = [
 
 export default function NavigationMenu() {
   const [open, setOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const controlNavbar = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Show nav when scrolling up or at top
+      if (currentScrollY < lastScrollY || currentScrollY < 50) {
+        setIsVisible(true);
+      } 
+      // Hide nav when scrolling down and not at top
+      else if (currentScrollY > 50 && currentScrollY > lastScrollY) {
+        setIsVisible(false);
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', controlNavbar);
+    return () => window.removeEventListener('scroll', controlNavbar);
+  }, [lastScrollY]);
 
   return (
-    <div className="absolute top-0 left-0 right-0 z-50 pt-[50px]">
-      <nav className="container mx-auto px-8 h-24 flex items-center justify-center">
+    <div className={`fixed top-0 left-0 right-0 z-50 transition-transform duration-300 ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
+      <nav className="container mx-auto px-8 h-24 flex items-center justify-center relative">
         <div className="hidden md:flex items-center space-x-12">
           {navigation.map((item) => (
             <Link
@@ -66,4 +89,4 @@ export default function NavigationMenu() {
       </nav>
     </div>
   );
-} 
+}
