@@ -27,8 +27,15 @@ export default function RSVPPage() {
   //   return () => window.removeEventListener('mousemove', handleMouseMove);
   // }, []);
 
+  const containerClasses = [
+    'mobile-gallery-container',
+    isPartySelected ? 'rsvp-active' : '',
+    isPartySelected ? 'lights-hidden' : '',
+    isPartySelected ? 'bench-hidden' : ''
+  ].join(' ').trim();
+
   return (
-    <div className="mobile-gallery-container">
+    <div className={containerClasses}>
       {!isPartySelected && (
         <header className="gallery-header relative z-10">
           <div className="logo">
@@ -67,6 +74,11 @@ export default function RSVPPage() {
         </header>
       )}
 
+      {/* Conditionally render Lights ONLY if party is NOT selected */} 
+      {!isPartySelected && (
+        <Image src="/images/Lights.png" alt="Gallery lights" width={1000} height={100} className="lights-image relative z-0" />
+      )}
+
       <main className="gallery-main rsvp-custom-main relative z-20">
         {/* Gradient layers - REMOVED */}
         {/* <div className="gallery-gradient-1" /> */}
@@ -87,8 +99,6 @@ export default function RSVPPage() {
           }}
         /> */}
 
-        <Image src="/images/Lights.png" alt="Gallery lights" width={1000} height={100} className="lights-image relative z-0" />
-
         <div className="gallery-section pt-12 relative z-2">
           {/* Static paragraph removed, handled by RSVPForm */}
           
@@ -99,6 +109,8 @@ export default function RSVPPage() {
           </div>
         </div>
 
+        {/* Conditionally render Bench ONLY if party is NOT selected */} 
+        {/* The .bench-hidden class on parent will also hide it, but this is more explicit */} 
         {!isPartySelected && (
           <div className="bench-container rsvp-bench-container relative z-1">
             <Image src="/images/bench.png" alt="Gallery bench" width={800} height={200} className="bench-image" />

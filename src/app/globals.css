@@ -321,7 +321,6 @@ body {
   top: 0;
   left: 0;
   background: none !important; /* Attempt to override Tailwind's body background */
-  /* touch-action: none; /* Already on html, body global rule */
 }
 
 .mobile-gallery-container {
@@ -340,18 +339,18 @@ body {
 }
 
 .gallery-header {
+  position: relative; /* Not fixed, flows after lights */
+  margin-top: 60px; /* Space for the fixed lights bar */
+  width: 100%;
+  padding: 0.5rem 1rem; /* Original padding */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 20px;
   color: white;
-  position: fixed; 
-  top: 50px; /* Raised nav bar */
-  left: 0;
-  width: 100%; 
-  box-sizing: border-box; 
-  z-index: 1000;
-  background-color: transparent; 
+  z-index: 10; /* Above normal flow, but below fixed lights if they were to overlap (they shouldn't) */
+  box-sizing: border-box;
+  flex-shrink: 0;
+  background-color: transparent; /* Explicitly transparent if needed */
 }
 
 .logo span {
@@ -377,80 +376,81 @@ body {
   align-items: center;
   overflow: hidden !important; /* Reinforce no scrolling, add !important */
   position: relative; 
-  padding: 1rem; 
+  padding: 1rem; /* Default padding */
+  /* padding-top is implicitly handled by header's bottom margin, or add explicit if header height varies */
   width: 100%; 
-  margin-bottom: 80px; 
-  /* touch-action: pan-y; /* If specific y-scroll IS needed within gallery-main, but we want to stop page scroll */
-  /* For now, let's assume no scroll at all is desired here based on overall goal */
-  touch-action: none; /* Disable touch actions here too if children are causing issues */
+  margin-bottom: 80px; /* Space for fixed bench (adjust if bench height changes) */
+  touch-action: none; /* Disable touch actions here too */
+  box-sizing: border-box;
 }
 
-.artwork-display {
+.artwork-display { /* For homepage content */
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center; /* Vertically center frame & plaque */
   position: relative; 
   width: 100%;
-  margin-top: 20px; /* Add some margin to push content down from lights */
+  flex-grow: 1; /* Allow this to fill gallery-main's flex space */
 }
 
 .lights-image {
   position: fixed; 
   top: 0; 
-  left: 50%;
-  transform: translateX(-50%) scale(2.5); 
-  transform-origin: top center; 
-  width: 100%; 
-  max-width: 450px; 
-  height: auto; 
-  z-index: 1; 
+  left: 0; /* Align to the left edge */
+  width: 100vw; /* Fill entire viewport width */
+  height: 60px; /* Explicit height for the lights bar */
+  object-fit: cover; /* Cover the area, cropping as needed */
+  z-index: 20; /* High z-index to be on top */
 }
 
 .framed-artwork {
   position: relative; 
-  width: 80%; 
-  max-width: 300px; 
-  margin-top: 30px; /* Adjusted for spacing below lights */
+  max-width: 75%; 
+  max-height: 55vh; 
   z-index: 5; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  margin-bottom: 2vh; 
 }
 
 .artwork-frame { 
-  width: 100%;
+  max-width: 100%; 
+  max-height: 100%; 
   height: auto; 
-  display: block;
+  object-fit: contain;
 }
 
 .plaque-image { 
-  margin-top: 15px; 
-  width: 30%; /* Halved size */
-  max-width: 90px; /* Halved size */
+  max-width: 60%; 
+  max-height: 8vh; 
   height: auto; 
   display: block; 
   margin-left: auto; 
   margin-right: auto; 
   z-index: 5;
+  object-fit: contain; 
 }
 
 .bench-container {
   position: fixed; 
   bottom: 0;
   left: 0;
-  width: 100%;
-  z-index: 200; 
+  width: 100vw; /* Full viewport width */
+  height: 80px; /* Fixed height for the bench area */
+  z-index: 20; 
   display: flex;
   justify-content: center;
-  align-items: flex-end; 
-  padding-bottom: 0; 
-  overflow: hidden; 
-  height: 100px; /* Consistent height across all breakpoints */
+  align-items: center; /* Center image within the container if it's not 100% height */
+  overflow: hidden; /* Ensure image doesn't spill if object-fit causes issues */
 }
 
 .bench-image {
-  width: 80%;
-  height: 100px; /* Mobile height for the bench image */
-  object-fit: cover;
-  object-position: center center; /* Ensure the bench is centered */
-  margin-top: 20px;
+  width: 100%; /* Fill the container width */
+  height: 100%; /* Fill the container height */
+  object-fit: cover; /* Cover the area, crop if necessary */
+  object-position: center; /* Center the image content */
 }
 
 @media (min-width: 400px) {
@@ -974,4 +974,89 @@ body {
   .animate-subtle-fade-in {
     animation: subtleFadeIn 0.5s ease-in-out forwards;
   }
+}
+
+/* Add a general class for when bench/lights might be hidden */
+.lights-hidden .lights-image {
+  display: none !important;
+}
+.lights-hidden .gallery-header {
+  margin-top: 0 !important; /* Header moves to top if lights are gone */
+}
+/* If header itself can be hidden, another class like .header-hidden would be needed */
+
+.bench-hidden .bench-container {
+  display: none !important;
+}
+.bench-hidden .gallery-main {
+  margin-bottom: 0 !important; /* No bottom margin if bench is gone */
+}
+.bench-hidden .gallery-main-story { /* Also for story page */
+  margin-bottom: 0 !important;
+}
+
+/* --- FAQ Page Overrides --- */
+.faq-page body,
+.faq-page html {
+  /* These selectors won't work directly as .faq-page is a child of body/html */
+  /* We rely on overriding the direct children of .faq-page or applying a body class */
+}
+
+/* If we could add a class to body on FAQ route (e.g., via a layout file or useEffect): */
+body.on-faq-page,
+html.on-faq-page {
+  position: static !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  touch-action: auto !important;
+  height: auto !important;
+  width: auto !important;
+}
+
+/* Targeting .faq-page and its specific structure */
+.faq-page {
+  height: auto !important; /* Allow page to grow with content */
+  overflow-y: auto !important; /* Enable vertical scroll on the main container */
+  overflow-x: hidden !important;
+  touch-action: auto !important; /* Allow default touch actions for scrolling */
+  position: static !important; /* Override body:fixed for this container context if possible, though body styles are stronger */
+}
+
+/* Ensure body itself allows scrolling when FAQ page is active (if not using body.on-faq-page) */
+/* This is hard to achieve with CSS only without a body class. */
+/* The .faq-page styles above are the primary attempt. */
+
+.faq-page .gallery-header {
+  position: relative !important; /* Ensure header scrolls with FAQ content */
+  margin-top: 0 !important; /* Reset margin assuming lights are hidden */
+  top: auto !important;
+  /* background-color: rgba(10, 26, 59, 0.85); /* Optional: Add a slight background for FAQ header */
+}
+
+.faq-page .lights-image,
+.faq-page .bench-container {
+  display: none !important; /* Hide fixed lights and bench on FAQ */
+}
+
+.faq-page .gallery-main {
+  padding-top: 1rem; /* Adjust as needed for spacing below header */
+  margin-top: 0 !important; /* Reset any top margin meant for fixed lights */
+  margin-bottom: 0 !important; /* No fixed bench to make space for */
+  height: auto !important; /* Let content determine height */
+  overflow-y: auto !important; /* Ensure this specific main area scrolls if content exceeds viewport */
+  overflow-x: hidden !important;
+  touch-action: auto !important;
+}
+
+/* Remove or adjust the fixed height spacer if it exists and is not needed with new header flow */
+.faq-page > div[style*="height: 170px"] { /* Targeting the spacer div */
+  display: none; /* Or height: auto or height for actual header if needed */
+}
+
+
+/* RSVP Page Specific Adjustments */
+/* Using the .lights-hidden and .bench-hidden utility classes now */
+.mobile-gallery-container.rsvp-active {
+  /* This class is added in rsvp/page.tsx */
+  /* The .lights-hidden and .bench-hidden logic is handled by those classes being added to this element or its children */
 }

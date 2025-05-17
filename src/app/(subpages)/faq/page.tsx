@@ -22,7 +22,7 @@ export default function NewFaqPage() {
   // const [isMenuOpen, setIsMenuOpen] = useState(false); // No longer needed
 
   return (
-    <div className="mobile-gallery-container" style={{ backgroundImage: 'url(/images/faq-bg.png)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
+    <div className="mobile-gallery-container faq-page" style={{ backgroundImage: 'url(/images/faq-bg.png)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
       <header className="gallery-header">
         <div className="logo">
           <Link href="/"> {/* Added Link wrapper */}
