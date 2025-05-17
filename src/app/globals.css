@@ -616,15 +616,17 @@ body {
 /* Styles for the Event Details Dialog */
 .event-dialog-content {
   /* shadcn DialogContent is already responsive and centered */
-  /* You can set max-width or width if needed, e.g., max-width: 500px; */
   /* Default max-width is sm (32rem) for DialogContent if not overridden by shadcn theme */
-  color: black; /* Assuming dialog has a light background from shadcn default theme */
+  color: black; 
 }
 
 .event-dialog-content .dialog-details-scrollable {
-  max-height: 60vh; /* Adjust as needed, allows content to scroll */
+  max-height: 65vh; /* Increased from 60vh */
   overflow-y: auto;
-  padding-right: 10px; /* For scrollbar spacing */
+  padding-top: 1rem; /* Added padding */
+  padding-bottom: 1rem; /* Added padding */
+  padding-left: 10px; /* Existing right padding was 10px, make it symmetrical */
+  padding-right: 10px; 
   margin-top: 15px;
   margin-bottom: 15px;
 }
