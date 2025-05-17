@@ -310,8 +310,10 @@ body, html {
   padding: 0;
   width: 100vw; /* Ensure full viewport width */
   height: 100vh; /* Ensure full viewport height */
-  overflow: hidden; /* Prevent all scrolling on html and body */
+  overflow: hidden !important; /* Prevent all scrolling on html and body, add !important */
   font-family: sans-serif; 
+  -webkit-overflow-scrolling: auto; /* Attempt to disable iOS momentum scroll before hiding */
+  touch-action: none; /* Disable panning/zooming touch actions */
 }
 
 body {
@@ -319,6 +321,7 @@ body {
   top: 0;
   left: 0;
   background: none !important; /* Attempt to override Tailwind's body background */
+  /* touch-action: none; /* Already on html, body global rule */
 }
 
 .mobile-gallery-container {
@@ -326,27 +329,29 @@ body {
   flex-direction: column;
   height: 100vh; 
   width: 100vw; 
-  overflow: hidden; /* Reinforce no scrolling */
-  position: relative; /* Keep for potential absolutely positioned children within gallery-main */
+  overflow: hidden !important; /* Reinforce no scrolling, add !important */
+  position: relative; 
   background-image: url('/images/home-bg.png'); 
   background-size: cover;
   background-position: center;
-  /* padding-top: 60px; /* Removed - lights are now fixed */
-  /* padding-bottom: 80px; /* Removed - bench is now fixed */
   box-sizing: border-box; 
+  -webkit-overflow-scrolling: auto; /* Attempt to disable iOS momentum scroll */
+  touch-action: none; /* Disable panning/zooming touch actions for the main container */
 }
 
 .gallery-header {
-  width: 100%;
-  position: relative; 
-  z-index: 10; 
-  padding: 0.5rem 1rem; 
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-shrink: 0; 
-  margin-top: 60px; /* Added: Space for fixed lights bar. Matches .lights-image height. */
-  /* background-color: rgba(10, 26, 59, 0.7); /* Optional: for slight transparency */
+  padding: 15px 20px;
+  color: white;
+  position: fixed; 
+  top: 50px; /* Raised nav bar */
+  left: 0;
+  width: 100%; 
+  box-sizing: border-box; 
+  z-index: 1000;
+  background-color: transparent; 
 }
 
 .logo span {
@@ -370,81 +375,82 @@ body {
   flex-direction: column;
   justify-content: center; 
   align-items: center;
-  overflow: hidden; /* Reinforce no scrolling within main content area */
+  overflow: hidden !important; /* Reinforce no scrolling, add !important */
   position: relative; 
   padding: 1rem; 
   width: 100%; 
-  margin-bottom: 80px; /* Added: Space for fixed bench. Matches .bench-container height. */
+  margin-bottom: 80px; 
+  /* touch-action: pan-y; /* If specific y-scroll IS needed within gallery-main, but we want to stop page scroll */
+  /* For now, let's assume no scroll at all is desired here based on overall goal */
+  touch-action: none; /* Disable touch actions here too if children are causing issues */
 }
 
 .artwork-display {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* Vertically center frame & plaque */
   position: relative; 
   width: 100%;
-  flex-grow: 1; /* Allow this to fill gallery-main */
+  margin-top: 20px; /* Add some margin to push content down from lights */
 }
 
 .lights-image {
-  position: fixed; /* Changed from absolute */
+  position: fixed; 
   top: 0; 
-  left: 0; 
-  width: 100vw; 
-  height: 60px; /* Desired visible height of the lights bar */
-  object-fit: cover; 
-  z-index: 20; /* Ensure lights are on top of other page content, but header will be pushed down */
-  /* background-color: rgba(0,0,255,0.2); /* DEBUG: Make lights background visible */
+  left: 50%;
+  transform: translateX(-50%) scale(2.5); 
+  transform-origin: top center; 
+  width: 100%; 
+  max-width: 450px; 
+  height: auto; 
+  z-index: 1; 
 }
 
 .framed-artwork {
   position: relative; 
-  max-width: 75%; 
-  max-height: 55vh; /* Target height for the frame area */
+  width: 80%; 
+  max-width: 300px; 
+  margin-top: 30px; /* Adjusted for spacing below lights */
   z-index: 5; 
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-  margin-bottom: 2vh; 
 }
 
-.artwork-frame { /* The actual Next/Image for the frame background */
-  max-width: 100%; 
-  max-height: 100%; /* Fill the .framed-artwork container */
-  height: auto; /* Maintain aspect ratio if width constrained first */
-  object-fit: contain;
+.artwork-frame { 
+  width: 100%;
+  height: auto; 
+  display: block;
 }
 
 .plaque-image { 
-  max-width: 60%; 
-  max-height: 8vh; /* Target height for the plaque */
+  margin-top: 15px; 
+  width: 30%; /* Halved size */
+  max-width: 90px; /* Halved size */
   height: auto; 
   display: block; 
   margin-left: auto; 
   margin-right: auto; 
   z-index: 5;
-  object-fit: contain; /* Ensure plaque content scales nicely */
 }
 
 .bench-container {
   position: fixed; 
-  bottom: 0; 
-  left: 0; 
-  width: 100vw; /* Full viewport width bar */
-  height: 80px; /* Fixed height for the bench area - ADJUST AS NEEDED */
-  z-index: 20; 
-  display: flex; /* To center the bench image within this bar */
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 200; 
+  display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end; 
+  padding-bottom: 0; 
+  overflow: hidden; 
+  height: 100px; /* Consistent height across all breakpoints */
 }
 
-.bench-image { 
-  width: 100%; /* Changed from auto, make it fill container width */
-  /* max-width: 90%; */ /* Removed max-width to allow full spread */
-  height: 100%; /* Scale to fill the height of bench-container */
-  object-fit: cover; /* Changed from contain to cover the area */
-  object-position: center; /* Ensure it's centered if aspect ratio differs from container */
+.bench-image {
+  width: 80%;
+  height: 100px; /* Mobile height for the bench image */
+  object-fit: cover;
+  object-position: center center; /* Ensure the bench is centered */
+  margin-top: 20px;
 }
 
 @media (min-width: 400px) {
@@ -544,32 +550,37 @@ body {
   flex-direction: column;
   align-items: center; 
   width: 100%;
-  justify-content: center; /* Changed from space-around to center, items will need margins or define own height */
-  flex-grow: 1; 
-  overflow: hidden; 
+  justify-content: space-around; /* Distribute space between the two event items */
+  flex-grow: 1; /* Allow it to take available space in gallery-main */
+  padding-top: 0; /* Remove previous padding, rely on justify-content */
+  padding-bottom: 0; /* Remove previous padding */
+  overflow: hidden; /* Prevent its own scrollbars if content is still too large */
 }
 
 .event-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 90%; 
-  margin-bottom: 3vh; /* Add some space between event items if justify-content is center */
-}
-
-.event-item:last-child {
-  margin-bottom: 0;
+  margin-bottom: 0; /* Remove margin, rely on parent's justify-content */
+  width: 90%; /* Slight reduction to prevent edge cases */
+  /* Max height for an event item can be roughly 45-50% of available space in events-list */
 }
 
 .event-item .framed-artwork {
-  /* Inherits from global .framed-artwork, we can override max-height here for events */
-  max-width: 80%; /* Allow event frames to be a bit wider within their item */
-  max-height: 28vh; /* Approx height for each event frame to fit two */
+  /* max-width is currently 300px on mobile. This might need to be smaller. */
+  /* Let's try reducing it. This will be device-dependent. */
+  max-width: 240px; /* Reduce max-width of frame */
+  margin-top: 10px; /* Reduce top margin */
 }
 
+/* .artwork-frame (the Image component itself) will scale within .framed-artwork */
+
 .event-item .plaque-image {
-  /* Inherits from global .plaque-image, can override max-height */
-  max-height: 7vh; /* Approx height for each event plaque */
+  /* width: 30%; max-width: 90px; are existing. */
+  /* These might need to be smaller too. */
+  width: 25%;
+  max-width: 75px; /* Reduce plaque size */
+  margin-top: 8px; /* Reduce margin */
 }
 
 .info-icon-overlay {
@@ -674,13 +685,14 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* Center the .story-content-container */
+  justify-content: center; /* Ensure content is vertically centered */
   position: relative;
-  width: 100%; 
-  flex-grow: 1; 
-  overflow: hidden; 
-  margin-bottom: 80px; /* Consistent with .gallery-main for fixed bench */
-  padding: 1rem; /* Add some padding like gallery-main */
+  width: 100%; /* Explicitly set width */
+  height: 100vh; /* Span full viewport height */
+  padding-top: 130px; /* Adjusted for fixed header (50px offset + ~80px height) */
+  padding-bottom: 100px; /* Adjusted for fixed bench (100px height) */
+  box-sizing: border-box; /* Important for height & padding */
+  overflow-y: auto; /* Add scroll if content unexpectedly overflows */
 }
 
 .story-content-container {
@@ -688,9 +700,11 @@ body {
   align-items: center;
   justify-content: center;
   z-index: 1;
+  margin-top: 0; /* Remove fixed margin, rely on parent flex centering */
   width: 100%;
-  /* max-height: 100%; /* Allow it to use space given by gallery-main-story */
-  /* padding-left/right are okay */
+  padding-left: 10px;
+  padding-right: 10px;
+  box-sizing: border-box;
 }
 
 .arrow {
@@ -709,26 +723,22 @@ body {
 }
 
 .framed-artwork-story {
-  border: 22px solid #333; 
+  border: 22px solid #333; /* Adjusted border (50% thicker than original) */
   border-radius: 5px;
-  padding: 8px; 
+  padding: 8px; /* Reduced padding */
   background-color: white;
   position: relative;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.25); 
-  display: flex; 
-  justify-content: center; 
-  align-items: center; 
-  max-width: 70%; /* Max width relative to story-content-container */
-  max-height: 60vh; /* Max height for the story frame, adjust as needed */
-  flex-shrink: 0; /* Prevent shrinking if arrows are wide */
+  box-shadow: 0 8px 16px rgba(0,0,0,0.25); /* Slightly reduced shadow */
+  display: flex; /* Added to help with image centering if needed */
+  justify-content: center; /* Added to help with image centering */
+  align-items: center; /* Added to help with image centering */
 }
 
+/* Specific class for the image if needed, but Next/Image component might handle responsiveness well */
 .artwork-image-story {
-  display: block; 
-  max-width: 100%; /* Fill width of .framed-artwork-story */
-  max-height: 100%; /* Fill height of .framed-artwork-story */
+  display: block; /* Ensure image is block to prevent extra space */
+  max-width: 100%; /* Ensure image is responsive within its container */
   height: auto; /* Maintain aspect ratio */
-  object-fit: contain; /* Ensure whole image is visible within the frame */
 }
 
 .info-icon-on-image {
@@ -764,6 +774,116 @@ body {
 .plaque-story p {
   margin: 4px 0 0; /* Adjusted margin */
   font-size: 0.7rem; /* Reduced font size */
+}
+
+/* Ensure bench is at the bottom */
+.gallery-main-story .bench-container {
+  margin-top: auto; /* Pushes bench to the bottom if gallery-main-story has enough height */
+  z-index: 1;
+  width: 100%; /* Make bench container take full width */
+  display: flex;
+  justify-content: center;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+  .gallery-main-story {
+    /* padding-top and padding-bottom are inherited from the main rule and should be correct. */
+    /* justify-content: center is inherited. */
+    /* No specific changes needed here now for positioning if base is correct. */
+  }
+
+  .story-content-container {
+    margin-top: 0; /* Ensure no top margin here either */
+    /* Other mobile-specific sizing for arrows, frame, etc., remains */
+  }
+
+  .arrow {
+    font-size: 2rem; /* Smaller arrows on mobile */
+  }
+  .left-arrow {
+    margin-right: 5px;
+  }
+  .right-arrow {
+    margin-left: 5px;
+  }
+
+  .framed-artwork-story {
+    border-width: 15px; /* Adjusted smaller border (50% thicker than original) */
+    padding: 5px; /* Smaller padding */
+    max-width: calc(100% - 60px); /* Ensure it fits, considering arrows */
+  }
+
+  /* The Image component's width/height props might dominate,
+     but we can set max-width/max-height on its child if needed,
+     or ensure its container (.framed-artwork-story) constrains it.
+     Forcing a smaller image via its direct props in TSX might be better.
+     For now, relying on container size.
+  */
+   .artwork-image-story { /* This class should be applied to the Next/Image component for this to work */
+    /* Example: Force smaller image if needed, but usually responsive design is better */
+    /* width: 200px !important; */
+    /* height: 300px !important; */
+  }
+
+
+  .info-icon-on-image {
+    bottom: 8px;
+    right: 8px;
+    padding: 4px;
+  }
+  .info-icon-on-image > svg { /* Target the SVG icon directly */
+    width: 20px;
+    height: 20px;
+  }
+
+  .plaque-story {
+    margin-top: 10px; /* Bring plaque closer to image */
+    padding: 6px 10px; /* Smaller padding */
+    max-width: calc(100% - 40px); /* Ensure plaque fits */
+    box-sizing: border-box;
+  }
+
+  .plaque-story h3 {
+    font-size: 0.8rem; /* Smaller title */
+  }
+
+  .plaque-story p {
+    font-size: 0.65rem; /* Smaller subtitle */
+  }
+  
+  .gallery-main-story .bench-container {
+    margin-top: 2vh; /* Adjust space above bench on mobile */
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery-main-story {
+    /* padding-top and padding-bottom are inherited. */
+    /* justify-content: center is inherited. */
+  }
+  .story-content-container {
+     margin-top: 0; /* Ensure no top margin here either */
+  }
+   .framed-artwork-story {
+    border-width: 12px; /* Adjusted smallest border (50% thicker than original) */
+    padding: 4px;
+    max-width: calc(100% - 50px); /* Adjust for smaller arrows */
+  }
+  .arrow {
+    font-size: 1.8rem;
+  }
+  .plaque-story {
+    margin-top: 8px;
+    padding: 5px 8px;
+  }
+   .plaque-story h3 {
+    font-size: 0.75rem;
+  }
+
+  .plaque-story p {
+    font-size: 0.6rem;
+  }
 }
 
 /* Styles for Image Text Overlay */
