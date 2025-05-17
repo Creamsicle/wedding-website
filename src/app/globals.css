@@ -308,15 +308,16 @@
 body, html {
   margin: 0;
   padding: 0;
-  width: 100%;
-  height: 100%;
-  overflow-x: hidden; 
+  width: 100vw; /* Ensure full viewport width */
+  height: 100vh; /* Ensure full viewport height */
+  overflow: hidden; /* Prevent all scrolling on html and body */
   font-family: sans-serif; 
 }
 
-/* Overriding Tailwind's body background for this specific page context if needed,
-   or ensure .mobile-gallery-container is the primary full-page wrapper. */
 body {
+  position: fixed; /* Fix body to viewport to help prevent mobile scroll quirks */
+  top: 0;
+  left: 0;
   background: none !important; /* Attempt to override Tailwind's body background */
 }
 
@@ -325,7 +326,7 @@ body {
   flex-direction: column;
   height: 100vh; 
   width: 100vw; 
-  overflow: hidden; 
+  overflow: hidden; /* Reinforce no scrolling */
   position: relative; /* Keep for potential absolutely positioned children within gallery-main */
   background-image: url('/images/home-bg.png'); 
   background-size: cover;
@@ -369,7 +370,7 @@ body {
   flex-direction: column;
   justify-content: center; 
   align-items: center;
-  overflow: hidden; 
+  overflow: hidden; /* Reinforce no scrolling within main content area */
   position: relative; 
   padding: 1rem; 
   width: 100%; 
