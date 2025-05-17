@@ -991,74 +991,61 @@ body {
 }
 
 /* --- FAQ Page Overrides --- */
-/* Attempt to make body scrollable when .faq-page is present. 
-   This might not work reliably in all browsers due to specificity and nature of `position:fixed` on body.
-   A JavaScript solution to add a class to body might be more robust. */
-body:has(.faq-page) {
-  position: static !important;
-  overflow-y: auto !important;
+/* Remove body:has attempt as it's unreliable for this case */
+
+.faq-page.mobile-gallery-container { /* Target the element with both classes */
+  position: static !important; /* Override body's fixed behavior influence */
+  display: block !important; 
+  height: 100vh !important; /* Take full viewport height */
+  overflow-y: auto !important; /* THIS is the primary scroll container */
   overflow-x: hidden !important;
-  touch-action: auto !important;
-  height: auto !important;
-  width: auto !important;
+  touch-action: auto !important; /* Allow normal touch scrolling */
+  background-attachment: scroll !important; /* Ensure background scrolls with FAQ content */
+  /* Reset global scroll prevention that might be on .mobile-gallery-container */
+  -webkit-overflow-scrolling: touch !important; /* Enable momentum scroll for FAQ page */
 }
 
-.faq-page {
-  height: auto !important; /* Allow page to grow with content */
-  overflow-y: auto !important; /* Enable vertical scroll on the main container */
-  overflow-x: hidden !important;
-  touch-action: auto !important; /* Allow default touch actions for scrolling */
-  position: static !important; /* Try to break out of fixed body */
-  display: block !important; /* Ensure it behaves like a normal block */
-}
-
-.faq-page .mobile-gallery-container { /* This class is on the .faq-page element itself */
-  background-image: url('/images/faq-bg.png') !important; /* Ensure FAQ background is applied */
-  background-size: cover !important;
-  background-position: center !important;
-  background-attachment: scroll !important; /* Allow background to scroll with content */
-  height: auto !important;
-  overflow-y: auto !important;
-  touch-action: auto !important;
-}
+/* Reset body styles IF we could target it when FAQ is active.
+   Since we can't easily do that with CSS only, the .faq-page styles are key. */
 
 .faq-page .gallery-header {
-  position: sticky !important; /* Make header sticky within .faq-page */
-  top: 0 !important; /* Stick to the top of the .faq-page scroll container */
+  position: sticky !important; /* Sticky within the .faq-page scroll */
+  top: 0 !important;
   margin-top: 0 !important; 
-  background-color: rgba(10, 26, 59, 0.9) !important; /* Add a background for visibility */
-  z-index: 100; /* Ensure header is above FAQ content */
+  background-color: rgba(10, 26, 59, 0.95) !important; /* Ensure header visible */
+  z-index: 100; 
 }
 
 .faq-page .lights-image,
 .faq-page .bench-container {
-  display: none !important; /* Hide fixed lights and bench on FAQ */
+  display: none !important; 
 }
 
 .faq-page .gallery-main {
-  padding-top: 1rem; /* Adjust as needed for spacing below sticky header */
+  padding-top: 1rem; 
   margin-top: 0 !important; 
-  margin-bottom: 0 !important; 
-  height: auto !important; 
-  overflow: visible !important; /* Let .faq-page handle the main scroll */
+  margin-bottom: 1rem !important; /* Add some bottom padding within the scroll */
+  height: auto !important; /* Content determines height */
+  overflow: visible !important; /* Let .faq-page handle scrolling */
   touch-action: auto !important;
+  width: 100%; /* Ensure it takes full width */
 }
 
-/* The spacer div in faq/page.tsx with inline height:170px */
+/* Hide the explicit 170px spacer div on the FAQ page */
 .faq-page > div[style*="height:"] {
-    display: none !important; /* Hide the explicit spacer div */
+    display: none !important; 
 }
 
 
-/* Events Page - Plaque positioning */
+/* Events Page - Plaque positioning & Sizing */
 .events-list {
   display: flex;
   flex-direction: column;
   align-items: center; 
   width: 100%;
-  justify-content: center; /* Center items, adjust margins on items for spacing */
+  justify-content: center; /* Center items */
   flex-grow: 1; 
-  overflow: hidden; 
+  overflow: hidden; /* Prevent this list itself from scrolling */
 }
 
 .event-item {
@@ -1066,22 +1053,37 @@ body:has(.faq-page) {
   flex-direction: column;
   align-items: center;
   width: 90%; 
-  margin-bottom: 3vh; /* Increased spacing between event items */
-  /* max-height: 40vh; /* Optional: constraint if still needed */
+  margin-bottom: 2vh; /* Space between items */
+  flex-shrink: 0; /* Prevent items from shrinking excessively */
+  max-height: calc( (100vh - 60px - 70px - 80px - 4vh) / 2 - 2vh ); /* Approximate: (VP - lights - header - bench - list_padding) / 2 - item_margin */
+                                                                 /* 70px is est. header, 4vh est. gallery-main padding */
 }
 
 .event-item:last-child {
-  margin-bottom: 1vh; /* Less margin for the last item to pull it up from bench */
+  margin-bottom: 0; /* No margin for the last item if centered */
 }
 
 .event-item .framed-artwork {
-  max-width: 70%; 
-  max-height: 20vh; /* Further reduced max-height */
-  margin-bottom: 1vh; /* Space between frame and plaque */
+  max-width: 65%;  /* Slightly smaller */
+  max-height: 60%; /* Proportion of the .event-item's calculated max-height */
+  margin-bottom: 1vh; 
+  flex-grow: 1; /* Allow frame to take space */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.event-item .artwork-frame { /* The Next/Image for the frame */
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
 }
 
 .event-item .plaque-image {
-  max-height: 4vh; /* Further reduced max-height */
+  max-height: 25%; /* Proportion of the .event-item's calculated max-height */
+  width: auto; /* Let height control width via aspect ratio */
+  object-fit: contain;
+  flex-shrink: 0; /* Plaque should not shrink much */
 }
 
 /* RSVP Form Padding Adjustments */
