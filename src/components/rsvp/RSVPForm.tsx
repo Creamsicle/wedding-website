@@ -168,7 +168,7 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
               <div 
                 key={guest.id} 
                 // Show only current card on mobile, add animation, show all on larger screens (md breakpoint)
-                className={`${index === currentGuestCardIndex ? 'block animate-subtle-fade-in' : 'hidden md:block'} bg-gray-700/90 p-5 rounded-lg shadow-lg mb-6 last:mb-0`}
+                className={`${index === currentGuestCardIndex ? 'block animate-subtle-fade-in' : 'hidden md:block'} rsvp-guest-card bg-gray-700/90 p-5 rounded-lg shadow-lg mb-6 last:mb-0`}
               >
                 <h4 className="text-xl font-semibold text-white mb-4 border-b border-gray-600 pb-2">
                   {guest.firstName} {guest.lastName}
