@@ -108,7 +108,14 @@ export default function EventsNewPage() {
                   <Image src="/click.svg" alt="Click hint" width={50} height={50} />
                 </div>
               </div>
-              <Image src={event.plaque} alt={event.altPlaque} width={300} height={100} className="plaque-image" />
+              <Image 
+                src={event.plaque} 
+                alt={event.altPlaque} 
+                width={300} 
+                height={100} 
+                className="plaque-image cursor-pointer" 
+                onClick={() => openDialog(event)} 
+              />
             </div>
           ))}
         </div>
