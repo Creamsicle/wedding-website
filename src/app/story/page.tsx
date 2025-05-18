@@ -111,6 +111,14 @@ export default function StoryNewPage() {
   const paragraphRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
+    // Preload all story images when the component mounts
+    storyItems.forEach(item => {
+      const img = new window.Image();
+      img.src = item.src;
+    });
+  }, []); // Empty dependency array ensures this runs only once on mount
+
+  useEffect(() => {
     // Trigger animation when current index changes, but not on initial load if not desired
     // For this case, we want it on every image, including the first one.
     setAnimationTriggerKey(prevKey => prevKey + 1);
@@ -192,107 +200,118 @@ export default function StoryNewPage() {
   const currentStory = storyItems[currentIndex];
 
   return (
-    <div className="mobile-gallery-container">
-      <header className="gallery-header">
-        <div className="logo">
+    <>
+      <style jsx>{`
+        .artwork-image-story-animated {
+          animation: fadeInStoryImage 0.5s ease-in-out;
+        }
+        @keyframes fadeInStoryImage {
+          from { opacity: 0; transform: scale(0.98); }
+          to { opacity: 1; transform: scale(1); }
+        }
+      `}</style>
+      <div className="mobile-gallery-container">
+        <header className="gallery-header">
+          <div className="logo">
+            <Link href="/">
+              <Image src="/logow.png" alt="Logo" width={50} height={50} className="header-logo-image" />
+            </Link>
+          </div>
           <Link href="/">
-            <Image src="/logow.png" alt="Logo" width={50} height={50} className="header-logo-image" />
+            <div className="header-title">CHELSEA & NEIL</div>
           </Link>
-        </div>
-        <Link href="/">
-          <div className="header-title">CHELSEA & NEIL</div>
-        </Link>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="icon" className="menu-icon-button">
-              <MenuIcon className="h-6 w-6 menu-actual-icon" />
-              <span className="sr-only">Open menu</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="mobile-dropdown-menu-content">
-            <DropdownMenuItem asChild>
-              <Link href="/">Home</Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link href="/events">Events</Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link href="/story">Our Story</Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link href="/faq">FAQ</Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link href="/rsvp">RSVP</Link>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </header>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="icon" className="menu-icon-button">
+                <MenuIcon className="h-6 w-6 menu-actual-icon" />
+                <span className="sr-only">Open menu</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="mobile-dropdown-menu-content">
+              <DropdownMenuItem asChild>
+                <Link href="/">Home</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href="/events">Events</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href="/story">Our Story</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href="/faq">FAQ</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href="/rsvp">RSVP</Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </header>
 
-      <main className="gallery-main-story">
-        <Image src="/images/Lights.png" alt="Gallery lights" width={1000} height={100} className="lights-image" />
+        <main className="gallery-main-story">
+          <Image src="/images/Lights.png" alt="Gallery lights" width={1000} height={100} className="lights-image" />
 
-        <div 
-          className="story-content-container" 
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove} 
-          onTouchEnd={handleTouchEnd}
-        >
-          <div className="arrow left-arrow" onClick={prevItem} role="button" tabIndex={0} 
-               onKeyDown={(e) => e.key === 'Enter' && prevItem()}>
-            &lt;
+          <div 
+            className="story-content-container" 
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove} 
+            onTouchEnd={handleTouchEnd}
+          >
+            <div className="arrow left-arrow" onClick={prevItem} role="button" tabIndex={0} 
+                 onKeyDown={(e) => e.key === 'Enter' && prevItem()}>
+              &lt;
+            </div>
+
+            <div className="framed-artwork-story" onClick={() => !isOverlayVisible && handleImageClick(currentStory.description)}>
+              <img 
+                key={currentStory.id}
+                src={currentStory.src} 
+                alt={currentStory.alt} 
+                className="artwork-image-story artwork-image-story-animated" 
+              />
+              
+              <Image
+                key={`click-hint-${animationTriggerKey}`} // Force re-render to restart animation
+                src="/click.svg"
+                alt="Click hint"
+                width={50} // Adjust size as needed
+                height={50} // Adjust size as needed
+                className="clickable-image-hint"
+              />
+
+              {isOverlayVisible && (
+                <div 
+                  ref={overlayRef}
+                  className={`image-text-overlay ${isOverlayVisible ? 'visible' : ''} ${overlayContentIsScrollable ? 'has-scrollable-content' : ''}`}
+                  onClick={(e) => { 
+                    e.stopPropagation(); // Prevent click from bubbling to framed-artwork-story
+                    handleOverlayClick(); 
+                  }}
+                  role="dialog" // Good for accessibility
+                  aria-modal="true"
+                  aria-labelledby="overlay-title" // Needs an element with this id if used
+                >
+                  {/* <h4 id="overlay-title" className="sr-only">Image Description</h4> */}
+                  <p ref={paragraphRef}>{selectedStoryDescription}</p>
+                </div>
+              )}
+            </div>
+
+            <div className="arrow right-arrow" onClick={nextItem} role="button" tabIndex={0} 
+                 onKeyDown={(e) => e.key === 'Enter' && nextItem()}>
+              &gt;
+            </div>
           </div>
 
-          <div className="framed-artwork-story" onClick={() => !isOverlayVisible && handleImageClick(currentStory.description)}>
-            <img 
-              key={currentStory.id}
-              src={currentStory.src} 
-              alt={currentStory.alt} 
-              className="artwork-image-story" 
-            />
-            
-            <Image
-              key={`click-hint-${animationTriggerKey}`} // Force re-render to restart animation
-              src="/click.svg"
-              alt="Click hint"
-              width={50} // Adjust size as needed
-              height={50} // Adjust size as needed
-              className="clickable-image-hint"
-            />
-
-            {isOverlayVisible && (
-              <div 
-                ref={overlayRef}
-                className={`image-text-overlay ${isOverlayVisible ? 'visible' : ''} ${overlayContentIsScrollable ? 'has-scrollable-content' : ''}`}
-                onClick={(e) => { 
-                  e.stopPropagation(); // Prevent click from bubbling to framed-artwork-story
-                  handleOverlayClick(); 
-                }}
-                role="dialog" // Good for accessibility
-                aria-modal="true"
-                aria-labelledby="overlay-title" // Needs an element with this id if used
-              >
-                {/* <h4 id="overlay-title" className="sr-only">Image Description</h4> */}
-                <p ref={paragraphRef}>{selectedStoryDescription}</p>
-              </div>
-            )}
+          <div className="plaque-story">
+            <h3>{currentStory.title}</h3>
+            <p>{currentStory.details}</p>
           </div>
 
-          <div className="arrow right-arrow" onClick={nextItem} role="button" tabIndex={0} 
-               onKeyDown={(e) => e.key === 'Enter' && nextItem()}>
-            &gt;
+          <div className="bench-container">
+            <Image src="/images/bench.png" alt="Gallery bench" width={800} height={200} className="bench-image" />
           </div>
-        </div>
-
-        <div className="plaque-story">
-          <h3>{currentStory.title}</h3>
-          <p>{currentStory.details}</p>
-        </div>
-
-        <div className="bench-container">
-          <Image src="/images/bench.png" alt="Gallery bench" width={800} height={200} className="bench-image" />
-        </div>
-      </main>
-    </div>
+        </main>
+      </div>
+    </>
   );
 } 
