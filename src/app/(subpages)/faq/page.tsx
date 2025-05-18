@@ -42,17 +42,15 @@ export default function NewFaqPage() {
 
     const handleScroll = () => {
       const currentScrollY = scrollableParentDiv.scrollTop;
-      
-      // console.log(`PARENT SCROLL Evt: CurrentY: ${currentScrollY}, LastY: ${lastScrollY.current}, Visible: ${isHeaderVisible}`); // DEBUG - Can be removed
+      const scrollDifference = lastScrollY.current - currentScrollY;
 
       if (currentScrollY === 0) {
-        setIsHeaderVisible(true);
-      } else if (currentScrollY > lastScrollY.current && currentScrollY > 30) { // Threshold reduced slightly
-        if (isHeaderVisible) {
-            setIsHeaderVisible(false);
-        }
-      } 
-      // No action to show on scroll up, only at top.
+        if (!isHeaderVisible) setIsHeaderVisible(true);
+      } else if (currentScrollY > lastScrollY.current && currentScrollY > 30) { // Scrolling Down
+        if (isHeaderVisible) setIsHeaderVisible(false);
+      } else if (currentScrollY < lastScrollY.current && scrollDifference > 10) { // Scrolling Up by a decent amount
+        if (!isHeaderVisible) setIsHeaderVisible(true);
+      }
       
       lastScrollY.current = currentScrollY;
     };
@@ -81,17 +79,18 @@ export default function NewFaqPage() {
         .gallery-header.hidden-header {
           transform: translateY(-100%);
           transition-property: transform, visibility;
-          transition-duration: 0.3s;
-          transition-timing-function: ease-out;
-          transition-delay: 0s, 0.3s;
+          transition-duration: 0.15s; /* Faster hide duration */
+          transition-timing-function: ease-in-out; /* Adjusted easing */
+          transition-delay: 0s, 0.15s; /* Visibility hidden AFTER faster transform */
           visibility: hidden;
           /* border-bottom: 3px solid red; */ /* DEBUG REMOVED */
         }
         .gallery-header.visible-header {
           transform: translateY(0);
           transition-property: transform, visibility;
-          transition-duration: 0.3s;
-          transition-timing-function: ease-out;
+          transition-duration: 0.25s; /* Kept at 0.25s for showing */
+          transition-timing-function: ease-in-out; /* Adjusted easing */
+          transition-delay: 0s, 0s; /* Visibility visible immediately */
           visibility: visible;
           /* border-bottom: 3px solid lime; */ /* DEBUG REMOVED */
         }
@@ -143,9 +142,9 @@ export default function NewFaqPage() {
             /* maxHeight: 'calc(100vh - 120px)' // Also might not be needed */
           }}
         >
-          <div className="artwork-display" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div className="artwork-display" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
             {/* Lights image is kept if desired, or can be removed if the FAQ section should be cleaner */}
-            {/* <Image src="/images/Lights.png" alt="Gallery lights" width={1000} height={100} className="lights-image" style={{ marginBottom: '5vh'}} /> */}
+            <Image src="/images/Lights.png" alt="Gallery lights" width={1000} height={100} className="lights-image" style={{ marginBottom: '5vh'}} />
 
             <div className="w-full max-w-2xl px-4"> {/* Added container for accordion */} 
               <Accordion type="single" collapsible className="w-full">

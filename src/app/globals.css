@@ -399,7 +399,7 @@ body {
   top: 0; 
   left: 0; /* Align to the left edge */
   width: 100vw; /* Fill entire viewport width */
-  height: 60px; /* Explicit height for the lights bar */
+  height: 60px; /* Fixed height */
   object-fit: cover; /* Cover the area, cropping as needed */
   z-index: 20; /* High z-index to be on top */
 }
@@ -461,7 +461,7 @@ body {
     font-size: 20px;
   }
   .lights-image {
-    max-width: 500px;
+    /* max-width: 500px; REMOVED */
   }
   .framed-artwork {
     max-width: 340px;
@@ -489,8 +489,8 @@ body {
     transform: none; 
     width: 100%;
     max-width: none; 
-    height: auto; /* Let image aspect ratio determine height */
-    /* object-fit removed to allow natural scaling for full breadth */
+    /* height: auto; Removed to inherit fixed height */
+    /* object-fit: cover; will be inherited from base */
   }
 
   .bench-container {
@@ -722,33 +722,36 @@ body {
   border-radius: 5px;
   padding: 8px; 
   background-color: white;
-  position: relative;
+  position: relative; 
   box-shadow: 0 8px 16px rgba(0,0,0,0.25); 
   display: flex; 
-  justify-content: center; 
   align-items: center; 
+  justify-content: center; 
   max-width: 70%; 
-  max-height: 55vh; /* Adjusted from 60vh, ensure it fits above plaque and bench */
+  align-self: center; /* Added to prevent vertical stretching in parent flex */
   flex-shrink: 0; 
-  transition: max-height 0.4s ease-in-out, max-width 0.4s ease-in-out; 
+  transition: width 0.4s ease-in-out, height 0.4s ease-in-out;
+  box-sizing: border-box; 
 }
 
-/* Specific class for the image if needed, but Next/Image component might handle responsiveness well */
 .artwork-image-story {
-  display: block; /* Ensure image is block to prevent extra space */
-  max-width: 100%; /* Ensure image is responsive within its container */
-  height: auto; /* Maintain aspect ratio */
+  display: block; 
+  width: auto; 
+  height: auto; 
+  max-width: 100%;   /* 100% of parent .framed-artwork-story content box */
+  max-height: 55vh;  /* Direct viewport height constraint on image */
+  object-fit: contain; 
 }
 
 .info-icon-on-image {
   position: absolute;
-  bottom: 10px; /* Adjusted position */
-  right: 10px; /* Adjusted position */
+  bottom: 10px;
+  right: 10px;
   cursor: pointer;
   background-color: rgba(0,0,0,0.5);
   border-radius: 50%;
   padding: 5px;
-  display: flex; /* For centering icon if needed */
+  display: flex;
   align-items: center;
   justify-content: center;
 }
@@ -762,25 +765,25 @@ body {
   text-align: center;
   z-index: 1;
   color: #333; 
-  flex-shrink: 0; /* Plaque should not shrink or cause overflow */
+  flex-shrink: 0;
 }
 
 .plaque-story h3 {
   margin: 0;
-  font-size: 0.9rem; /* Reduced font size */
+  font-size: 0.9rem;
   font-weight: bold;
 }
 
 .plaque-story p {
-  margin: 4px 0 0; /* Adjusted margin */
-  font-size: 0.7rem; /* Reduced font size */
+  margin: 4px 0 0;
+  font-size: 0.7rem;
 }
 
 /* Ensure bench is at the bottom */
 .gallery-main-story .bench-container {
-  margin-top: auto; /* Pushes bench to the bottom if gallery-main-story has enough height */
+  margin-top: auto;
   z-index: 1;
-  width: 100%; /* Make bench container take full width */
+  width: 100%;
   display: flex;
   justify-content: center;
 }
@@ -788,18 +791,16 @@ body {
 /* Mobile Adjustments */
 @media (max-width: 768px) {
   .gallery-main-story {
-    /* padding-top and padding-bottom are inherited from the main rule and should be correct. */
-    /* justify-content: center is inherited. */
-    /* No specific changes needed here now for positioning if base is correct. */
+    padding-top: 0;
+    padding-bottom: 0;
   }
 
   .story-content-container {
-    margin-top: 0; /* Ensure no top margin here either */
-    /* Other mobile-specific sizing for arrows, frame, etc., remains */
+    margin-top: 0;
   }
 
   .arrow {
-    font-size: 2rem; /* Smaller arrows on mobile */
+    font-size: 2rem;
   }
   .left-arrow {
     margin-right: 5px;
@@ -809,66 +810,60 @@ body {
   }
 
   .framed-artwork-story {
-    border-width: 15px; /* Adjusted smaller border (50% thicker than original) */
-    padding: 5px; /* Smaller padding */
-    max-width: calc(100% - 60px); /* Ensure it fits, considering arrows */
+    border-width: 15px;
+    padding: 5px;
+    max-width: calc(100% - 60px);
   }
 
-  /* The Image component's width/height props might dominate,
-     but we can set max-width/max-height on its child if needed,
-     or ensure its container (.framed-artwork-story) constrains it.
-     Forcing a smaller image via its direct props in TSX might be better.
-     For now, relying on container size.
-  */
-   .artwork-image-story { /* This class should be applied to the Next/Image component for this to work */
-    /* Example: Force smaller image if needed, but usually responsive design is better */
-    /* width: 200px !important; */
-    /* height: 300px !important; */
+  .artwork-image-story {
+    /* 
+    width: 200px !important; REMOVED 
+    height: 300px !important; REMOVED 
+    */
   }
-
 
   .info-icon-on-image {
     bottom: 8px;
     right: 8px;
     padding: 4px;
   }
-  .info-icon-on-image > svg { /* Target the SVG icon directly */
+  .info-icon-on-image > svg {
     width: 20px;
     height: 20px;
   }
 
   .plaque-story {
-    margin-top: 10px; /* Bring plaque closer to image */
-    padding: 6px 10px; /* Smaller padding */
-    max-width: calc(100% - 40px); /* Ensure plaque fits */
+    margin-top: 10px;
+    padding: 6px 10px;
+    max-width: calc(100% - 40px);
     box-sizing: border-box;
   }
 
   .plaque-story h3 {
-    font-size: 0.8rem; /* Smaller title */
+    font-size: 0.8rem;
   }
 
   .plaque-story p {
-    font-size: 0.65rem; /* Smaller subtitle */
+    font-size: 0.65rem;
   }
   
   .gallery-main-story .bench-container {
-    margin-top: 2vh; /* Adjust space above bench on mobile */
+    margin-top: 2vh;
   }
 }
 
 @media (max-width: 480px) {
   .gallery-main-story {
-    /* padding-top and padding-bottom are inherited. */
-    /* justify-content: center is inherited. */
+    padding-top: 0;
+    padding-bottom: 0;
   }
   .story-content-container {
-     margin-top: 0; /* Ensure no top margin here either */
+    margin-top: 0;
   }
    .framed-artwork-story {
-    border-width: 12px; /* Adjusted smallest border (50% thicker than original) */
+    border-width: 12px;
     padding: 4px;
-    max-width: calc(100% - 50px); /* Adjust for smaller arrows */
+    max-width: calc(100% - 50px);
   }
   .arrow {
     font-size: 1.8rem;
@@ -898,7 +893,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* Default: center for short text */
+  justify-content: center;
   padding: 20px;
   text-align: center;
   opacity: 0;
@@ -921,8 +916,8 @@ body {
 }
 
 .image-text-overlay p {
-  margin: 0; /* Reset paragraph margin if needed */
-  font-size: 0.9rem; /* Adjust as needed */
+  margin: 0;
+  font-size: 0.9rem;
   line-height: 1.4;
 }
 
@@ -945,23 +940,22 @@ body {
 /* Styles for Clickable Image Hint */
 @keyframes click-hint-animation {
   0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); filter: drop-shadow(0 0 0 transparent); }
-  20% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.5)); } /* Fade in, grow, add shadow */
-  40% { opacity: 1; transform: translate(-50%, -50%) scale(1);   filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.5)); }   /* Settle with shadow */
-  60% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.5)); } /* Pulse again with shadow */
-  100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); filter: drop-shadow(0 0 0 transparent); } /* Fade out, remove shadow */
+  20% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.5)); }
+  40% { opacity: 1; transform: translate(-50%, -50%) scale(1);   filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.5)); }
+  60% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.5)); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); filter: drop-shadow(0 0 0 transparent); }
 }
 
 .clickable-image-hint {
   position: absolute;
-  top: 50%; /* Center vertically */
-  left: 50%; /* Center horizontally */
-  transform: translate(-50%, -50%); /* Adjust for centering based on own size */
-  width: 50px; /* Matches JSX, can be adjusted */
-  height: 50px; /* Matches JSX, can be adjusted */
-  z-index: 15; /* Above image, below text overlay */
-  pointer-events: none; /* So it doesn't interfere with clicks on the image */
-  opacity: 0; /* Start invisible, animation handles fade in/out */
-  /* Apply the animation: name duration timing-function delay iteration-count fill-mode */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  z-index: 15;
+  pointer-events: none;
+  opacity: 0;
   animation: click-hint-animation 2.5s ease-in-out 0.2s 1 forwards;
 }
 
@@ -981,66 +975,65 @@ body {
   display: none !important;
 }
 .lights-hidden .gallery-header {
-  margin-top: 0 !important; /* Header moves to top if lights are gone */
+  margin-top: 0 !important;
 }
-/* If header itself can be hidden, another class like .header-hidden would be needed */
 
 .bench-hidden .bench-container {
   display: none !important;
 }
 .bench-hidden .gallery-main {
-  margin-bottom: 0 !important; /* No bottom margin if bench is gone */
+  margin-bottom: 0 !important;
 }
-.bench-hidden .gallery-main-story { /* Also for story page */
+.bench-hidden .gallery-main-story {
   margin-bottom: 0 !important;
 }
 
 /* --- FAQ Page Overrides --- */
 /* Remove body:has attempt as it's unreliable for this case */
 
-.faq-page.mobile-gallery-container { /* Target the element with both classes */
-  position: static !important; /* Override body's fixed behavior influence */
+.faq-page.mobile-gallery-container {
+  position: static !important;
   display: block !important; 
-  height: 100vh !important; /* Take full viewport height */
-  overflow-y: auto !important; /* THIS is the primary scroll container */
+  height: 100vh !important;
+  overflow-y: auto !important;
   overflow-x: hidden !important;
-  touch-action: auto !important; /* Allow normal touch scrolling */
-  background-attachment: scroll !important; /* Ensure background scrolls with FAQ content */
-  /* Reset global scroll prevention that might be on .mobile-gallery-container */
-  -webkit-overflow-scrolling: touch !important; /* Enable momentum scroll for FAQ page */
+  touch-action: auto !important;
+  background-attachment: scroll !important;
+  -webkit-overflow-scrolling: touch !important;
 }
 
-/* Reset body styles IF we could target it when FAQ is active.
-   Since we can't easily do that with CSS only, the .faq-page styles are key. */
-
 .faq-page .gallery-header {
-  position: sticky !important; /* Make header sticky within .faq-page */
+  position: sticky !important;
   top: 0 !important;
   margin-top: 0 !important; 
-  /* background-color: rgba(10, 26, 59, 0.95) !important; /* Removed to make transparent */
   z-index: 100; 
 }
 
 .faq-page .lights-image,
 .faq-page .bench-container {
-  display: none !important; 
+}
+
+.faq-page .lights-image {
+  display: none !important;
+}
+
+.faq-page .bench-container {
+  display: none !important;
 }
 
 .faq-page .gallery-main {
   padding-top: 1rem; 
   margin-top: 0 !important; 
-  margin-bottom: 1rem !important; /* Add some bottom padding within the scroll */
-  height: auto !important; /* Content determines height */
-  overflow: visible !important; /* Let .faq-page handle scrolling */
+  margin-bottom: 1rem !important;
+  height: auto !important;
+  overflow: visible !important;
   touch-action: auto !important;
-  width: 100%; /* Ensure it takes full width */
+  width: 100%;
 }
 
-/* Hide the explicit 170px spacer div on the FAQ page */
 .faq-page > div[style*="height:"] {
     display: none !important; 
 }
-
 
 /* Events Page - Plaque positioning & Sizing */
 .events-list {
@@ -1048,9 +1041,9 @@ body {
   flex-direction: column;
   align-items: center; 
   width: 100%;
-  justify-content: center; /* Center items */
+  justify-content: center;
   flex-grow: 1; 
-  overflow: hidden; /* Prevent this list itself from scrolling */
+  overflow: hidden;
 }
 
 .event-item {
@@ -1058,49 +1051,48 @@ body {
   flex-direction: column;
   align-items: center;
   width: 90%; 
-  margin-bottom: 2vh; /* Space between items */
-  flex-shrink: 0; /* Prevent items from shrinking excessively */
-  max-height: calc( (100vh - 60px - 70px - 80px - 4vh) / 2 - 2vh ); /* Approximate: (VP - lights - header - bench - list_padding) / 2 - item_margin */
-                                                                 /* 70px is est. header, 4vh est. gallery-main padding */
+  margin-bottom: 2vh;
+  flex-shrink: 0;
+  max-height: calc( (100vh - 60px - 70px - 80px - 4vh) / 2 - 2vh );
 }
 
 .event-item:last-child {
-  margin-bottom: 0; /* No margin for the last item if centered */
+  margin-bottom: 0;
 }
 
 .event-item .framed-artwork {
-  max-width: 65%;  /* Slightly smaller */
-  max-height: 60%; /* Proportion of the .event-item's calculated max-height */
+  max-width: 65%; 
+  max-height: 60%;
   margin-bottom: 1vh; 
-  flex-grow: 1; /* Allow frame to take space */
+  flex-grow: 1;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.event-item .artwork-frame { /* The Next/Image for the frame */
+.event-item .artwork-frame {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
 }
 
 .event-item .plaque-image {
-  max-height: 25%; /* Proportion of the .event-item's calculated max-height */
-  width: auto; /* Let height control width via aspect ratio */
+  max-height: 25%;
+  width: auto;
   object-fit: contain;
-  flex-shrink: 0; /* Plaque should not shrink much */
+  flex-shrink: 0;
 }
 
 /* RSVP Form Padding Adjustments */
 
-.rsvp-form-container .bg-gray-800\/80 { /* Targeting the Tailwind class for opacity */
-  max-height: 65vh; /* Default max height for mobile */
-  padding-top: 1rem; /* Added vertical padding */
-  padding-bottom: 1rem; /* Added vertical padding */
+.rsvp-form-container .bg-gray-800\/80 {
+  max-height: 65vh;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 .rsvp-guest-card {
-  padding: 0.75rem 0.5rem; /* p-3 vertical, p-2 horizontal (reduced from p-3 all around) */
+  padding: 0.75rem 0.5rem;
 }
 
 .rsvp-guest-card h4 {
