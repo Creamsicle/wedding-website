@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link'; // Added Link import
+import Head from 'next/head'; // Import Head for preloading
 // No longer need useState for menu open/close, DropdownMenu handles it.
 import { Button } from '@/components/ui/button';
 import {
@@ -68,6 +69,9 @@ export default function NewFaqPage() {
 
   return (
     <>
+      <Head>
+        <link rel="preload" href="/images/faq-bg.png" as="image" />
+      </Head>
       <style jsx global>{`
         .gallery-header { 
           /* background: rgba(50, 50, 70, 0.8); */ /* Test background REMOVED */

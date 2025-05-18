@@ -519,6 +519,14 @@ body {
   .plaque-image {
     max-width: 150px; /* Allow plaque to be a bit larger on desktop */
   }
+
+  .artwork-image-story {
+    max-height: 48vh !important; /* Adjusted for wider screens, keeping !important */
+  }
+
+  .gallery-main-story {
+    justify-content: flex-start !important; /* Align to top on desktop, with !important */
+  }
 }
 
 /* === End of Mobile Gallery Specific Styles === */
@@ -682,12 +690,12 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* Center the .story-content-container vertically */
+  justify-content: center; /* Default to center for mobile */
   position: relative;
   width: 100%; 
-  flex-grow: 1; /* Take available space in .mobile-gallery-container */
-  overflow: hidden; /* Prevent its own scrolling; content should fit */
-  margin-bottom: 80px; /* Space for the fixed bench */
+  flex-grow: 1; 
+  overflow: hidden; 
+  margin-bottom: 80px; 
   padding: 1rem; 
   box-sizing: border-box;
 }
