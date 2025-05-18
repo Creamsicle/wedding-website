@@ -711,10 +711,13 @@ body {
 }
 
 .arrow {
-  font-size: 2.5rem; /* Slightly smaller arrows */
+  font-size: 2.5rem; /* This might now primarily affect line-height or container size if not icon directly */
   cursor: pointer;
-  color: black;
-  user-select: none; /* Prevent text selection on click */
+  color: white; /* Changed from black to white */
+  user-select: none; 
+  display: flex; /* Added to help center the icon if needed */
+  align-items: center; /* Added to help center the icon if needed */
+  justify-content: center; /* Added to help center the icon if needed */
 }
 
 .left-arrow {
@@ -729,9 +732,10 @@ body {
   border: 22px solid #333; 
   border-radius: 5px;
   padding: 8px; 
-  background-color: white;
+  background-color: transparent; /* Changed from white */
   position: relative; 
-  box-shadow: 0 8px 16px rgba(0,0,0,0.25); 
+  /* Added inset shadow for 8px white border, kept existing outer shadow */
+  box-shadow: inset 0 0 0 8px white, 0 8px 16px rgba(0,0,0,0.25); 
   display: flex; 
   align-items: center; 
   justify-content: center; 

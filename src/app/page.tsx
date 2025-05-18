@@ -1,51 +1,12 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Menu as MenuIcon } from 'lucide-react';
+import SiteHeader from '@/components/layout/SiteHeader';
 
 export default function HomePage() {
   return (
     <div className="mobile-gallery-container">
-      <header className="gallery-header">
-        <div className="logo">
-          <Link href="/">
-            <Image src="/logow.png" alt="Logo" width={50} height={50} className="header-logo-image" />
-          </Link>
-        </div>
-        <Link href="/">
-          <div className="header-title">CHELSEA & NEIL</div>
-        </Link>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="icon" className="menu-icon-button">
-              <MenuIcon className="h-6 w-6 menu-actual-icon" />
-              <span className="sr-only">Open menu</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="mobile-dropdown-menu-content">
-            <DropdownMenuItem asChild>
-              <a href="/events">Events</a>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <a href="/story">Our Story</a>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <a href="/faq">FAQ</a>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <a href="/rsvp">RSVP</a>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </header>
+      <SiteHeader />
 
       <main className="gallery-main">
         <div className="artwork-display">

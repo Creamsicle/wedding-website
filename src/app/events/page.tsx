@@ -1,16 +1,9 @@
 'use client'; // Required for using hooks like useState
 
 import Image from 'next/image';
-import Link from 'next/link'; // Added Link import
 import { useState } from 'react'; // Need useState for dialog state
-import { Button } from '@/components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'; // Ensuring this path is used
-import { Menu as MenuIcon, Info } from 'lucide-react'; // Using Menu from lucide-react and added Info icon
+import { Button } from '@/components/ui/button'; // Added Button import back
+import { Info } from 'lucide-react'; // Info is used in the body
 import {
   Dialog,
   DialogContent,
@@ -20,7 +13,8 @@ import {
   DialogClose,
 } from '@/components/ui/dialog';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"; // Added Card components
-import { CalendarDays, Clock, MapPin, Shirt, Car } from 'lucide-react'; // Added more icons
+import { CalendarDays, Clock, MapPin, Shirt, Car } from 'lucide-react'; // These are used in the body
+import SiteHeader from '@/components/layout/SiteHeader'; // Import the new SiteHeader
 
 // Define an interface for the event structure
 interface EventDetail {
@@ -95,43 +89,7 @@ export default function EventsNewPage() {
 
   return (
     <div className="mobile-gallery-container">
-      <header className="gallery-header">
-        <div className="logo">
-          <Link href="/"> {/* Added Link wrapper */}
-            <Image src="/logow.png" alt="Logo" width={50} height={50} className="header-logo-image" />
-          </Link>
-        </div>
-        <Link href="/"> {/* Added Link wrapper */}
-          <div className="header-title">CHELSEA & NEIL</div>
-        </Link>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="icon" className="menu-icon-button">
-              <MenuIcon className="h-6 w-6 menu-actual-icon" />
-              <span className="sr-only">Open menu</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="mobile-dropdown-menu-content"> {/* align="end" to open towards the left from the icon if icon is on the right */}
-            {/* Optional: <DropdownMenuLabel>Navigation</DropdownMenuLabel> */}
-            {/* Optional: <DropdownMenuSeparator /> */}
-            <DropdownMenuItem asChild>
-              <Link href="/">Home</Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link href="/events">Events</Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link href="/story">Our Story</Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link href="/faq">FAQ</Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link href="/rsvp">RSVP</Link>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </header>
+      <SiteHeader />
 
       <main className="gallery-main">
         <Image src="/images/Lights.png" alt="Gallery lights" width={1000} height={100} className="lights-image" />

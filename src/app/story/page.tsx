@@ -1,16 +1,9 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Menu as MenuIcon } from 'lucide-react';
-import React, { useState, TouchEvent, useEffect, useRef } from 'react';
+import React, { useState, TouchEvent, useEffect, useRef, useCallback } from 'react';
+import SiteHeader from '@/components/layout/SiteHeader';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 // Define the structure for a story item
 interface StoryItem {
@@ -133,17 +126,37 @@ export default function StoryNewPage() {
     }
   }, [isOverlayVisible, selectedStoryDescription]); // Re-check when description changes too
 
-  const nextItem = () => {
+  const nextItem = useCallback(() => {
     setIsOverlayVisible(false); // Hide overlay when navigating
     setCurrentIndex((prevIndex) => (prevIndex + 1) % storyItems.length);
-  };
+  }, [storyItems.length]);
 
-  const prevItem = () => {
+  const prevItem = useCallback(() => {
     setIsOverlayVisible(false); // Hide overlay when navigating
     setCurrentIndex((prevIndex) =>
       prevIndex === 0 ? storyItems.length - 1 : prevIndex - 1
     );
-  };
+  }, [storyItems.length]);
+
+  // Add global keyboard navigation for arrow keys
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (isOverlayVisible) return; // Don't navigate if overlay is visible
+
+      if (event.key === 'ArrowLeft') {
+        prevItem();
+      } else if (event.key === 'ArrowRight') {
+        nextItem();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    // Cleanup function to remove the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOverlayVisible, prevItem, nextItem]);
 
   const handleImageClick = (description: string) => {
     setSelectedStoryDescription(description);
@@ -151,10 +164,9 @@ export default function StoryNewPage() {
     // The useEffect for scroll check will run after this state update
   };
 
-  const handleOverlayClick = () => {
+  const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation(); // Prevent click from bubbling to framed-artwork-story
     setIsOverlayVisible(false);
-    // Optionally clear selectedStoryDescription if needed, but not strictly necessary here
-    // setSelectedStoryDescription(null);
   };
 
   const handleTouchStart = (e: TouchEvent<HTMLDivElement>) => {
@@ -211,94 +223,49 @@ export default function StoryNewPage() {
         }
       `}</style>
       <div className="mobile-gallery-container">
-        <header className="gallery-header">
-          <div className="logo">
-            <Link href="/">
-              <Image src="/logow.png" alt="Logo" width={50} height={50} className="header-logo-image" />
-            </Link>
-          </div>
-          <Link href="/">
-            <div className="header-title">CHELSEA & NEIL</div>
-          </Link>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="icon" className="menu-icon-button">
-                <MenuIcon className="h-6 w-6 menu-actual-icon" />
-                <span className="sr-only">Open menu</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="mobile-dropdown-menu-content">
-              <DropdownMenuItem asChild>
-                <Link href="/">Home</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link href="/events">Events</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link href="/story">Our Story</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link href="/faq">FAQ</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link href="/rsvp">RSVP</Link>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </header>
+        <SiteHeader />
+        
+        <Image src="/images/Lights.png" alt="Gallery lights" width={1000} height={100} className="lights-image" />
 
-        <main className="gallery-main-story">
-          <Image src="/images/Lights.png" alt="Gallery lights" width={1000} height={100} className="lights-image" />
-
-          <div 
-            className="story-content-container" 
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove} 
-            onTouchEnd={handleTouchEnd}
-          >
-            <div className="arrow left-arrow" onClick={prevItem} role="button" tabIndex={0} 
-                 onKeyDown={(e) => e.key === 'Enter' && prevItem()}>
-              &lt;
+        <main className="gallery-main-story" 
+          onTouchStart={handleTouchStart} 
+          onTouchMove={handleTouchMove} 
+          onTouchEnd={handleTouchEnd}
+        >
+          <div className="story-content-container">
+            <div className="arrow left-arrow" onClick={prevItem}>
+              <ChevronLeft size={36} />
             </div>
-
             <div className="framed-artwork-story" onClick={() => !isOverlayVisible && handleImageClick(currentStory.description)}>
-              <img 
+              <Image 
                 key={currentStory.id}
                 src={currentStory.src} 
                 alt={currentStory.alt} 
-                className="artwork-image-story artwork-image-story-animated" 
+                width={currentStory.originalWidth} 
+                height={currentStory.originalHeight} 
+                className="artwork-image-story artwork-image-story-animated"
+                priority={currentIndex === 0}
               />
-              
-              <Image
-                key={`click-hint-${animationTriggerKey}`} // Force re-render to restart animation
+              <Image 
+                key={`hint-${animationTriggerKey}`}
                 src="/click.svg"
-                alt="Click hint"
-                width={50} // Adjust size as needed
-                height={50} // Adjust size as needed
+                alt="Click for details" 
+                width={50} 
+                height={50} 
                 className="clickable-image-hint"
               />
-
-              {isOverlayVisible && (
+              {isOverlayVisible && selectedStoryDescription && (
                 <div 
                   ref={overlayRef}
-                  className={`image-text-overlay ${isOverlayVisible ? 'visible' : ''} ${overlayContentIsScrollable ? 'has-scrollable-content' : ''}`}
-                  onClick={(e) => { 
-                    e.stopPropagation(); // Prevent click from bubbling to framed-artwork-story
-                    handleOverlayClick(); 
-                  }}
-                  role="dialog" // Good for accessibility
-                  aria-modal="true"
-                  aria-labelledby="overlay-title" // Needs an element with this id if used
+                  className={`image-text-overlay visible ${overlayContentIsScrollable ? 'has-scrollable-content' : ''}`}
+                  onClick={handleOverlayClick}
                 >
-                  {/* <h4 id="overlay-title" className="sr-only">Image Description</h4> */}
                   <p ref={paragraphRef}>{selectedStoryDescription}</p>
                 </div>
               )}
             </div>
-
-            <div className="arrow right-arrow" onClick={nextItem} role="button" tabIndex={0} 
-                 onKeyDown={(e) => e.key === 'Enter' && nextItem()}>
-              &gt;
+            <div className="arrow right-arrow" onClick={nextItem}>
+              <ChevronRight size={36} />
             </div>
           </div>
 
@@ -306,11 +273,11 @@ export default function StoryNewPage() {
             <h3>{currentStory.title}</h3>
             <p>{currentStory.details}</p>
           </div>
-
-          <div className="bench-container">
-            <Image src="/images/bench.png" alt="Gallery bench" width={800} height={200} className="bench-image" />
-          </div>
         </main>
+
+        <div className="bench-container">
+          <Image src="/images/bench.png" alt="Gallery bench" width={800} height={200} className="bench-image" />
+        </div>
       </div>
     </>
   );

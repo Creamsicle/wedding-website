@@ -19,6 +19,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"; // Added Accordion imports
 import { useState, useEffect, useRef } from 'react'; // Import useState, useEffect, AND useRef
+import SiteHeader from '@/components/layout/SiteHeader'; // Import the new SiteHeader
 
 export default function NewFaqPage() {
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
@@ -101,43 +102,7 @@ export default function NewFaqPage() {
       `}</style>
       {/* The ref is removed from main, as .mobile-gallery-container is the scroll target */}
       <div className="mobile-gallery-container faq-page pt-8" style={{ backgroundImage: 'url(/images/faq-bg.png)', backgroundSize: 'cover', backgroundPosition: 'center'}}>
-        <header className={`gallery-header ${isHeaderVisible ? 'visible-header' : 'hidden-header'}`}>
-          <div className="logo">
-            <Link href="/"> {/* Added Link wrapper */}
-              <Image src="/logow.png" alt="Logo" width={50} height={50} className="header-logo-image" />
-            </Link>
-          </div>
-          <Link href="/"> {/* Added Link wrapper */}
-            <div className="header-title">CHELSEA & NEIL</div>
-          </Link>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="icon" className="menu-icon-button">
-                <MenuIcon className="h-6 w-6 menu-actual-icon" />
-                <span className="sr-only">Open menu</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="mobile-dropdown-menu-content"> {/* align="end" to open towards the left from the icon if icon is on the right */}
-              {/* Optional: <DropdownMenuLabel>Navigation</DropdownMenuLabel> */}
-              {/* Optional: <DropdownMenuSeparator /> */}
-              <DropdownMenuItem asChild>
-                <Link href="/">Home</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <a href="/events">Events</a>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <a href="/story">Our Story</a>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <a href="/faq">FAQ</a>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <a href="/rsvp">RSVP</a>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </header>
+        <SiteHeader className={isHeaderVisible ? 'visible-header' : 'hidden-header'} />
         <main 
           className="gallery-main" 
           style={{ 
