@@ -157,28 +157,31 @@ export default function EventsNewPage() {
 
         {selectedEvent && (
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-            <DialogContent className="event-dialog-content sm:max-w-[600px] z-[1050]">
+            <DialogContent 
+              className="event-dialog-content flex flex-col my-4 mx-2 sm:mx-auto sm:max-w-[600px] z-[1050] bg-gray-800/90 p-4 md:p-6 rounded-xl shadow-xl text-white styled-scrollbar max-h-[calc(100vh-4rem)]"
+              style={{ "--muted-foreground": "0 0% 100%" } as React.CSSProperties}
+            >
               <DialogHeader>
-                <DialogTitle className="text-2xl font-semibold">{selectedEvent.title}</DialogTitle>
-                <div className="pt-2 text-sm text-muted-foreground text-left">
+                <DialogTitle className="text-2xl font-semibold text-white">{selectedEvent.title}</DialogTitle>
+                <div className="pt-2 text-sm text-white/90 text-left">
                   <div className="flex items-center gap-2 mb-1">
-                    <CalendarDays className="h-5 w-5 text-gray-600" />
+                    <CalendarDays className="h-5 w-5 text-white/70" />
                     <span>{selectedEvent.date}</span>
                   </div>
                   <div className="flex items-center gap-2 mb-2">
-                    <Clock className="h-5 w-5 text-gray-600" />
+                    <Clock className="h-5 w-5 text-white/70" />
                     <span>{selectedEvent.time}</span>
                   </div>
                   <div className="flex items-start gap-2">
-                    <MapPin className="h-5 w-5 text-gray-600 mt-1" />
+                    <MapPin className="h-5 w-5 text-white/70 mt-1" />
                     <span>
                       <strong>{selectedEvent.locationName}</strong>
                       <br />
-                      <a 
+                      <a
                         href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(selectedEvent.locationAddress)}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="underline hover:text-primary transition-colors"
+                        className="underline text-current hover:text-[var(--rust-light)] transition-colors"
                       >
                         {selectedEvent.locationAddress}
                       </a>
@@ -186,15 +189,15 @@ export default function EventsNewPage() {
                   </div>
                 </div>
               </DialogHeader>
-              <div className="dialog-details-scrollable py-4 space-y-4">
-                <Card>
+              <div className="dialog-details-scrollable flex-1 py-4 space-y-4 overflow-y-auto min-h-0">
+                <Card className="bg-gray-700/90 border-gray-600">
                   <CardHeader>
-                    <CardTitle className="flex items-center text-lg">
-                      <CalendarDays className="h-5 w-5 mr-2 text-primary" />
+                    <CardTitle className="flex items-center text-lg text-[var(--rust-light)]">
+                      <CalendarDays className="h-5 w-5 mr-2 text-[var(--rust-primary)]" />
                       Schedule
                     </CardTitle>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="text-white/90">
                     <ul className="list-disc pl-5 space-y-1 text-sm">
                       {selectedEvent.schedule.map((item: string, index: number) => (
                         <li key={index}>{item}</li>
@@ -203,33 +206,33 @@ export default function EventsNewPage() {
                   </CardContent>
                 </Card>
 
-                <Card>
+                <Card className="bg-gray-700/90 border-gray-600">
                   <CardHeader>
-                    <CardTitle className="flex items-center text-lg">
-                      <Shirt className="h-5 w-5 mr-2 text-primary" />
+                    <CardTitle className="flex items-center text-lg text-[var(--rust-light)]">
+                      <Shirt className="h-5 w-5 mr-2 text-[var(--rust-primary)]" />
                       Dress Code
                     </CardTitle>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="text-white/90">
                     <p className="text-sm">{selectedEvent.dressCode}</p>
                   </CardContent>
                 </Card>
 
-                <Card>
+                <Card className="bg-gray-700/90 border-gray-600">
                   <CardHeader>
-                    <CardTitle className="flex items-center text-lg">
-                      <Car className="h-5 w-5 mr-2 text-primary" />
+                    <CardTitle className="flex items-center text-lg text-[var(--rust-light)]">
+                      <Car className="h-5 w-5 mr-2 text-[var(--rust-primary)]" />
                       Parking & Travel
                     </CardTitle>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="text-white/90">
                     <p className="text-sm">{selectedEvent.parkingTravel}</p>
                   </CardContent>
                 </Card>
               </div>
-              <DialogFooter className="sm:justify-start pt-4">
+              <DialogFooter className="sm:justify-start pt-4 border-t border-gray-700">
                 <DialogClose asChild>
-                  <Button type="button" variant="secondary">
+                  <Button type="button" variant="secondary" className="bg-[var(--rust-primary)] hover:bg-[var(--rust-secondary)] text-white">
                     Close
                   </Button>
                 </DialogClose>
