@@ -330,7 +330,7 @@ body {
   width: 100vw; 
   overflow: hidden !important; /* Reinforce no scrolling, add !important */
   position: relative; 
-  background-image: url('/images/home-bg.png'); 
+  background-image: url('/images/home-bg2.png'); /* Changed to home-bg2.png */
   background-size: cover;
   background-position: center;
   box-sizing: border-box; 
@@ -467,7 +467,10 @@ body {
     max-width: 340px;
   }
   .plaque-image {
-    max-width: 100px; /* Halved size for this breakpoint */
+    max-width: 100px;
+  }
+  .plaque-image-home {
+    max-width: 48px; /* Reduced from 60px (approx 20% reduction) */
   }
   .bench-container {
     height: 100px; /* Consistent height */
@@ -501,7 +504,7 @@ body {
     height: 150px; /* Consistent height */
     max-width: none; 
     object-fit: cover; 
-    object-position: center center; /* Changed from center bottom */
+    object-position: center top; /* Changed from center center to preserve top */
     /* transform: none; */ /* Scale already removed, ensure no transform */
     transform: none; /* Explicitly remove any transform */
     /* object-position: center bottom; is inherited */
@@ -518,7 +521,10 @@ body {
   }
 
   .plaque-image {
-    max-width: 150px; /* Allow plaque to be a bit larger on desktop */
+    max-width: 150px;
+  }
+  .plaque-image-home {
+    max-width: 72px; /* Reduced from 90px (approx 20% reduction) */
   }
 
   .artwork-image-story {
@@ -1153,4 +1159,12 @@ body {
 
 .rsvp-guest-card .space-x-4 > label span.ml-2 { 
   font-size: 0.875rem; 
+}
+
+/* New class for homepage plaque to allow right alignment */
+.plaque-image-home {
+  max-width: 32%; /* Reduced from 40% (approx 20% reduction) */
+  height: auto;   /* Maintain aspect ratio */
+  object-fit: contain;
+  display: inline-block; /* Allow it to size to content within flex justify-end */
 }

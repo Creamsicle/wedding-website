@@ -35,15 +35,23 @@ export default function SiteHeader({ className }: SiteHeaderProps) {
 
   return (
     <header className={headerClasses}>
-      {/* Left Group: Logo + Title */}
+      {/* Left Group: Logo */}
       <div className="flex flex-shrink-0 items-center z-10">
         <div className="logo">
           <Link href="/">
-            <Image src="/logow.png" alt="Logo" width={50} height={50} className="header-logo-image" />
+            <Image src="/logow.png" alt="Logo" width={50} height={50} className="header-logo-image lg:drop-shadow-sm" />
           </Link>
         </div>
+        {/* Title - Desktop: Part of Left Group, Mobile: Centered (handled below) */}
+        <Link href="/" className="hidden lg:block"> {/* Hidden on mobile, shown on lg+ */}
+          <div className="header-title ml-4 drop-shadow-sm">CHELSEA & NEIL</div>
+        </Link>
+      </div>
+      
+      {/* Mobile-only Centered Title (absolutely positioned) */}
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 lg:hidden z-0">
         <Link href="/">
-          <div className="header-title ml-4">CHELSEA & NEIL</div>
+          <div className="header-title">CHELSEA & NEIL</div>
         </Link>
       </div>
       
@@ -52,7 +60,7 @@ export default function SiteHeader({ className }: SiteHeaderProps) {
         {currentPath !== '/' && (
           <Link
             href="/"
-            className="text-base font-semibold uppercase tracking-wider text-white hover:text-rust-light transition-colors"
+            className="text-base font-semibold uppercase tracking-wider text-white hover:text-rust-light transition-colors lg:drop-shadow-sm"
           >
             HOME
           </Link>
@@ -61,7 +69,7 @@ export default function SiteHeader({ className }: SiteHeaderProps) {
           <Link
             key={link.href}
             href={link.href}
-            className="text-base font-semibold uppercase tracking-wider text-white hover:text-rust-light transition-colors"
+            className="text-base font-semibold uppercase tracking-wider text-white hover:text-rust-light transition-colors lg:drop-shadow-sm"
           >
             {link.label} 
           </Link>
