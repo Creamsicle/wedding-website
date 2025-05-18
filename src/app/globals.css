@@ -516,8 +516,16 @@ body {
     justify-content: flex-start; /* Added to align content to top */
   }
 
+  /* Add this new rule for homepage artwork display on desktop */
+  .artwork-display {
+    justify-content: flex-start; /* Align frame and plaque to the top */
+    padding-top: 2vh; /* Add some padding from the top of gallery-main */
+  }
+
   .framed-artwork {
     max-width: 450px; /* Allow frame to be a bit larger on desktop */
+    max-height: 35vh; /* Explicit max-height for homepage artwork on desktop, reduced by ~30% */
+    margin-bottom: 1vh; /* Reduce bottom margin slightly */
   }
 
   .plaque-image {
@@ -525,6 +533,7 @@ body {
   }
   .plaque-image-home {
     max-width: 72px; /* Reduced from 90px (approx 20% reduction) */
+    margin-top: 1vh; /* Add some space above the home plaque */
   }
 
   .artwork-image-story {
@@ -543,10 +552,36 @@ body {
   }
 
   .event-item {
-    width: 49%; /* Adjusted from 48% to make items even closer */
+    width: 48%; /* Adjusted from 45% to make items closer */
     max-height: 75vh; /* Allow items to be reasonably tall on desktop */
     margin-bottom: 0; /* Vertical margin between items not needed when side-by-side */
+    overflow: visible; /* Ensure content isn't clipped by the item itself */
   }
+
+  .event-item .framed-artwork {
+    flex-grow: 0; /* Prevent artwork from pushing plaque down */
+    max-height: 55%; /* Slightly reduce image height on desktop */
+    /* other styles inherited from base */
+  }
+
+  .event-item .plaque-image {
+    position: relative; /* Allow z-index to apply */
+    z-index: 1; /* Lift plaque slightly */
+    /* max-height: 25% and other styles inherited from base */
+  }
+
+  /* NEW RULES START HERE */
+  .event-item .framed-artwork {
+    flex-grow: 0; 
+    flex-shrink: 0; 
+    /* Other properties like max-height: 60% are inherited from base .event-item .framed-artwork */
+  }
+
+  .event-item .plaque-image {
+    /* Inherits max-height: 25% and flex-shrink: 0 from base .event-item .plaque-image */
+    /* No new desktop-specific overrides needed here, relying on inherited properties */
+  }
+  /* NEW RULES END HERE */
 }
 
 /* === End of Mobile Gallery Specific Styles === */
@@ -1127,7 +1162,33 @@ body {
     width: 48%; /* Adjusted from 45% to make items closer */
     max-height: 75vh; /* Allow items to be reasonably tall on desktop */
     margin-bottom: 0; /* Vertical margin between items not needed when side-by-side */
+    overflow: visible; /* Ensure content isn't clipped by the item itself */
   }
+
+  .event-item .framed-artwork {
+    flex-grow: 0; /* Prevent artwork from pushing plaque down */
+    max-height: 55%; /* Slightly reduce image height on desktop */
+    /* other styles inherited from base */
+  }
+
+  .event-item .plaque-image {
+    position: relative; /* Allow z-index to apply */
+    z-index: 1; /* Lift plaque slightly */
+    /* max-height: 25% and other styles inherited from base */
+  }
+
+  /* NEW RULES START HERE */
+  .event-item .framed-artwork {
+    flex-grow: 0; 
+    flex-shrink: 0; 
+    /* Other properties like max-height: 60% are inherited from base .event-item .framed-artwork */
+  }
+
+  .event-item .plaque-image {
+    /* Inherits max-height: 25% and flex-shrink: 0 from base .event-item .plaque-image */
+    /* No new desktop-specific overrides needed here, relying on inherited properties */
+  }
+  /* NEW RULES END HERE */
 }
 
 /* RSVP Form Padding Adjustments */
