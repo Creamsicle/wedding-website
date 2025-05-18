@@ -156,9 +156,9 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
             <h3 className="text-2xl font-bold text-white mb-2 text-center">
               RSVP for Your Party
             </h3>
-            {/* Guest Counter for Mobile View */}
+            {/* Guest Counter for Mobile View - now for all views if multiple guests */}
             {selectedParty.partyMembers.length > 1 && (
-              <p className="text-center text-white/80 text-sm mb-4 md:hidden">
+              <p className="text-center text-white/80 text-sm mb-4">
                 Guest {currentGuestCardIndex + 1} of {selectedParty.partyMembers.length}
               </p>
             )}
@@ -168,7 +168,7 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
               <div 
                 key={guest.id} 
                 // Show only current card on mobile, add animation, show all on larger screens (md breakpoint)
-                className={`${index === currentGuestCardIndex ? 'block animate-subtle-fade-in' : 'hidden md:block'} rsvp-guest-card bg-gray-700/90 p-5 rounded-lg shadow-lg mb-6 last:mb-0`}
+                className={`${index === currentGuestCardIndex ? 'block animate-subtle-fade-in' : 'hidden'} rsvp-guest-card bg-gray-700/90 p-5 rounded-lg shadow-lg mb-6 last:mb-0`}
               >
                 <h4 className="text-xl font-semibold text-white mb-4 border-b border-gray-600 pb-2">
                   {guest.firstName} {guest.lastName}
@@ -367,9 +367,9 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
             ))}
           </div>
 
-          {/* Mobile Navigation for Guest Cards - only if multiple guests */}
+          {/* Mobile Navigation for Guest Cards - now for all views if multiple guests */}
           {selectedParty.partyMembers.length > 1 && (
-            <div className="flex justify-between items-center mt-4 md:hidden"> 
+            <div className="flex justify-between items-center mt-4">
               <button
                 onClick={() => setCurrentGuestCardIndex(prev => Math.max(0, prev - 1))}
                 disabled={currentGuestCardIndex === 0}
