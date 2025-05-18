@@ -613,7 +613,7 @@ body {
   cursor: pointer;
   transition: transform 0.3s ease-in-out; /* For hover effect */
   position: relative; /* Needed if we add pseudo-elements for more complex animations later */
-  animation: pulse-attention 2s ease-out 0.5s 2; /* name duration timing-function delay iteration-count */
+  animation: pulse-attention 1.5s ease-out 0.5s 1; /* Iteration count changed from 2 to 1 */
 }
 
 .event-image-clickable:hover {
