@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -28,6 +29,7 @@ interface SiteHeaderProps {
 }
 
 export default function SiteHeader({ className }: SiteHeaderProps) {
+  const currentPath = usePathname();
   // Combine base classes with any passed className
   const headerClasses = `gallery-header relative ${className || ''}`.trim();
 
@@ -47,6 +49,14 @@ export default function SiteHeader({ className }: SiteHeaderProps) {
       
       {/* Center Group: Desktop Navigation - Adjusted spacing */}
       <nav className="hidden lg:absolute lg:left-1/2 lg:top-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2 lg:flex items-center space-x-12">
+        {currentPath !== '/' && (
+          <Link
+            href="/"
+            className="text-base font-semibold uppercase tracking-wider text-white hover:text-rust-light transition-colors"
+          >
+            HOME
+          </Link>
+        )}
         {navLinks.map((link) => (
           <Link
             key={link.href}

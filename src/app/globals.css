@@ -477,7 +477,7 @@ body {
     max-width: none; /* Allow percentage width */
     height: 100px; /* Consistent height */
     object-position: center center; /* Ensure consistency */
-    /* transform: scale(1.75); */ /* Removed scale */
+    /* transform: scale(1.75); /* Removed scale */
     /* transform-origin: center bottom; is inherited */
   }
 }
@@ -508,8 +508,9 @@ body {
   }
 
   .gallery-main {
-    padding-top: 120px; /* Keep consistent with mobile or adjust if header changes for desktop */
+    padding-top: 20px; /* Adjusted from 80px, total reduction 100px from original 120px */
     padding-bottom: 150px; /* Adjust for desktop bench height */
+    justify-content: flex-start; /* Added to align content to top */
   }
 
   .framed-artwork {
@@ -526,6 +527,19 @@ body {
 
   .gallery-main-story {
     justify-content: flex-start !important; /* Align to top on desktop, with !important */
+  }
+
+  /* Desktop Styles for Events Page (Two Columns) */
+  .events-list {
+    flex-direction: row;
+    justify-content: space-around; /* Distributes space around the two items */
+    align-items: flex-start; /* Aligns the top of the items if they have different heights */
+  }
+
+  .event-item {
+    width: 49%; /* Adjusted from 48% to make items even closer */
+    max-height: 75vh; /* Allow items to be reasonably tall on desktop */
+    margin-bottom: 0; /* Vertical margin between items not needed when side-by-side */
   }
 }
 
@@ -1095,8 +1109,22 @@ body {
   flex-shrink: 0;
 }
 
-/* RSVP Form Padding Adjustments */
+/* Desktop Styles for Events Page - Relocated for Specificity */
+@media (min-width: 1024px) {
+  .events-list {
+    flex-direction: row;
+    justify-content: space-around; /* Distributes space around the two items */
+    align-items: flex-start; /* Aligns the top of the items if they have different heights */
+  }
 
+  .event-item {
+    width: 48%; /* Adjusted from 45% to make items closer */
+    max-height: 75vh; /* Allow items to be reasonably tall on desktop */
+    margin-bottom: 0; /* Vertical margin between items not needed when side-by-side */
+  }
+}
+
+/* RSVP Form Padding Adjustments */
 .rsvp-form-container .bg-gray-800\/80 {
   max-height: 65vh;
   padding-top: 1rem;

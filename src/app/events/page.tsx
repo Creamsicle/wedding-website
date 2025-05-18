@@ -104,8 +104,8 @@ export default function EventsNewPage() {
                     <Info size={28} color="white" strokeWidth={1.5} />
                   </div>
                 )}
-                <div className={`click-svg-overlay ${index === 0 ? 'animate-tap-first' : 'animate-tap-second'}`}>
-                  <Image src="/click.svg" alt="Click indicator" width={50} height={50} />
+                <div className="clickable-image-hint">
+                  <Image src="/click.svg" alt="Click hint" width={50} height={50} />
                 </div>
               </div>
               <Image src={event.plaque} alt={event.altPlaque} width={300} height={100} className="plaque-image" />
