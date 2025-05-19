@@ -164,6 +164,18 @@ export default function StoryNewPage() {
     // The useEffect for scroll check will run after this state update
   };
 
+  // New function to toggle overlay visibility
+  const toggleOverlay = () => {
+    if (isOverlayVisible) {
+      setIsOverlayVisible(false);
+    } else {
+      // Ensure currentStory is available before calling handleImageClick
+      if (currentStory) {
+        handleImageClick(currentStory.description);
+      }
+    }
+  };
+
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation(); // Prevent click from bubbling to framed-artwork-story
     setIsOverlayVisible(false);
@@ -234,9 +246,9 @@ export default function StoryNewPage() {
         >
           <div className="story-content-container">
             <div className="arrow left-arrow" onClick={prevItem}>
-              <ChevronLeft size={36} />
+              <ChevronLeft size={60} />
             </div>
-            <div className="framed-artwork-story" onClick={() => !isOverlayVisible && handleImageClick(currentStory.description)}>
+            <div className="framed-artwork-story" onClick={toggleOverlay}>
               <Image 
                 key={currentStory.id}
                 src={currentStory.src} 
@@ -265,11 +277,14 @@ export default function StoryNewPage() {
               )}
             </div>
             <div className="arrow right-arrow" onClick={nextItem}>
-              <ChevronRight size={36} />
+              <ChevronRight size={60} />
             </div>
           </div>
 
-          <div className="plaque-story">
+          <div 
+            className="plaque-story" 
+            onClick={toggleOverlay}
+          >
             <h3>{currentStory.title}</h3>
             <p>{currentStory.details}</p>
           </div>

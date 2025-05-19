@@ -39,7 +39,7 @@ export default function SiteHeader({ className }: SiteHeaderProps) {
       <div className="flex flex-shrink-0 items-center z-10">
         <div className="logo">
           <Link href="/">
-            <Image src="/logow.png" alt="Logo" width={50} height={50} className="header-logo-image lg:drop-shadow-sm" />
+            <Image src="/logow1.png" alt="Logo" width={50} height={50} className="header-logo-image lg:drop-shadow-sm" />
           </Link>
         </div>
         {/* Title - Desktop: Part of Left Group, Mobile: Centered (handled below) */}

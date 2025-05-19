@@ -372,15 +372,14 @@ body {
   flex-grow: 1; 
   display: flex;
   flex-direction: column;
-  justify-content: center; 
+  justify-content: flex-start; 
   align-items: center;
-  overflow: hidden !important; /* Reinforce no scrolling, add !important */
+  overflow: hidden; /* Changed back from overflow-y: auto to prevent scrolling */
   position: relative; 
   padding: 1rem; /* Default padding */
-  /* padding-top is implicitly handled by header's bottom margin, or add explicit if header height varies */
   width: 100%; 
   margin-bottom: 80px; /* Space for fixed bench (adjust if bench height changes) */
-  touch-action: none; /* Disable touch actions here too */
+  touch-action: none; 
   box-sizing: border-box;
 }
 
@@ -388,7 +387,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* Vertically center frame & plaque */
+  justify-content: flex-start; /* Changed from center */
   position: relative; 
   width: 100%;
   flex-grow: 1; /* Allow this to fill gallery-main's flex space */
@@ -404,11 +403,27 @@ body {
   z-index: 20; /* High z-index to be on top */
 }
 
+/* New class for HomePage content block */
+.home-content-block {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Changed from space-between to center content */
+}
+
+/* New class for Home Page plaque wrapper for spacing */
+.home-plaque-wrapper {
+  margin-top: 2rem; /* Consistent spacing */
+  flex-shrink: 0; /* Plaque takes its natural height */
+}
+
 /* Base style for the hero image container for Next.js Image with fill prop */
 .hero-image-container {
-  width: 100%; /* Take full width of its parent */
-  height: 55vh; /* Default height, adjust as needed for mobile */
-  position: relative; /* Already set inline, but good to have in CSS if it wasn't */
+  /* height: 55vh; Removed fixed vh height */
+  flex-grow: 1; /* Allow image container to take up available space */
+  min-height: 0; /* Necessary for flex-grow to shrink properly */
+  width: 100%; 
+  position: relative; 
 }
 
 .framed-artwork {
@@ -518,36 +533,34 @@ body {
   }
 
   .gallery-main {
-    padding-top: 20px; /* Adjusted from 80px, total reduction 100px from original 120px */
-    padding-bottom: 150px; /* Adjust for desktop bench height */
-    justify-content: flex-start; /* Added to align content to top */
+    padding-top: 20px;
+    padding-bottom: 1rem; /* Changed from 150px */
+    margin-bottom: 150px; /* Added to account for 150px fixed bench */
+    justify-content: flex-start;
   }
 
   /* Add this new rule for homepage artwork display on desktop */
   .artwork-display {
     justify-content: flex-start; /* Align frame and plaque to the top */
     padding-top: 2vh; /* Add some padding from the top of gallery-main */
-    max-height: calc(100vh - 230px); /* Attempt to constrain overall height (60px lights + 150px bench + 20px gallery-main padding-top approx) */
+    /* max-height: calc(100vh - 230px); REMOVED THIS LINE */
     /* flex-direction: column is inherited from base style */
   }
 
   /* Styles for the container of the fill-mode hero image */
   .artwork-display .hero-image-container {
-    max-width: 450px; /* Corresponds to lg:max-w-[450px] on frame-and-plaque-container */
-    width: 100%; /* Ensure it takes the width of its parent up to max-width */
-    height: 50vh; /* Adjusted height for the image container */
-    margin-bottom: 1vh; 
-    flex-shrink: 0; 
-    /* position: relative; is set inline on the element */
+    max-width: 650px; /* Increased from 540px for larger desktop image */
+    width: 100%; 
+    /* height: 60vh; Removed to allow flex-grow from base to manage height */
+    margin-bottom: 0; /* Ensure no margin so plaque spacing is solely from home-plaque-wrapper */
   }
 
   .plaque-image {
     max-width: 150px;
   }
   .plaque-image-home {
-    max-width: 72px; /* Reduced from 90px (approx 20% reduction) */
-    margin-top: 1vh; /* Add some space above the home plaque */
-    flex-shrink: 0; /* Prevent plaque from shrinking */
+    max-width: 60px; /* Reduced size, was 72px */
+    flex-shrink: 0; /* Ensure it doesn't shrink if its wrapper is constrained */
   }
 
   .artwork-image-story {
@@ -556,6 +569,9 @@ body {
 
   .gallery-main-story {
     justify-content: flex-start !important; /* Align to top on desktop, with !important */
+    padding-bottom: 150px; /* Space for desktop bench */
+    margin-bottom: 0; /* Remove margin if any */
+    overflow-y: auto; /* Ensure scrolling if needed */
   }
 
   /* Desktop Styles for Events Page (Two Columns) */
@@ -584,7 +600,14 @@ body {
   }
 }
 
-/* === End of Mobile Gallery Specific Styles === */
+/* Add new media query for tablet bench spacing for gallery-main-story */
+@media (min-width: 400px) and (max-width: 1023px) {
+  .gallery-main-story {
+    padding-bottom: 100px; /* Space for tablet bench */
+    margin-bottom: 0; /* Remove margin if any */
+    overflow-y: auto; /* Ensure scrolling if needed for consistency */
+  }
+}
 
 /* Styles for .menu-icon-button and .menu-actual-icon remain */
 
@@ -613,9 +636,8 @@ body {
   flex-direction: column;
   align-items: center; 
   width: 100%;
-  justify-content: center; /* Center items, adjust margins on items for spacing */
-  flex-grow: 1; 
-  overflow: hidden; 
+  justify-content: space-around; /* Changed from flex-start, to distribute space for items */
+  height: 100%; /* Fill parent (.gallery-main) */
 }
 
 .event-item {
@@ -623,22 +645,36 @@ body {
   flex-direction: column;
   align-items: center;
   width: 90%; 
-  margin-bottom: 3vh; /* Increased spacing between event items */
-  /* max-height: 40vh; /* Optional: constraint if still needed */
+  margin-bottom: 2vh; 
+  flex-shrink: 1;   /* Corrected to 1 to allow shrinking */
+  flex-grow: 1;   
+  flex-basis: 0;  
+  min-height: 0;  
+  /* max-height: calc( (100vh - 60px - 70px - 80px - 4vh) / 2 - 2vh ); Removed */
 }
 
 .event-item:last-child {
-  margin-bottom: 1vh; /* Less margin for the last item to pull it up from bench */
+  margin-bottom: 0;
 }
 
 .event-item .framed-artwork {
-  max-width: 70%; 
-  max-height: 20vh; /* Further reduced max-height */
-  margin-bottom: 1vh; /* Space between frame and plaque */
+  max-width: 70%; /* Or other desired width */
+  /* max-height: 20vh;  Removed fixed vh */
+  margin-bottom: 1vh; 
+  flex-grow: 1; /* Image frame takes most of the item's space */
+  min-height: 0; /* Allow image frame to shrink */
+  width: 100%; /* Ensure it uses available width from parent for centering */
+  display: flex; /* Ensure image inside can be centered */
+  justify-content: center;
+  align-items: center;
 }
 
 .event-item .plaque-image {
-  max-height: 4vh; /* Further reduced max-height */
+  /* max-height: 4vh; Removed fixed vh */
+  flex-shrink: 0; /* Plaque takes its natural height */
+  width: auto; /* Adjust as needed, e.g., max-width: 60% */
+  max-width: 60%;
+  object-fit: contain;
 }
 
 .info-icon-overlay {
@@ -745,24 +781,26 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* Default to center for mobile */
+  justify-content: flex-start; /* Changed from center */
   position: relative;
   width: 100%; 
   flex-grow: 1; 
-  overflow: hidden; 
-  margin-bottom: 80px; 
+  overflow-y: auto; /* Changed from hidden */
   padding: 1rem; 
+  padding-bottom: 80px; /* Space for mobile bench */
+  margin-bottom: 0; /* Use padding for bench space */
+  /* touch-action and box-sizing will be inherited or should be here */
   box-sizing: border-box;
+  touch-action: pan-y; /* Allow vertical scroll */
 }
 
 .story-content-container {
   display: flex;
-  align-items: center; /* Vertically align arrows and frame */
-  justify-content: center; /* Horizontally center arrows and frame */
-  z-index: 1;
+  align-items: center; 
+  justify-content: center; /* Changed from space-between to group arrows and image */
   width: 100%;
-  max-height: 100%; /* Ensure it doesn't overflow .gallery-main-story before bench margin */
-  /* padding-left/right are okay if needed, but arrows provide spacing */
+  position: relative; 
+  /* flex-grow: 1; Removed */ 
 }
 
 .arrow {
@@ -776,29 +814,31 @@ body {
 }
 
 .left-arrow {
-  margin-right: 10px; /* Reduced margin */
+  margin-right: 24px; /* Increased margin */
 }
 
 .right-arrow {
-  margin-left: 10px; /* Reduced margin */
+  margin-left: 24px; /* Increased margin */
 }
 
 .framed-artwork-story {
   border: 22px solid #333; 
   border-radius: 5px;
   padding: 8px; 
-  background-color: transparent; /* Changed from white */
-  position: relative; 
-  /* Added inset shadow for 8px white border, kept existing outer shadow */
+  background-color: transparent;
   box-shadow: inset 0 0 0 8px white, 0 8px 16px rgba(0,0,0,0.25); 
+  box-sizing: border-box; 
+  position: relative;
   display: flex; 
   align-items: center; 
-  justify-content: center; 
-  max-width: 70%; 
-  align-self: center; /* Added to prevent vertical stretching in parent flex */
-  flex-shrink: 0; 
-  transition: width 0.4s ease-in-out, height 0.4s ease-in-out;
-  box-sizing: border-box; 
+  justify-content: center;
+  max-width: 70%; /* Or whatever it was, this can be adjusted */
+  /* max-height: 100%; This line remains removed or commented out */
+  align-self: center; /* This was in the original, might be important */
+  flex-shrink: 0; /* This was in the original */
+  transition: width 0.4s ease-in-out, height 0.4s ease-in-out; /* This was in the original */
+  cursor: pointer; /* Added back if it was removed, or ensure it's present */
+  margin: 0 auto; /* If it centers, keep it */
 }
 
 .artwork-image-story {
@@ -833,6 +873,7 @@ body {
   z-index: 1;
   color: #333; 
   flex-shrink: 0;
+  cursor: pointer; /* Added to indicate clickability */
 }
 
 .plaque-story h3 {
@@ -859,15 +900,17 @@ body {
 @media (max-width: 768px) {
   .gallery-main-story {
     padding-top: 0;
-    padding-bottom: 0;
+    /* padding-bottom: 0; Removed to allow base bench padding */
+    justify-content: center; /* Center content vertically if space allows */
   }
 
   .story-content-container {
     margin-top: 0;
+    justify-content: center; /* Group arrows and image centrally */
   }
 
   .arrow {
-    font-size: 2rem;
+    font-size: 3.5rem; /* Increased size for mobile */
   }
   .left-arrow {
     margin-right: 5px;
@@ -917,12 +960,18 @@ body {
   .gallery-main-story .bench-container {
     margin-top: 2vh;
   }
+
+  .home-plaque-wrapper {
+    margin-bottom: 2vh; /* Add space below plaque on mobile */
+  }
 }
 
 @media (max-width: 480px) {
   .gallery-main-story {
     padding-top: 0;
-    padding-bottom: 0;
+    /* padding-bottom: 0; Removed to allow base bench padding */
+    /* justify-content will be inherited from max-width: 768px if not specified, or can be reiterated */
+    justify-content: center; /* Center content vertically if space allows */
   }
   .story-content-container {
     margin-top: 0;
@@ -933,7 +982,7 @@ body {
     max-width: calc(100% - 50px);
   }
   .arrow {
-    font-size: 1.8rem;
+    font-size: 3rem; /* Slightly smaller for very small screens, but still larger */
   }
   .plaque-story {
     margin-top: 8px;
@@ -1067,13 +1116,15 @@ body {
   touch-action: auto !important;
   background-attachment: scroll !important;
   -webkit-overflow-scrolling: touch !important;
+  padding-top: 60px; /* Added to create space for where lights would be */
 }
 
 .faq-page .gallery-header {
   position: sticky !important;
-  top: 0 !important;
-  margin-top: 0 !important; 
+  top: 0 !important; /* Sticks to the top of the padded .faq-page.mobile-gallery-container */
+  margin-top: 0 !important; /* Header itself doesn't need margin if parent has padding */
   z-index: 100; 
+  /* background-color: var(--navy-primary); Removed for transparency */
 }
 
 .faq-page .lights-image,
@@ -1108,9 +1159,8 @@ body {
   flex-direction: column;
   align-items: center; 
   width: 100%;
-  justify-content: center;
-  flex-grow: 1; 
-  overflow: hidden;
+  justify-content: space-around; /* Ensure this matches */
+  height: 100%; /* Ensure this matches */
 }
 
 .event-item {
@@ -1118,9 +1168,12 @@ body {
   flex-direction: column;
   align-items: center;
   width: 90%; 
-  margin-bottom: 2vh;
-  flex-shrink: 0;
-  max-height: calc( (100vh - 60px - 70px - 80px - 4vh) / 2 - 2vh );
+  margin-bottom: 2vh; /* This margin might be an issue with height:100%/flex-basis */
+  flex-shrink: 1;   /* Corrected to 1 to allow shrinking */
+  flex-grow: 1;   
+  flex-basis: 0;  
+  min-height: 0;  
+  /* max-height: calc( (100vh - 60px - 70px - 80px - 4vh) / 2 - 2vh ); Removed */
 }
 
 .event-item:last-child {
@@ -1129,23 +1182,26 @@ body {
 
 .event-item .framed-artwork {
   max-width: 65%; 
-  max-height: 60%;
+  /* max-height: 60%; Removed percentage based on item, now using flex-grow */
   margin-bottom: 1vh; 
   flex-grow: 1;
+  min-height: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
 }
 
-.event-item .artwork-frame {
+.event-item .artwork-frame { /* Image itself */
   max-width: 100%;
-  max-height: 100%;
+  max-height: 100%; /* Fill the .framed-artwork container */
   object-fit: contain;
 }
 
 .event-item .plaque-image {
-  max-height: 25%;
+  /* max-height: 25%; Removed percentage based on item */
   width: auto;
+  max-width: 60%; /* Example */
   object-fit: contain;
   flex-shrink: 0;
 }
@@ -1224,7 +1280,7 @@ body {
 
 /* New class for homepage plaque to allow right alignment */
 .plaque-image-home {
-  max-width: 32%; /* Reduced from 40% (approx 20% reduction) */
+  max-width: 25%; /* Reduced from 32% */
   height: auto;   /* Maintain aspect ratio */
   object-fit: contain;
   display: inline-block; /* Allow it to size to content within flex justify-end */
