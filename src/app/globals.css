@@ -124,6 +124,10 @@
   }
   body {
     @apply bg-[#0A1A3B] text-white font-sans;
+    padding-top: env(safe-area-inset-top);
+    padding-right: env(safe-area-inset-right);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
   }
 }
 
@@ -309,26 +313,27 @@ body, html {
   margin: 0;
   padding: 0;
   width: 100vw; /* Ensure full viewport width */
-  height: 100vh; /* Ensure full viewport height */
-  overflow: hidden !important; /* Prevent all scrolling on html and body, add !important */
+  /* height: 100vh; */ /* Ensure full viewport height - Commented out, can conflict with min-h-screen and dynamic viewports */
+  /* overflow: hidden !important; */ /* Prevent all scrolling on html and body, add !important - Commented out, too aggressive globally */
   font-family: sans-serif; 
-  -webkit-overflow-scrolling: auto; /* Attempt to disable iOS momentum scroll before hiding */
-  touch-action: none; /* Disable panning/zooming touch actions */
+  /* -webkit-overflow-scrolling: auto; */ /* Attempt to disable iOS momentum scroll before hiding */
+  /* touch-action: none; */ /* Disable panning/zooming touch actions - Might be too restrictive globally */
 }
 
-body {
-  position: fixed; /* Fix body to viewport to help prevent mobile scroll quirks */
-  top: 0;
-  left: 0;
-  background: none !important; /* Attempt to override Tailwind's body background */
+body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section and is problematic globally */
+  /* position: fixed; */ /* Fix body to viewport to help prevent mobile scroll quirks - Commented out, major implications */
+  /* top: 0; */
+  /* left: 0; */
+  /* background: none !important; */ /* Attempt to override Tailwind's body background - Commented out */
 }
 
 .mobile-gallery-container {
   display: flex;
   flex-direction: column;
-  height: 100vh; 
+  /* height: 100vh; */ /* Replaced with dynamic vh */
+  height: calc(var(--dynamic-vh, 1vh) * 100);
   width: 100vw; 
-  overflow: hidden !important; /* Reinforce no scrolling, add !important */
+  overflow: hidden !important; 
   position: relative; 
   background-image: url('/images/home-bg2.png'); /* Changed to home-bg2.png */
   background-size: cover;
@@ -374,7 +379,7 @@ body {
   flex-direction: column;
   justify-content: flex-start; 
   align-items: center;
-  overflow: hidden; /* Changed back from overflow-y: auto to prevent scrolling */
+  overflow: hidden; /* Restored */
   position: relative; 
   padding: 1rem; /* Default padding */
   width: 100%; 
@@ -429,7 +434,8 @@ body {
 .framed-artwork {
   position: relative; 
   max-width: 75%; 
-  max-height: 55vh; 
+  /* max-height: 55vh; */ /* Replaced with dynamic vh */
+  max-height: calc(var(--dynamic-vh, 1vh) * 55);
   z-index: 5; 
   display: flex; 
   align-items: center; 
@@ -446,7 +452,8 @@ body {
 
 .plaque-image { 
   max-width: 60%; 
-  max-height: 8vh; 
+  /* max-height: 8vh; */ /* Replaced with dynamic vh */
+  max-height: calc(var(--dynamic-vh, 1vh) * 8);
   height: auto; 
   display: block; 
   margin-left: auto; 
@@ -846,7 +853,8 @@ body {
   width: auto; 
   height: auto; 
   max-width: 100%;   /* 100% of parent .framed-artwork-story content box */
-  max-height: 55vh;  /* Direct viewport height constraint on image */
+  /* max-height: 55vh; */  /* Replaced with dynamic vh */
+  max-height: calc(var(--dynamic-vh, 1vh) * 55);
   object-fit: contain; 
 }
 
@@ -1253,7 +1261,7 @@ body {
 
 /* RSVP Form Padding Adjustments */
 .rsvp-form-container .bg-gray-800\/80 {
-  max-height: 65vh;
+  max-height: 65vh; /* Restored from previous state before -webkit-fill-available */
   padding-top: 1rem;
   padding-bottom: 1rem;
 }

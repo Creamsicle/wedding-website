@@ -181,7 +181,10 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
       ) : (
         <div className="space-y-6">
           {/* Scrollable container for all guest cards */}
-          <div className="bg-gray-800/80 p-4 md:p-6 rounded-xl shadow-xl max-h-[70vh] overflow-y-auto styled-scrollbar space-y-6">
+          <div 
+            className="bg-gray-800/80 p-4 md:p-6 rounded-xl shadow-xl overflow-y-auto styled-scrollbar space-y-6"
+            style={{ maxHeight: 'calc(var(--dynamic-vh, 1vh) * 70)' }}
+          >
             <h3 className="text-2xl font-bold text-white mb-2 text-center">
               RSVP for Your Party
             </h3>

@@ -1,7 +1,11 @@
+// 'use client'; // No longer a client component
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+// import { useDynamicViewportHeight } from "@/lib/hooks/useDynamicViewportHeight"; // No longer called here
+import { DynamicViewportHeightInitializer } from "@/components/layout/DynamicViewportHeightInitializer"; // Import the new component
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,9 +26,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // useDynamicViewportHeight(); // No longer called here
+
   return (
     <html lang="en">
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+      </head>
       <body className={cn(inter.className, "min-h-screen bg-background")}>
+        <DynamicViewportHeightInitializer /> {/* Use the new component here */}
         <main>{children}</main>
       </body>
     </html>

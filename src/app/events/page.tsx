@@ -123,8 +123,11 @@ export default function EventsNewPage() {
         {selectedEvent && (
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogContent 
-              className="event-dialog-content flex flex-col my-4 mx-2 sm:mx-auto sm:max-w-[600px] z-[1050] bg-gray-800/90 p-4 md:p-6 rounded-xl shadow-xl text-white styled-scrollbar max-h-[calc(100vh-4rem)]"
-              style={{ "--muted-foreground": "0 0% 100%" } as React.CSSProperties}
+              className="event-dialog-content flex flex-col my-4 mx-2 sm:mx-auto sm:max-w-[600px] z-[1050] bg-gray-800/90 p-4 md:p-6 rounded-xl shadow-xl text-white styled-scrollbar"
+              style={{
+                maxHeight: `calc( (var(--dynamic-vh, 1vh) * 100) - 4rem )`,
+                "--muted-foreground": "0 0% 100%"
+              } as React.CSSProperties}
             >
               <DialogHeader>
                 <DialogTitle className="text-2xl font-semibold text-white">{selectedEvent.title}</DialogTitle>
