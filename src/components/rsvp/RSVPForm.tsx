@@ -50,8 +50,20 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
         mealPreference: 'Chicken' as const,
         dietaryRestrictions: '',
         needsRideToHinduCeremony: false,
+        hinduCeremonyRideDetails: '',
         needsRideToWedding: false,
+        weddingRideDetails: '',
         canOfferRide: false,
+        rideOfferDetails: '',
+        email: '',
+        physicalAddress: {
+          street: '',
+          city: '',
+          province: '',
+          postalCode: '',
+          country: ''
+        },
+        otherComments: ''
       }
     }), {});
     setResponses(initialResponses);
@@ -66,6 +78,23 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
         [field]: value
       }
     }));
+  };
+
+  const handleAddressChange = (guestId: string, field: keyof NonNullable<RSVPResponse['physicalAddress']>, value: string) => {
+    setResponses(prev => {
+      const currentGuestResponse = prev[guestId];
+      const existingAddress = currentGuestResponse.physicalAddress || { street: '', city: '', province: '', postalCode: '', country: '' };
+      return {
+        ...prev,
+        [guestId]: {
+          ...currentGuestResponse,
+          physicalAddress: {
+            ...existingAddress,
+            [field]: value
+          }
+        }
+      };
+    });
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -200,6 +229,45 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
                     </div>
                   </div>
 
+                  {responses[guest.id]?.hinduCeremonyAttending && (
+                    <div className="pl-6 space-y-4 mt-3 border-l-2 border-rust-500/50">
+                      <div>
+                        <label className="block text-[var(--rust-light)] mb-2">
+                          Do you need a ride to the Brampton Hindu ceremony?
+                        </label>
+                        <div className="space-x-4">
+                          <label className="inline-flex items-center">
+                            <input
+                              type="radio"
+                              checked={responses[guest.id]?.needsRideToHinduCeremony === true}
+                              onChange={() => handleResponseChange(guest.id, 'needsRideToHinduCeremony', true)}
+                              className="form-radio text-[var(--rust-primary)]"
+                            />
+                            <span className="ml-2 text-white">Yes</span>
+                          </label>
+                          <label className="inline-flex items-center">
+                            <input
+                              type="radio"
+                              checked={responses[guest.id]?.needsRideToHinduCeremony === false}
+                              onChange={() => handleResponseChange(guest.id, 'needsRideToHinduCeremony', false)}
+                              className="form-radio text-[var(--rust-primary)]"
+                            />
+                            <span className="ml-2 text-white">No</span>
+                          </label>
+                        </div>
+                        {responses[guest.id]?.needsRideToHinduCeremony && (
+                          <textarea
+                            value={responses[guest.id]?.hinduCeremonyRideDetails || ''}
+                            onChange={(e) => handleResponseChange(guest.id, 'hinduCeremonyRideDetails', e.target.value)}
+                            placeholder="Please provide details on where you're coming from"
+                            className="mt-2 w-full px-3 py-2 bg-[var(--navy-primary)] text-white rounded border border-[var(--rust-light)]"
+                            rows={3}
+                          />
+                        )}
+                      </div>
+                    </div>
+                  )}
+
                   <div>
                     <label className="block text-[var(--rust-light)] mb-2">
                       Will you attend the Saturday Wedding + Reception?
@@ -226,108 +294,7 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
                     </div>
                   </div>
 
-                  {responses[guest.id]?.weddingReceptionAttending && (
-                    <>
-                      <div>
-                        <label className="block text-[var(--rust-light)] mb-2">
-                          Meal Preference
-                        </label>
-                        <select
-                          value={responses[guest.id]?.mealPreference}
-                          onChange={(e) => handleResponseChange(guest.id, 'mealPreference', e.target.value)}
-                          className="w-full px-3 py-2 bg-[var(--navy-primary)] text-white rounded border border-[var(--rust-light)]"
-                        >
-                          <option value="Chicken">Chicken</option>
-                          <option value="Steak">Steak</option>
-                          <option value="Vegetarian Risotto">Vegetarian Risotto</option>
-                        </select>
-                      </div>
-
-                      <div>
-                        <label className="block text-[var(--rust-light)] mb-2">
-                          Dietary Restrictions or Allergies
-                        </label>
-                        <textarea
-                          value={responses[guest.id]?.dietaryRestrictions || ''}
-                          onChange={(e) => handleResponseChange(guest.id, 'dietaryRestrictions', e.target.value)}
-                          placeholder="Please list any dietary restrictions or allergies we should be aware of"
-                          className="w-full px-3 py-2 bg-[var(--navy-primary)] text-white rounded border border-[var(--rust-light)]"
-                          rows={2}
-                        />
-                      </div>
-                    </>
-                  )}
-
-                  <div>
-                    <label className="block text-[var(--rust-light)] mb-2">
-                      Do you need a ride to the Brampton Hindu ceremony?
-                    </label>
-                    <div className="space-x-4">
-                      <label className="inline-flex items-center">
-                        <input
-                          type="radio"
-                          checked={responses[guest.id]?.needsRideToHinduCeremony === true}
-                          onChange={() => handleResponseChange(guest.id, 'needsRideToHinduCeremony', true)}
-                          className="form-radio text-[var(--rust-primary)]"
-                        />
-                        <span className="ml-2 text-white">Yes</span>
-                      </label>
-                      <label className="inline-flex items-center">
-                        <input
-                          type="radio"
-                          checked={responses[guest.id]?.needsRideToHinduCeremony === false}
-                          onChange={() => handleResponseChange(guest.id, 'needsRideToHinduCeremony', false)}
-                          className="form-radio text-[var(--rust-primary)]"
-                        />
-                        <span className="ml-2 text-white">No</span>
-                      </label>
-                    </div>
-                    {responses[guest.id]?.needsRideToHinduCeremony && (
-                      <textarea
-                        value={responses[guest.id]?.hinduCeremonyRideDetails || ''}
-                        onChange={(e) => handleResponseChange(guest.id, 'hinduCeremonyRideDetails', e.target.value)}
-                        placeholder="Please provide details on where you're coming from"
-                        className="mt-2 w-full px-3 py-2 bg-[var(--navy-primary)] text-white rounded border border-[var(--rust-light)]"
-                        rows={3}
-                      />
-                    )}
-                  </div>
-
-                  <div>
-                    <label className="block text-[var(--rust-light)] mb-2">
-                      Do you need a ride to the Hamilton Wedding/Reception?
-                    </label>
-                    <div className="space-x-4">
-                      <label className="inline-flex items-center">
-                        <input
-                          type="radio"
-                          checked={responses[guest.id]?.needsRideToWedding === true}
-                          onChange={() => handleResponseChange(guest.id, 'needsRideToWedding', true)}
-                          className="form-radio text-[var(--rust-primary)]"
-                        />
-                        <span className="ml-2 text-white">Yes</span>
-                      </label>
-                      <label className="inline-flex items-center">
-                        <input
-                          type="radio"
-                          checked={responses[guest.id]?.needsRideToWedding === false}
-                          onChange={() => handleResponseChange(guest.id, 'needsRideToWedding', false)}
-                          className="form-radio text-[var(--rust-primary)]"
-                        />
-                        <span className="ml-2 text-white">No</span>
-                      </label>
-                    </div>
-                    {responses[guest.id]?.needsRideToWedding && (
-                      <textarea
-                        value={responses[guest.id]?.weddingRideDetails || ''}
-                        onChange={(e) => handleResponseChange(guest.id, 'weddingRideDetails', e.target.value)}
-                        placeholder="Please provide details on where you're coming from"
-                        className="mt-2 w-full px-3 py-2 bg-[var(--navy-primary)] text-white rounded border border-[var(--rust-light)]"
-                        rows={3}
-                      />
-                    )}
-                  </div>
-
+                  {/* Moved "Can you offer a ride" question here */}
                   <div>
                     <label className="block text-[var(--rust-light)] mb-2">
                       Can you offer a ride to either event?
@@ -362,6 +329,149 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
                       />
                     )}
                   </div>
+
+                  {responses[guest.id]?.weddingReceptionAttending && (
+                    <div className="pl-6 space-y-4 mt-3 border-l-2 border-rust-500/50">
+                      <div>
+                        <label className="block text-[var(--rust-light)] mb-2">
+                          Meal Preference
+                        </label>
+                        <select
+                          value={responses[guest.id]?.mealPreference}
+                          onChange={(e) => handleResponseChange(guest.id, 'mealPreference', e.target.value)}
+                          className="w-full px-3 py-2 bg-[var(--navy-primary)] text-white rounded border border-[var(--rust-light)]"
+                        >
+                          <option value="Chicken">Chicken</option>
+                          <option value="Steak">Steak</option>
+                          <option value="Vegetarian Risotto">Vegetarian Risotto</option>
+                        </select>
+                      </div>
+
+                      <div>
+                        <label className="block text-[var(--rust-light)] mb-2">
+                          Dietary Restrictions or Allergies
+                        </label>
+                        <textarea
+                          value={responses[guest.id]?.dietaryRestrictions || ''}
+                          onChange={(e) => handleResponseChange(guest.id, 'dietaryRestrictions', e.target.value)}
+                          placeholder="Please list any dietary restrictions or allergies we should be aware of"
+                          className="w-full px-3 py-2 bg-[var(--navy-primary)] text-white rounded border border-[var(--rust-light)]"
+                          rows={2}
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[var(--rust-light)] mb-2">
+                          Do you need a ride to the Hamilton Wedding/Reception?
+                        </label>
+                        <div className="space-x-4">
+                          <label className="inline-flex items-center">
+                            <input
+                              type="radio"
+                              checked={responses[guest.id]?.needsRideToWedding === true}
+                              onChange={() => handleResponseChange(guest.id, 'needsRideToWedding', true)}
+                              className="form-radio text-[var(--rust-primary)]"
+                            />
+                            <span className="ml-2 text-white">Yes</span>
+                          </label>
+                          <label className="inline-flex items-center">
+                            <input
+                              type="radio"
+                              checked={responses[guest.id]?.needsRideToWedding === false}
+                              onChange={() => handleResponseChange(guest.id, 'needsRideToWedding', false)}
+                              className="form-radio text-[var(--rust-primary)]"
+                            />
+                            <span className="ml-2 text-white">No</span>
+                          </label>
+                        </div>
+                        {responses[guest.id]?.needsRideToWedding && (
+                          <textarea
+                            value={responses[guest.id]?.weddingRideDetails || ''}
+                            onChange={(e) => handleResponseChange(guest.id, 'weddingRideDetails', e.target.value)}
+                            placeholder="Please provide details on where you're coming from"
+                            className="mt-2 w-full px-3 py-2 bg-[var(--navy-primary)] text-white rounded border border-[var(--rust-light)]"
+                            rows={3}
+                          />
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* New Fields: Email, Physical Address, Other Comments */}
+                  <div>
+                    <label htmlFor={`email-${guest.id}`} className="block text-[var(--rust-light)] mb-2">
+                      Email Address (for confirmation)
+                    </label>
+                    <input
+                      type="email"
+                      id={`email-${guest.id}`}
+                      value={responses[guest.id]?.email || ''}
+                      onChange={(e) => handleResponseChange(guest.id, 'email', e.target.value)}
+                      placeholder="your.email@example.com"
+                      className="w-full px-3 py-2 bg-[var(--navy-primary)] text-white rounded border border-[var(--rust-light)]"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-[var(--rust-light)] mb-2">
+                      Physical Address
+                    </label>
+                    <div className="space-y-2">
+                      <input
+                        type="text"
+                        value={responses[guest.id]?.physicalAddress?.street || ''}
+                        onChange={(e) => handleAddressChange(guest.id, 'street', e.target.value)}
+                        placeholder="Street Address"
+                        className="w-full px-3 py-2 bg-[var(--navy-primary)] text-white rounded border border-[var(--rust-light)]"
+                      />
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <input
+                          type="text"
+                          value={responses[guest.id]?.physicalAddress?.city || ''}
+                          onChange={(e) => handleAddressChange(guest.id, 'city', e.target.value)}
+                          placeholder="City"
+                          className="w-full px-3 py-2 bg-[var(--navy-primary)] text-white rounded border border-[var(--rust-light)]"
+                        />
+                        <input
+                          type="text"
+                          value={responses[guest.id]?.physicalAddress?.province || ''}
+                          onChange={(e) => handleAddressChange(guest.id, 'province', e.target.value)}
+                          placeholder="Province/State"
+                          className="w-full px-3 py-2 bg-[var(--navy-primary)] text-white rounded border border-[var(--rust-light)]"
+                        />
+                      </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <input
+                          type="text"
+                          value={responses[guest.id]?.physicalAddress?.postalCode || ''}
+                          onChange={(e) => handleAddressChange(guest.id, 'postalCode', e.target.value)}
+                          placeholder="Postal/Zip Code"
+                          className="w-full px-3 py-2 bg-[var(--navy-primary)] text-white rounded border border-[var(--rust-light)]"
+                        />
+                        <input
+                          type="text"
+                          value={responses[guest.id]?.physicalAddress?.country || ''}
+                          onChange={(e) => handleAddressChange(guest.id, 'country', e.target.value)}
+                          placeholder="Country"
+                          className="w-full px-3 py-2 bg-[var(--navy-primary)] text-white rounded border border-[var(--rust-light)]"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label htmlFor={`otherComments-${guest.id}`} className="block text-[var(--rust-light)] mb-2">
+                      Any other comments or notes you&apos;d like to leave for the couple?
+                    </label>
+                    <textarea
+                      id={`otherComments-${guest.id}`}
+                      value={responses[guest.id]?.otherComments || ''}
+                      onChange={(e) => handleResponseChange(guest.id, 'otherComments', e.target.value)}
+                      placeholder="Your notes here..."
+                      className="w-full px-3 py-2 bg-[var(--navy-primary)] text-white rounded border border-[var(--rust-light)]"
+                      rows={3}
+                    />
+                  </div>
+                  {/* End of New Fields */}
                 </div>
               </div>
             ))}

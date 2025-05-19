@@ -129,14 +129,14 @@ export default function StoryNewPage() {
   const nextItem = useCallback(() => {
     setIsOverlayVisible(false); // Hide overlay when navigating
     setCurrentIndex((prevIndex) => (prevIndex + 1) % storyItems.length);
-  }, [storyItems]);
+  }, []);
 
   const prevItem = useCallback(() => {
     setIsOverlayVisible(false); // Hide overlay when navigating
     setCurrentIndex((prevIndex) =>
       prevIndex === 0 ? storyItems.length - 1 : prevIndex - 1
     );
-  }, [storyItems]);
+  }, []);
 
   // Add global keyboard navigation for arrow keys
   useEffect(() => {

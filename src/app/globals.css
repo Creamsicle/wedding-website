@@ -964,6 +964,10 @@ body {
   .home-plaque-wrapper {
     margin-bottom: 2vh; /* Add space below plaque on mobile */
   }
+
+  .events-list {
+    padding-bottom: 2vh; /* Add space below the last event item on mobile */
+  }
 }
 
 @media (max-width: 480px) {

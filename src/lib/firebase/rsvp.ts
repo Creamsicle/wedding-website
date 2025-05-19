@@ -25,6 +25,15 @@ export interface RSVPResponse {
   weddingRideDetails?: string;
   canOfferRide: boolean;
   rideOfferDetails?: string;
+  email?: string;
+  physicalAddress?: {
+    street: string;
+    city: string;
+    province: string;
+    postalCode: string;
+    country: string;
+  };
+  otherComments?: string;
   timestamp: Date;
 }
 
