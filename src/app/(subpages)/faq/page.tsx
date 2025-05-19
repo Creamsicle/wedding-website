@@ -1,17 +1,16 @@
 'use client'; // Required for using hooks like useState
 
 import Image from 'next/image';
-import Link from 'next/link'; // Added Link import
 import Head from 'next/head'; // Import Head for preloading
 // No longer need useState for menu open/close, DropdownMenu handles it.
-import { Button } from '@/components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Menu as MenuIcon } from 'lucide-react'; // Using Menu from lucide-react
+// import { Button } from '@/components/ui/button';
+// import {
+//   DropdownMenu,
+//   DropdownMenuContent,
+//   DropdownMenuItem,
+//   DropdownMenuTrigger,
+// } from '@/components/ui/dropdown-menu';
+// import { Menu as MenuIcon } from 'lucide-react'; // Using Menu from lucide-react
 import {
   Accordion,
   AccordionContent,

@@ -404,6 +404,13 @@ body {
   z-index: 20; /* High z-index to be on top */
 }
 
+/* Base style for the hero image container for Next.js Image with fill prop */
+.hero-image-container {
+  width: 100%; /* Take full width of its parent */
+  height: 55vh; /* Default height, adjust as needed for mobile */
+  position: relative; /* Already set inline, but good to have in CSS if it wasn't */
+}
+
 .framed-artwork {
   position: relative; 
   max-width: 75%; 
@@ -520,12 +527,18 @@ body {
   .artwork-display {
     justify-content: flex-start; /* Align frame and plaque to the top */
     padding-top: 2vh; /* Add some padding from the top of gallery-main */
+    max-height: calc(100vh - 230px); /* Attempt to constrain overall height (60px lights + 150px bench + 20px gallery-main padding-top approx) */
+    /* flex-direction: column is inherited from base style */
   }
 
-  .framed-artwork {
-    max-width: 450px; /* Allow frame to be a bit larger on desktop */
-    max-height: 35vh; /* Explicit max-height for homepage artwork on desktop, reduced by ~30% */
-    margin-bottom: 1vh; /* Reduce bottom margin slightly */
+  /* Styles for the container of the fill-mode hero image */
+  .artwork-display .hero-image-container {
+    max-width: 450px; /* Corresponds to lg:max-w-[450px] on frame-and-plaque-container */
+    width: 100%; /* Ensure it takes the width of its parent up to max-width */
+    height: 50vh; /* Adjusted height for the image container */
+    margin-bottom: 1vh; 
+    flex-shrink: 0; 
+    /* position: relative; is set inline on the element */
   }
 
   .plaque-image {
@@ -534,6 +547,7 @@ body {
   .plaque-image-home {
     max-width: 72px; /* Reduced from 90px (approx 20% reduction) */
     margin-top: 1vh; /* Add some space above the home plaque */
+    flex-shrink: 0; /* Prevent plaque from shrinking */
   }
 
   .artwork-image-story {
@@ -553,7 +567,7 @@ body {
 
   .event-item {
     width: 48%; /* Adjusted from 45% to make items closer */
-    max-height: 75vh; /* Allow items to be reasonably tall on desktop */
+    max-height: 65vh; /* Reduced height to prevent clipping */
     margin-bottom: 0; /* Vertical margin between items not needed when side-by-side */
     overflow: visible; /* Ensure content isn't clipped by the item itself */
   }
@@ -561,27 +575,13 @@ body {
   .event-item .framed-artwork {
     flex-grow: 0; /* Prevent artwork from pushing plaque down */
     max-height: 55%; /* Slightly reduce image height on desktop */
-    /* other styles inherited from base */
+    /* other styles inherited from base, like margin-bottom: 1vh */
   }
 
   .event-item .plaque-image {
-    position: relative; /* Allow z-index to apply */
-    z-index: 1; /* Lift plaque slightly */
+    /* Removed position: relative and z-index: 1; */
     /* max-height: 25% and other styles inherited from base */
   }
-
-  /* NEW RULES START HERE */
-  .event-item .framed-artwork {
-    flex-grow: 0; 
-    flex-shrink: 0; 
-    /* Other properties like max-height: 60% are inherited from base .event-item .framed-artwork */
-  }
-
-  .event-item .plaque-image {
-    /* Inherits max-height: 25% and flex-shrink: 0 from base .event-item .plaque-image */
-    /* No new desktop-specific overrides needed here, relying on inherited properties */
-  }
-  /* NEW RULES END HERE */
 }
 
 /* === End of Mobile Gallery Specific Styles === */

@@ -95,7 +95,7 @@ export default function EventsNewPage() {
         <Image src="/images/Lights.png" alt="Gallery lights" width={1000} height={100} className="lights-image" />
 
         <div className="events-list"> {/* New container for event items */}
-          {eventDetails.map((event, index) => (
+          {eventDetails.map((event) => (
             <div key={event.id} className="event-item">
               <div className="framed-artwork event-image-clickable" onClick={() => openDialog(event)}>
                 <Image src={event.photo} alt={event.altPhoto} width={600} height={450} className="artwork-frame" />
