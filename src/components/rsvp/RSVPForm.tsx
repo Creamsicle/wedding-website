@@ -67,7 +67,12 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
       }
     }), {});
     setResponses(initialResponses);
-    setCurrentGuestCardIndex(0); // Reset to first guest when a new party is selected
+    setCurrentGuestCardIndex(0);
+
+    // Attempt to scroll to top after selecting a party
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   const handleResponseChange = (guestId: string, field: keyof RSVPResponse, value: ResponseFieldValue) => {
@@ -501,7 +506,7 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
           )}
 
           {/* Buttons outside the scrollable area */}
-          <div className="flex flex-col sm:flex-row justify-between gap-4 pt-4">
+          <div className="flex flex-row justify-between gap-4 pt-4">
             <button
               onClick={() => {
                 setSelectedParty(null);
@@ -526,9 +531,9 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
 
       {/* Display search results - styled like mockup cards, now in a scrollable container */}
       {searchResults.length > 0 && !selectedParty && (
-        <div className="max-w-md mx-auto"> {/* Container for centering the scroll box */}
-          <div className="max-h-72 overflow-y-auto border border-gray-600 rounded-lg p-2 bg-gray-800/50 styled-scrollbar"> {/* Scrollable container */}
-            <div className="space-y-3 pr-1"> {/* Inner spacing for items and scrollbar gap */}
+        <div className="w-full mx-auto">
+          <div className="max-h-72 overflow-y-auto border border-gray-600 rounded-lg p-2 bg-gray-800/50 styled-scrollbar">
+            <div className="space-y-3 pr-1">
               {searchResults.map((party) => (
                 <div 
                   key={party.id} 

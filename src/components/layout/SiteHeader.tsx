@@ -11,13 +11,16 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Menu as MenuIcon } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
-const navLinks = [
+const initialNavLinks = [
   { href: "/events", label: "EXHIBITIONS" },
   { href: "/story", label: "HISTORY" },
   { href: "/faq", label: "FAQ" },
   { href: "/rsvp", label: "RSVP" },
 ];
+
+const MOBILE_MAX_WIDTH = 768;
 
 // Helper function for Title Case
 const toTitleCase = (str: string) => {
@@ -32,6 +35,21 @@ export default function SiteHeader({ className }: SiteHeaderProps) {
   const currentPath = usePathname();
   // Combine base classes with any passed className
   const headerClasses = `gallery-header relative ${className || ''}`.trim();
+
+  const [currentNavLinks, setCurrentNavLinks] = useState(initialNavLinks);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const isMobile = window.innerWidth <= MOBILE_MAX_WIDTH;
+      if (isMobile) {
+        setCurrentNavLinks(prevLinks => 
+          prevLinks.map(link => 
+            link.href === '/rsvp' ? { ...link, href: '/rsvp-mobile' } : link
+          )
+        );
+      }
+    }
+  }, []);
 
   return (
     <header className={headerClasses}>
@@ -65,7 +83,7 @@ export default function SiteHeader({ className }: SiteHeaderProps) {
             HOME
           </Link>
         )}
-        {navLinks.map((link) => (
+        {currentNavLinks.map((link) => (
           <Link
             key={link.href}
             href={link.href}
@@ -92,10 +110,9 @@ export default function SiteHeader({ className }: SiteHeaderProps) {
                   {toTitleCase("HOME")}
                 </Link>
               </DropdownMenuItem>
-              {navLinks.map((link) => (
+              {currentNavLinks.map((link) => (
                 <DropdownMenuItem key={link.href} asChild>
                   <Link href={link.href}>
-                    {/* Render FAQ and RSVP as all caps, others as Title Case for mobile */}
                     {(link.label === "FAQ" || link.label === "RSVP") ? link.label : toTitleCase(link.label)}
                   </Link>
                 </DropdownMenuItem>

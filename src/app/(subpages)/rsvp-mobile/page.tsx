@@ -33,7 +33,7 @@ export default function RSVPMobilePage() { // Renamed component
         {/* Gradient, noise, overlay, and spotlight elements were already commented out/removed */}
 
         <div className="pt-12 relative z-2 flex-grow flex flex-col w-full items-center bg-transparent"> {/* Added bg-transparent */}
-          <div className="max-w-3xl w-full px-4 flex-grow flex flex-col bg-transparent border-4 border-red-500">
+          <div className="max-w-3xl w-full px-4 flex-grow flex flex-col bg-transparent">
             <Suspense fallback={<div>Loading...</div>}>
               <RSVPForm onPartySelectStateChange={setIsPartySelected} />
             </Suspense>
