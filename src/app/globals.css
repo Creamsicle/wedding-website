@@ -1273,14 +1273,10 @@ body.rsvp-form-active .rsvp-mobile-container {
 }
 
 .rsvp-mobile-container {
-  height: calc(var(--dynamic-vh, 1vh) * 100) !important; 
-  width: 100%; /* Changed from 100vw to fill its parent main */
-  overflow-y: auto !important;
-  /* background-image: url('/images/home-bg2.png'); */ /* REMOVED - Body now handles this for this page */
-  /* background-size: cover; */
-  /* background-position: center; */
-  /* background-attachment: fixed; */
-  background: transparent; /* Ensure it's transparent to body's background */
+  height: 100%; /* Fill parent main element */
+  width: 100%; 
+  overflow-y: auto !important; /* Keep scrolling internal to this container */
+  background: transparent; 
   display: flex; 
   flex-direction: column; 
 }
