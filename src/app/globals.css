@@ -1273,13 +1273,14 @@ body.rsvp-form-active .rsvp-mobile-container {
 }
 
 .rsvp-mobile-container {
-  height: calc(var(--dynamic-vh, 1vh) * 100) !important; /* Full dynamic viewport height */
-  width: 100vw !important; /* Full viewport width */
+  height: calc(var(--dynamic-vh, 1vh) * 100) !important; 
+  width: 100%; /* Changed from 100vw to fill its parent main */
   overflow-y: auto !important;
-  background-image: url('/images/home-bg2.png');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed; /* Added for seamless background on scroll */
+  /* background-image: url('/images/home-bg2.png'); */ /* REMOVED - Body now handles this for this page */
+  /* background-size: cover; */
+  /* background-position: center; */
+  /* background-attachment: fixed; */
+  background: transparent; /* Ensure it's transparent to body's background */
   display: flex; 
   flex-direction: column; 
 }
@@ -1317,6 +1318,15 @@ body.rsvp-form-active .rsvp-mobile-container {
 }
 
 /* Styles for the RSVP Mobile page */
+body.on-rsvp-mobile {
+  background-image: url('/images/home-bg2.png') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-attachment: fixed !important;
+  /* If body has other background colors from themes (e.g., bg-background), this will overlay it */
+}
+
+/* When on rsvp-mobile, main should be transparent to show the body's new background */
 body.on-rsvp-mobile main {
-  background: transparent !important; /* Ensure layout main is transparent on mobile RSVP page */
+  background: transparent !important; 
 }
