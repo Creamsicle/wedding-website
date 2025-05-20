@@ -310,10 +310,10 @@
 /* Ensure these styles are specific enough or come after Tailwind base/component styles to take precedence */
 
 body, html {
+  height: 100%;
   margin: 0;
   padding: 0;
-  width: 100vw; /* Ensure full viewport width */
-  /* height: 100vh; */ /* Ensure full viewport height - Commented out, can conflict with min-h-screen and dynamic viewports */
+  /* width: 100vw; */ /* Ensure full viewport width - Replaced by 100% from html/body context */
   /* overflow: hidden !important; */ /* Prevent all scrolling on html and body, add !important - Commented out, too aggressive globally */
   font-family: sans-serif; 
   /* -webkit-overflow-scrolling: auto; */ /* Attempt to disable iOS momentum scroll before hiding */
@@ -1314,4 +1314,9 @@ body.rsvp-form-active .rsvp-mobile-container {
   height: auto;   /* Maintain aspect ratio */
   object-fit: contain;
   display: inline-block; /* Allow it to size to content within flex justify-end */
+}
+
+/* Styles for the RSVP Mobile page */
+body.on-rsvp-mobile main {
+  background: transparent !important; /* Ensure layout main is transparent on mobile RSVP page */
 }

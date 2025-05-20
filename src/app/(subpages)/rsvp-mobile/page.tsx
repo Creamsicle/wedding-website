@@ -1,30 +1,39 @@
 'use client';
 
 import { RSVPForm } from '@/components/rsvp/RSVPForm';
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 import { useState } from 'react';
 // import Image from 'next/image'; // No longer needed
 import SiteHeader from '@/components/layout/SiteHeader';
+import { DynamicViewportHeightInitializer } from '@/components/layout/DynamicViewportHeightInitializer';
 
 export default function RSVPMobilePage() { // Renamed component
   const [isPartySelected, setIsPartySelected] = useState(false);
+
+  useEffect(() => {
+    document.body.classList.add('on-rsvp-mobile');
+    return () => {
+      document.body.classList.remove('on-rsvp-mobile');
+    };
+  }, []);
 
   // Removed mousePosition and useEffect for spotlight as it was already commented out
   // Removed containerClasses logic
 
   return (
     <div className="rsvp-mobile-container"> {/* Simplified container class */}
+      <DynamicViewportHeightInitializer />
       {!isPartySelected && (
         <SiteHeader />
       )}
 
       {/* Lights image removed */}
 
-      <main className="relative z-20 flex-grow"> {/* Added flex-grow */}
+      <main className="relative z-20 flex-grow flex flex-col bg-transparent"> {/* Added bg-transparent */}
         {/* Gradient, noise, overlay, and spotlight elements were already commented out/removed */}
 
-        <div className="pt-12 relative z-2">
-          <div className="max-w-3xl mx-auto w-full px-4"> {/* Added w-full and some padding for content safety */}
+        <div className="pt-12 relative z-2 flex-grow flex flex-col w-full items-center bg-transparent"> {/* Added bg-transparent */}
+          <div className="max-w-3xl w-full px-4 flex-grow flex flex-col bg-transparent border-4 border-red-500">
             <Suspense fallback={<div>Loading...</div>}>
               <RSVPForm onPartySelectStateChange={setIsPartySelected} />
             </Suspense>

@@ -149,7 +149,7 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
   }
 
   return (
-    <div className="space-y-8 rsvp-form-container">
+    <div className="space-y-8 rsvp-form-container flex flex-col flex-grow">
       {instructionalText && (
         <p className="text-center text-white/90 mb-6 max-w-lg mx-auto text-lg font-medium">
           {instructionalText}

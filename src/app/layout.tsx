@@ -29,13 +29,13 @@ export default function RootLayout({
   // useDynamicViewportHeight(); // No longer called here
 
   return (
-    <html lang="en">
+    <html lang="en" className="h-full">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
       </head>
-      <body className={cn(inter.className, "min-h-screen bg-background")}>
-        <DynamicViewportHeightInitializer /> {/* Use the new component here */}
-        <main>{children}</main>
+      <body className={cn(inter.className, "min-h-screen bg-background h-full flex flex-col")}>
+        <DynamicViewportHeightInitializer />
+        <main className="flex-grow">{children}</main>
       </body>
     </html>
   );
