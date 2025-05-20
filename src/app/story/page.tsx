@@ -246,38 +246,41 @@ export default function StoryNewPage() {
         >
           <div className="story-content-container">
             <div className="arrow left-arrow" onClick={prevItem}>
-              <ChevronLeft size={60} />
+              <ChevronLeft size={40} />
             </div>
             <div className="framed-artwork-story" onClick={toggleOverlay}>
-              <Image 
-                key={currentStory.id}
-                src={currentStory.src} 
-                alt={currentStory.alt} 
-                width={currentStory.originalWidth} 
-                height={currentStory.originalHeight} 
-                className="artwork-image-story artwork-image-story-animated"
-                priority={currentIndex === 0}
-              />
-              <Image 
-                key={`hint-${animationTriggerKey}`}
-                src="/click.svg"
-                alt="Click for details" 
-                width={50} 
-                height={50} 
-                className="clickable-image-hint"
-              />
-              {isOverlayVisible && selectedStoryDescription && (
-                <div 
-                  ref={overlayRef}
-                  className={`image-text-overlay visible ${overlayContentIsScrollable ? 'has-scrollable-content' : ''}`}
-                  onClick={handleOverlayClick}
-                >
-                  <p ref={paragraphRef}>{selectedStoryDescription}</p>
-                </div>
-              )}
+                {currentStory && (
+                    <div key={animationTriggerKey} className="artwork-image-story-animated">
+                        <Image
+                            src={currentStory.src}
+                            alt={currentStory.alt}
+                            width={currentStory.originalWidth} 
+                            height={currentStory.originalHeight}
+                            className="artwork-image-story"
+                            priority
+                        />
+                    </div>
+                )}
+                <Image 
+                  key={`hint-${animationTriggerKey}`}
+                  src="/click.svg"
+                  alt="Click for details" 
+                  width={50} 
+                  height={50} 
+                  className="clickable-image-hint"
+                />
+                {isOverlayVisible && selectedStoryDescription && (
+                  <div 
+                    ref={overlayRef}
+                    className={`image-text-overlay visible ${overlayContentIsScrollable ? 'has-scrollable-content' : ''}`}
+                    onClick={handleOverlayClick}
+                  >
+                    <p ref={paragraphRef}>{selectedStoryDescription}</p>
+                  </div>
+                )}
             </div>
             <div className="arrow right-arrow" onClick={nextItem}>
-              <ChevronRight size={60} />
+              <ChevronRight size={40} />
             </div>
           </div>
 
