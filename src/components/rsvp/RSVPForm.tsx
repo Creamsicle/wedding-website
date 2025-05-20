@@ -91,19 +91,6 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
           [field]: value
         }
       };
-
-      // Auto-populate email for other guests if their email is empty
-      if (field === 'email' && typeof value === 'string' && value.trim() !== '' && selectedParty) {
-        selectedParty.partyMembers.forEach(member => {
-          const memberResponse = newResponses[member.id];
-          if (member.id !== guestId && memberResponse && (typeof memberResponse.email !== 'string' || memberResponse.email.trim() === '')) {
-            newResponses[member.id] = {
-              ...memberResponse,
-              email: value
-            };
-          }
-        });
-      }
       return newResponses;
     });
   };
@@ -121,27 +108,6 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
           [field]: value
         }
       };
-
-      // Auto-populate this address field for other guests if their corresponding field is empty
-      if (value.trim() !== '' && selectedParty) {
-        selectedParty.partyMembers.forEach(member => {
-          if (member.id !== guestId && newResponses[member.id]) {
-            // Ensure physicalAddress exists or initialize it before checking/setting a subfield
-            const memberResponse = newResponses[member.id];
-            const memberAddress = memberResponse.physicalAddress || { street: '', city: '', province: '', postalCode: '', country: '' };
-            
-            if (!memberAddress[field] || memberAddress[field].trim() === '') {
-              newResponses[member.id] = {
-                ...memberResponse,
-                physicalAddress: {
-                  ...memberAddress,
-                  [field]: value
-                }
-              };
-            }
-          }
-        });
-      }
       return newResponses;
     });
   };
@@ -173,11 +139,28 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
 
   const handleNextGuest = () => {
     if (selectedParty && currentGuestCardIndex < selectedParty.partyMembers.length - 1) {
+      const currentGuestId = selectedParty.partyMembers[currentGuestCardIndex].id;
+      const nextGuestId = selectedParty.partyMembers[currentGuestCardIndex + 1].id;
+
+      setResponses(prevResponses => {
+        const newResponses = { ...prevResponses };
+        const currentGuestData = newResponses[currentGuestId];
+        
+        if (currentGuestData) {
+          newResponses[nextGuestId] = {
+            ...newResponses[nextGuestId],
+            email: currentGuestData.email,
+            physicalAddress: currentGuestData.physicalAddress ? { ...currentGuestData.physicalAddress } : { street: '', city: '', province: '', postalCode: '', country: '' }
+          };
+        }
+        return newResponses;
+      });
+
       setCurrentGuestCardIndex(prevIndex => prevIndex + 1);
+
       if (formRef.current) {
         formRef.current.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
-        // Fallback for environments where formRef might not be immediately available or in mobile views not using the ref's scrollable parent
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     }

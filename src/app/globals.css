@@ -1324,5 +1324,16 @@ body.on-rsvp-mobile {
 
 /* When on rsvp-mobile, main should be transparent to show the body's new background */
 body.on-rsvp-mobile main {
-  background: transparent !important; 
+  background-color: transparent !important; /* Ensure main content area on rsvp-mobile is transparent */
+}
+
+/* Custom styles for Event Dialog Close Button */
+.event-dialog-content > button svg {
+  color: white !important; /* Default white color for the icon */
+  fill: white !important; /* Also try setting fill for SVG */
+}
+
+.event-dialog-content > button:hover svg {
+  color: var(--rust-primary) !important; /* Orange on hover */
+  fill: var(--rust-primary) !important; /* Orange fill on hover */
 }
