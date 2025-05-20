@@ -1,15 +1,18 @@
 'use client';
 
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, useRef, useEffect, useCallback } from 'react';
 import { searchGuests, submitRSVP } from '@/lib/firebase/rsvp';
 import type { GuestParty, RSVPResponse } from '@/lib/firebase/rsvp';
+import { useDynamicViewportHeight } from '@/lib/hooks/useDynamicViewportHeight';
+
 type ResponseFieldValue = string | boolean;
 
 interface RSVPFormProps {
   onPartySelectStateChange: (isPartySelected: boolean) => void;
+  isMobileView: boolean;
 }
 
-export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
+export function RSVPForm({ onPartySelectStateChange, isMobileView }: RSVPFormProps) {
   const [searchName, setSearchName] = useState('');
   const [searchResults, setSearchResults] = useState<GuestParty[]>([]);
   const [selectedParty, setSelectedParty] = useState<GuestParty | null>(null);
@@ -18,6 +21,53 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [searchError, setSearchError] = useState('');
   const [currentGuestCardIndex, setCurrentGuestCardIndex] = useState(0);
+
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const searchResultsContainerRef = useRef<HTMLDivElement>(null);
+  const formContainerRef = useRef<HTMLDivElement>(null);
+  const { triggerViewportUpdate } = useDynamicViewportHeight();
+
+  const forceReflow = useCallback((element: HTMLElement | null) => {
+    if (element) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const _height = element.offsetHeight;
+      console.log('[RSVPForm] Reflow triggered on:', element.className);
+    }
+  }, []);
+
+  const scheduleViewportUpdates = useCallback((elementToReflow: HTMLElement | null) => {
+    triggerViewportUpdate();
+    forceReflow(elementToReflow);
+    setTimeout(() => {
+      triggerViewportUpdate();
+      forceReflow(elementToReflow);
+    }, 50);
+    setTimeout(() => {
+      triggerViewportUpdate();
+      forceReflow(elementToReflow);
+    }, 150);
+  }, [triggerViewportUpdate, forceReflow]);
+
+  const handleInputFocus = useCallback(() => {
+    console.log('[RSVPForm] Search input focused');
+    if (searchInputRef.current) {
+      searchInputRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    scheduleViewportUpdates(searchInputRef.current);
+  }, [scheduleViewportUpdates]);
+
+  const handleInputBlur = useCallback(() => {
+    console.log('[RSVPForm] Search input blurred');
+    // Don't scroll on blur, just update viewport
+    scheduleViewportUpdates(searchInputRef.current);
+  }, [scheduleViewportUpdates]);
+  
+  useEffect(() => {
+    if (searchResults.length > 0) {
+      console.log('[RSVPForm] Search results updated, scheduling viewport updates.');
+      scheduleViewportUpdates(searchResultsContainerRef.current);
+    }
+  }, [searchResults, scheduleViewportUpdates]);
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -133,6 +183,15 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
   }
   // No specific text needed if a party is selected, as that section has its own heading
 
+  const handleBackToSearch = () => {
+    setSelectedParty(null);
+    onPartySelectStateChange(false);
+    setSearchResults([]);
+    setCurrentGuestCardIndex(0);
+    // Clear search name if you want to force a new search, or leave it to allow refining previous search
+    // setSearchName(''); 
+  };
+
   if (isSubmitted) {
     return (
       <div className="text-center card-hover p-8 rounded-lg shadow-lg">
@@ -149,7 +208,20 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
   }
 
   return (
-    <div className="space-y-8 rsvp-form-container">
+    <div className="space-y-8 rsvp-form-container relative">
+      {/* "X" button for mobile when party is selected */}
+      {isMobileView && selectedParty && (
+        <button
+          onClick={handleBackToSearch}
+          className="absolute top-0 right-0 mt-2 mr-2 z-50 p-2 bg-gray-700/80 hover:bg-gray-600 rounded-full text-white"
+          aria-label="Back to search"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      )}
+
       {instructionalText && (
         <p className="text-center text-white/90 mb-6 max-w-lg mx-auto text-lg font-medium">
           {instructionalText}
@@ -166,6 +238,9 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
               placeholder="Enter your name"
               className="w-full px-4 py-3 rounded-lg bg-navy-700 text-white placeholder-white border border-navy-500 focus:outline-none focus:ring-2 focus:ring-rust-500 focus:border-rust-500 shadow-md"
               minLength={2}
+              ref={searchInputRef}
+              onFocus={handleInputFocus}
+              onBlur={handleInputBlur}
             />
             {searchError && (
               <p className="mt-2 text-sm text-red-400">{searchError}</p>
@@ -182,10 +257,10 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
         <div className="space-y-6">
           {/* Scrollable container for all guest cards */}
           <div 
-            className="bg-gray-800/80 p-4 md:p-6 rounded-xl shadow-xl overflow-y-auto styled-scrollbar space-y-6"
-            style={{ maxHeight: 'calc(var(--dynamic-vh, 1vh) * 70)' }}
+            ref={formContainerRef}
+            className="bg-gray-800/80 p-4 md:p-6 rounded-xl shadow-xl max-h-[70vh] overflow-y-auto styled-scrollbar space-y-6"
           >
-            <h3 className="text-2xl font-bold text-white mb-2 text-center">
+            <h3 className="sticky top-0 z-10 bg-gray-800/80 pt-4 md:pt-6 pb-2 text-2xl font-bold text-white mb-2 text-center">
               RSVP for Your Party
             </h3>
             {/* Guest Counter for Mobile View - now for all views if multiple guests */}
@@ -503,12 +578,7 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
           {/* Buttons outside the scrollable area */}
           <div className="flex flex-col sm:flex-row justify-between gap-4 pt-4">
             <button
-              onClick={() => {
-                setSelectedParty(null);
-                onPartySelectStateChange(false);
-                setSearchResults([]);
-                setCurrentGuestCardIndex(0);
-              }}
+              onClick={handleBackToSearch}
               className="bg-[var(--navy-secondary)] hover:bg-[var(--navy-light)] text-white font-bold py-2 px-4 rounded transition-colors"
             >
               Back to Search
@@ -526,23 +596,19 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
 
       {/* Display search results - styled like mockup cards, now in a scrollable container */}
       {searchResults.length > 0 && !selectedParty && (
-        <div className="max-w-md mx-auto"> {/* Container for centering the scroll box */}
-          <div className="max-h-72 overflow-y-auto border border-gray-600 rounded-lg p-2 bg-gray-800/50 styled-scrollbar"> {/* Scrollable container */}
-            <div className="space-y-3 pr-1"> {/* Inner spacing for items and scrollbar gap */}
-              {searchResults.map((party) => (
-                <div 
-                  key={party.id} 
-                  onClick={() => handlePartySelect(party)}
-                  className="bg-gray-700 p-4 rounded-lg shadow-md cursor-pointer hover:bg-gray-600 transition-colors duration-150 text-white"
-                >
-                  <p className="font-semibold mb-1">Party Members:</p>
-                  {party.partyMembers.map(member => (
-                    <p key={member.id} className="ml-2">{member.firstName} {member.lastName}</p>
-                  ))}
-                </div>
+        <div ref={searchResultsContainerRef} className="mt-6 space-y-3 max-h-[40vh] overflow-y-auto styled-scrollbar p-1 max-w-md mx-auto">
+          {searchResults.map((party) => (
+            <button
+              key={party.id}
+              onClick={() => handlePartySelect(party)}
+              className="w-full bg-gray-700 p-4 rounded-lg shadow-md cursor-pointer hover:bg-gray-600 transition-colors duration-150 text-white text-left"
+            >
+              <p className="font-semibold mb-1">Party Members:</p>
+              {party.partyMembers.map(member => (
+                <p key={member.id} className="ml-2">{member.firstName} {member.lastName}</p>
               ))}
-            </div>
-          </div>
+            </button>
+          ))}
         </div>
       )}
     </div>

@@ -128,6 +128,7 @@
     padding-right: env(safe-area-inset-right);
     padding-bottom: env(safe-area-inset-bottom);
     padding-left: env(safe-area-inset-left);
+    overflow-y: auto;
   }
 }
 
@@ -298,6 +299,12 @@
   @apply relative z-[5] container mx-auto px-8 py-24;
 }
 
+/* Reduce padding on gallery-section when RSVP form is active */
+.mobile-gallery-container.rsvp-active .gallery-section {
+  padding-top: 1.5rem; /* Adjust as needed, less than original 6rem */
+  padding-bottom: 1.5rem; /* Adjust as needed, less than original 6rem */
+}
+
 .exhibition-piece {
   @apply relative rounded-none overflow-hidden;
   background: rgba(0, 0, 0, 0.6);
@@ -318,6 +325,7 @@ body, html {
   font-family: sans-serif; 
   /* -webkit-overflow-scrolling: auto; */ /* Attempt to disable iOS momentum scroll before hiding */
   /* touch-action: none; */ /* Disable panning/zooming touch actions - Might be too restrictive globally */
+  overflow-x: hidden; /* Keep horizontal scroll hidden */
 }
 
 body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section and is problematic globally */
@@ -325,23 +333,37 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
   /* top: 0; */
   /* left: 0; */
   /* background: none !important; */ /* Attempt to override Tailwind's body background - Commented out */
+  @apply bg-[#0A1A3B] text-white font-sans; /* From original body rule in @layer base */
+  padding-top: env(safe-area-inset-top);
+  padding-right: env(safe-area-inset-right);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  overflow-y: auto; /* Allow body to scroll vertically if content overflows */
 }
 
 .mobile-gallery-container {
   display: flex;
   flex-direction: column;
-  /* height: 100vh; */ /* Replaced with dynamic vh */
-  height: calc(var(--dynamic-vh, 1vh) * 100);
+  min-height: calc(var(--dynamic-vh, 1vh) * 100); /* Changed to min-height */
   width: 100vw; 
-  overflow: hidden !important; 
+  /* overflow: hidden !important; */ /* REMOVED to allow content to make page scroll */
   position: relative; 
   background-image: url('/images/home-bg2.png'); /* Changed to home-bg2.png */
   background-size: cover;
   background-position: center;
   box-sizing: border-box; 
-  -webkit-overflow-scrolling: auto; /* Attempt to disable iOS momentum scroll */
-  touch-action: none; /* Disable panning/zooming touch actions for the main container */
+  -webkit-overflow-scrolling: auto; 
+  touch-action: auto; /* CHANGED from none */
 }
+
+/* Override for RSVP page to use static 100vh for its main container -- REMOVING THIS RULE */
+/*
+.mobile-gallery-container.rsvp-page-viewport-override {
+  height: 100% !important; 
+  min-height: 100% !important; 
+  touch-action: auto !important; 
+}
+*/
 
 .gallery-header {
   position: relative; /* Not fixed, flows after lights */
@@ -352,10 +374,14 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
   justify-content: space-between;
   align-items: center;
   color: white;
-  z-index: 10; /* Above normal flow, but below fixed lights if they were to overlap (they shouldn't) */
+  z-index: 10; 
   box-sizing: border-box;
   flex-shrink: 0;
   background-color: transparent; /* Explicitly transparent if needed */
+}
+
+.gallery-header.rsvp-specific-header {
+  margin-top: calc(60px + 1rem) !important; /* Account for lights and desired gap, safe area handled by body */
 }
 
 .logo span {
@@ -379,12 +405,12 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
   flex-direction: column;
   justify-content: flex-start; 
   align-items: center;
-  overflow: hidden; /* Restored */
+  /* overflow: hidden; */ /* REMOVED */
   position: relative; 
   padding: 1rem; /* Default padding */
   width: 100%; 
   margin-bottom: 80px; /* Space for fixed bench (adjust if bench height changes) */
-  touch-action: none; 
+  touch-action: auto; /* CHANGED from none */
   box-sizing: border-box;
 }
 
@@ -578,7 +604,7 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
     justify-content: flex-start !important; /* Align to top on desktop, with !important */
     padding-bottom: 150px; /* Space for desktop bench */
     margin-bottom: 0; /* Remove margin if any */
-    overflow-y: auto; /* Ensure scrolling if needed */
+    /* overflow-y: auto; */ /* REMOVED */
   }
 
   /* Desktop Styles for Events Page (Two Columns) */
@@ -612,7 +638,7 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
   .gallery-main-story {
     padding-bottom: 100px; /* Space for tablet bench */
     margin-bottom: 0; /* Remove margin if any */
-    overflow-y: auto; /* Ensure scrolling if needed for consistency */
+    /* overflow-y: auto; */ /* REMOVED */
   }
 }
 
@@ -792,13 +818,12 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
   position: relative;
   width: 100%; 
   flex-grow: 1; 
-  overflow-y: auto; /* Changed from hidden */
+  /* overflow-y: auto; */ /* REMOVED (was Changed from hidden) */
   padding: 1rem; 
   padding-bottom: 80px; /* Space for mobile bench */
   margin-bottom: 0; /* Use padding for bench space */
-  /* touch-action and box-sizing will be inherited or should be here */
   box-sizing: border-box;
-  touch-action: pan-y; /* Allow vertical scroll */
+  touch-action: pan-y; /* Allow vertical scroll - this is fine for content, page scroll is body */
 }
 
 .story-content-container {
@@ -1296,4 +1321,155 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
   height: auto;   /* Maintain aspect ratio */
   object-fit: contain;
   display: inline-block; /* Allow it to size to content within flex justify-end */
+}
+
+/* Allow gallery-main on RSVP page to scroll vertically when form is active, to help with keyboard */
+.mobile-gallery-container.rsvp-active .gallery-main.rsvp-custom-main {
+  min-height: var(--dynamic-vh); /* Take full viewport height */
+  justify-content: flex-start; /* Align content to top */
+  padding-top: 1rem; /* Reduced padding */
+  padding-bottom: 1rem;
+  /* overflow-y: auto; */ /* REMOVED */
+}
+
+/* Specific overrides for gallery-main on RSVP page */
+.gallery-main.rsvp-custom-main {
+  /* min-height: calc(var(--dynamic-vh) - 100px - 100px); */ /* Default calculation, may not be needed if flexbox handles it*/
+  justify-content: center;
+  /* overflow-y: auto; */ /* REMOVED */
+  padding: 1rem; /* Overrides general gallery-main padding */
+}
+
+/* Override for gallery-section specifically on the RSVP page's main content area */
+.gallery-main.rsvp-custom-main .gallery-section {
+  padding-top: 0.5rem !important; 
+  padding-bottom: 0.5rem !important; 
+  /* Horizontal padding from the original .gallery-section is px-8 (2rem). */
+  /* If that's still desired: */
+  /* padding-left: 2rem !important; */
+  /* padding-right: 2rem !important; */
+  /* Or let it inherit if not specified here and specificity allows */
+}
+
+/* === BEGIN: Mobile RSVP Page Overrides === */
+@media (max-width: 768px) { 
+  
+  .mobile-gallery-container.rsvp-page {
+    position: static !important;
+    display: block !important; 
+    height: calc(var(--dynamic-vh, 1vh) * 100) !important; 
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    touch-action: auto !important;
+    padding-top: 60px; /* Restored to 60px for space above header, like FAQ page */
+    /* background-image will be inherited from .mobile-gallery-container if not overridden */
+    /* background-size: cover; */
+    /* background-position: center; */
+    background-attachment: scroll !important; 
+  }
+
+  .mobile-gallery-container.rsvp-page .lights-image,
+  .mobile-gallery-container.rsvp-page .bench-container {
+    display: none !important;
+  }
+
+  .mobile-gallery-container.rsvp-page .gallery-header.rsvp-specific-header {
+    position: sticky !important;
+    top: 0 !important;
+    margin-top: 0 !important; 
+    z-index: 100;
+    /* background-color: var(--navy-primary); /* Add background for sticky header -- REMOVING THIS */
+  }
+
+  .mobile-gallery-container.rsvp-page .gallery-main.rsvp-custom-main {
+    margin-top: 0 !important;
+    margin-bottom: 1rem !important; 
+    padding: 1rem !important; /* Unified padding */
+    height: auto !important; 
+    /* min-height: calc(100% - 60px); /* Fill remaining space after header's padding-top on parent -- REMOVING */
+    overflow: visible !important; 
+    /* touch-action: auto !important; */ /* Already on parent */
+    display: flex !important; /* Was block */
+    flex-direction: column !important;
+    justify-content: flex-start; /* Align content to top */
+    align-items: center; /* Center children like form horizontally */
+    flex-grow: 1; /* Allow it to take space, but not force scroll unless content is too big */
+  }
+  
+  .mobile-gallery-container.rsvp-page .gallery-main.rsvp-custom-main .gallery-section {
+    padding: 0 !important; /* Remove padding, main will handle it */
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* RSVP Form specific adjustments for mobile */
+  .mobile-gallery-container.rsvp-page .rsvp-form-container {
+    width: 100%; 
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+  }
+
+  .mobile-gallery-container.rsvp-page .rsvp-form-container > p.text-lg { /* Instructional Text */
+    margin-bottom: 1rem !important; 
+    font-size: 0.95rem !important; 
+  }
+
+  .mobile-gallery-container.rsvp-page .rsvp-form-container .bg-gray-800\/80 { /* Main form scrollable area when party selected */
+    max-height: none !important; 
+    /* padding: 1rem !important; /* Consider adjusting if parent padding is enough */
+  }
+
+  .mobile-gallery-container.rsvp-page .max-w-md.mx-auto { /* Search form container */
+     max-width: 100% !important; /* Allow search form to use full width */
+  }
+
+  .mobile-gallery-container.rsvp-page .mt-6.space-y-3.max-h-\[40vh\].overflow-y-auto { /* Search results container */
+    max-height: 60vh !important; /* More generous height for search results */
+  }
+
+  .mobile-gallery-container.rsvp-page .mt-6.space-y-3 > button { /* Search result buttons */
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important; 
+    width: 100% !important;
+  }
+}
+/* === END: Mobile RSVP Page Overrides === */
+
+/* Mobile Gallery Specific Styles - This section might be too broad or contain conflicting rules */
+/* Ensure this is scoped if specific, or remove if these are too global for body */
+.some-specific-gallery-body-context body { /* Example of scoping, or remove these rules from body */
+  background-color: #000; /* Default to black if needed */
+  /* overflow: hidden; */ /* REMOVED - Prevented page scroll */
+  /* height: var(--dynamic-vh, 100vh); */ /* REMOVED - Prevented page scroll */
+}
+
+.mobile-gallery-container {
+  .mobile-gallery-container.rsvp-active .gallery-main.rsvp-custom-main {
+    min-height: var(--dynamic-vh); /* Take full viewport height */
+    justify-content: flex-start; /* Align content to top */
+    padding-top: 1rem; /* Reduced padding */
+    padding-bottom: 1rem;
+    /* overflow-y: auto; */ /* REMOVED */
+  }
+
+  .gallery-main.rsvp-custom-main {
+    min-height: calc(var(--dynamic-vh) - 100px - 100px); /* Default calculation */
+    justify-content: center;
+    /* overflow-y: auto; */ /* REMOVED */
+    padding: 1rem; /* Overrides general gallery-main padding */
+  }
+}
+
+@media (max-width: 768px) { 
+  /* Styles for mobile view of the gallery, affecting layout and visibility */
+
+  .mobile-gallery-container.rsvp-page .gallery-main.rsvp-custom-main {
+    min-height: var(--dynamic-vh); /* Full height */
+    padding-top: 60px; /* Space for fixed header */
+    padding-bottom: 1rem; /* Minimal bottom padding */
+    justify-content: flex-start; /* Align form to top */
+    /* overflow-y: auto; */ /* REMOVED */
+  }
 }
