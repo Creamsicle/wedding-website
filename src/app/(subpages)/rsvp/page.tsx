@@ -5,8 +5,11 @@ import { Suspense } from 'react';
 import { useState } from 'react';
 import Image from 'next/image';
 import SiteHeader from '@/components/layout/SiteHeader';
+import { useMobileRedirect } from '@/lib/hooks/useMobileRedirect';
 
 export default function RSVPPage() {
+  useMobileRedirect('/rsvp-mobile');
+
   const [isPartySelected, setIsPartySelected] = useState(false);
 
   // const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 }); // No longer needed for spotlight

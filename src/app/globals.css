@@ -1266,6 +1266,24 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
   padding-bottom: 1rem;
 }
 
+/* Allow scrolling on the mobile RSVP page even when form is active */
+html.rsvp-form-active .rsvp-mobile-container,
+body.rsvp-form-active .rsvp-mobile-container {
+  overflow: auto !important; 
+}
+
+.rsvp-mobile-container {
+  height: calc(var(--dynamic-vh, 1vh) * 100) !important; /* Full dynamic viewport height */
+  width: 100vw !important; /* Full viewport width */
+  overflow-y: auto !important;
+  background-image: url('/images/home-bg2.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; /* Added for seamless background on scroll */
+  display: flex; 
+  flex-direction: column; 
+}
+
 .rsvp-guest-card {
   padding: 0.75rem 0.5rem;
 }
