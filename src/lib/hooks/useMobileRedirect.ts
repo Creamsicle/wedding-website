@@ -10,10 +10,12 @@ export function useMobileRedirect(targetPath: string) {
   const pathname = usePathname();
 
   useEffect(() => {
-    const isMobile = window.innerWidth <= MOBILE_MAX_WIDTH;
-    // Only redirect if on the main RSVP page and on a mobile device
-    if (isMobile && pathname === '/rsvp') {
-      router.replace(targetPath);
+    if (typeof window !== 'undefined') { // Ensure window is available
+      const isMobile = window.innerWidth <= MOBILE_MAX_WIDTH;
+      // Only redirect if on the main RSVP page and on a mobile device
+      if (isMobile && pathname === '/rsvp') {
+        router.replace(targetPath);
+      }
     }
   }, [router, pathname, targetPath]);
 } 
