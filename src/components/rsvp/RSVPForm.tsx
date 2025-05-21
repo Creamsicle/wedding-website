@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, FormEvent, useRef } from 'react';
+import { useState, FormEvent, useRef, useEffect } from 'react';
 import { searchGuests, submitRSVP } from '@/lib/firebase/rsvp';
 import type { GuestParty, RSVPResponse } from '@/lib/firebase/rsvp';
 type ResponseFieldValue = string | boolean;
@@ -76,11 +76,21 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
     setResponses(initialResponses);
     setCurrentGuestCardIndex(0);
 
-    // Attempt to scroll to top after selecting a party
-    if (typeof window !== 'undefined') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    // Scroll logic will be handled by useEffect now
+    // if (typeof window !== 'undefined') {
+    //   window.scrollTo({ top: 0, behavior: 'instant' });
+    // }
   };
+
+  useEffect(() => {
+    if (selectedParty && formRef.current) {
+      formRef.current.scrollTo({ top: 0, behavior: 'instant' });
+    } else if (selectedParty && typeof window !== 'undefined') {
+      // Fallback if formRef somehow isn't set but a party is selected
+      // This might indicate the main page itself needs scrolling if formRef isn't the primary scroller for the view.
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+  }, [selectedParty]); // Run when selectedParty changes
 
   const handleResponseChange = (guestId: string, field: keyof RSVPResponse, value: ResponseFieldValue) => {
     setResponses(prev => {
@@ -240,7 +250,7 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
           )}
         </form>
       ) : (
-        <div className="space-y-6 flex flex-col flex-1 h-full">
+        <div className="space-y-4 flex flex-col flex-1 h-full">
           {/* Scrollable container for all guest cards */}
           <div 
             ref={formRef}
@@ -358,42 +368,6 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
                     </div>
                   </div>
 
-                  {/* Moved "Can you offer a ride" question here */}
-                  <div>
-                    <label className="block text-[var(--rust-light)] mb-2">
-                      Can you offer a ride to either event?
-                    </label>
-                    <div className="space-x-4">
-                      <label className="inline-flex items-center">
-                        <input
-                          type="radio"
-                          checked={responses[guest.id]?.canOfferRide === true}
-                          onChange={() => handleResponseChange(guest.id, 'canOfferRide', true)}
-                          className="form-radio text-[var(--rust-primary)]"
-                        />
-                        <span className="ml-2 text-white">Yes</span>
-                      </label>
-                      <label className="inline-flex items-center">
-                        <input
-                          type="radio"
-                          checked={responses[guest.id]?.canOfferRide === false}
-                          onChange={() => handleResponseChange(guest.id, 'canOfferRide', false)}
-                          className="form-radio text-[var(--rust-primary)]"
-                        />
-                        <span className="ml-2 text-white">No</span>
-                      </label>
-                    </div>
-                    {responses[guest.id]?.canOfferRide && (
-                      <textarea
-                        value={responses[guest.id]?.rideOfferDetails || ''}
-                        onChange={(e) => handleResponseChange(guest.id, 'rideOfferDetails', e.target.value)}
-                        placeholder="Please provide details on where you're coming from and which event(s) you can offer rides to"
-                        className="mt-2 w-full px-3 py-2 bg-[var(--navy-primary)] text-white rounded border border-[var(--rust-light)]"
-                        rows={3}
-                      />
-                    )}
-                  </div>
-
                   {responses[guest.id]?.weddingReceptionAttending && (
                     <div className="pl-6 space-y-4 mt-3 border-l-2 border-rust-500/50">
                       <div>
@@ -451,7 +425,7 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
                           <textarea
                             value={responses[guest.id]?.weddingRideDetails || ''}
                             onChange={(e) => handleResponseChange(guest.id, 'weddingRideDetails', e.target.value)}
-                            placeholder="Please provide details on where you're coming from"
+                            placeholder="Please provide details on where you\'re coming from"
                             className="mt-2 w-full px-3 py-2 bg-[var(--navy-primary)] text-white rounded border border-[var(--rust-light)]"
                             rows={3}
                           />
@@ -459,6 +433,42 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
                       </div>
                     </div>
                   )}
+
+                  {/* Moved "Can you offer a ride" question here */}
+                  <div>
+                    <label className="block text-[var(--rust-light)] mb-2">
+                      Can you offer a ride to either event?
+                    </label>
+                    <div className="space-x-4">
+                      <label className="inline-flex items-center">
+                        <input
+                          type="radio"
+                          checked={responses[guest.id]?.canOfferRide === true}
+                          onChange={() => handleResponseChange(guest.id, 'canOfferRide', true)}
+                          className="form-radio text-[var(--rust-primary)]"
+                        />
+                        <span className="ml-2 text-white">Yes</span>
+                      </label>
+                      <label className="inline-flex items-center">
+                        <input
+                          type="radio"
+                          checked={responses[guest.id]?.canOfferRide === false}
+                          onChange={() => handleResponseChange(guest.id, 'canOfferRide', false)}
+                          className="form-radio text-[var(--rust-primary)]"
+                        />
+                        <span className="ml-2 text-white">No</span>
+                      </label>
+                    </div>
+                    {responses[guest.id]?.canOfferRide && (
+                      <textarea
+                        value={responses[guest.id]?.rideOfferDetails || ''}
+                        onChange={(e) => handleResponseChange(guest.id, 'rideOfferDetails', e.target.value)}
+                        placeholder="Please provide details on where you\'re coming from and which event(s) you can offer rides to"
+                        className="mt-2 w-full px-3 py-2 bg-[var(--navy-primary)] text-white rounded border border-[var(--rust-light)]"
+                        rows={3}
+                      />
+                    )}
+                  </div>
 
                   {/* New Fields: Email, Physical Address, Other Comments */}
                   <div>
@@ -542,7 +552,7 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
           </div>
 
           {/* BUTTONS CONTAINER: Handles mobile and desktop layouts */}
-          <div className="mt-6 pt-4 border-t border-gray-600">
+          <div className="pt-4 border-t border-gray-600 pb-4">
 
             {/* --- Mobile Layout (hidden on md and up) --- */}
             <div className="space-y-4 md:hidden">

@@ -29,11 +29,11 @@ export default function RSVPMobilePage() { // Renamed component
 
       {/* Lights image removed */}
 
-      <main className="relative z-20 flex-grow flex flex-col bg-transparent"> {/* Added bg-transparent */}
+      <main className="relative z-20 flex-grow flex flex-col bg-transparent diag-magenta"> {/* Added bg-transparent */}
         {/* Gradient, noise, overlay, and spotlight elements were already commented out/removed */}
 
-        <div className="pt-12 relative z-2 flex-grow flex flex-col w-full items-center bg-transparent"> {/* Added bg-transparent */}
-          <div className="max-w-3xl w-full px-4 flex-grow flex flex-col bg-transparent">
+        <div className={`${isPartySelected ? 'pt-8' : 'pt-12'} relative z-2 flex-grow flex flex-col w-full items-center bg-transparent diag-red`}> {/* Added bg-transparent */}
+          <div className="max-w-3xl w-full px-4 flex-grow flex flex-col bg-transparent diag-limegreen">
             <Suspense fallback={<div>Loading...</div>}>
               <RSVPForm onPartySelectStateChange={setIsPartySelected} />
             </Suspense>
