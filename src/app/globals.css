@@ -342,6 +342,8 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
   box-sizing: border-box; 
   -webkit-overflow-scrolling: auto; 
   touch-action: none; 
+  border: 3px solid orange !important;
+  border-color: transparent !important; /* HIDE BORDER */
 }
 
 .gallery-header {
@@ -388,6 +390,8 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
   /* margin-bottom: 80px; */ /* Removed - handled by parent padding */
   touch-action: none; 
   box-sizing: border-box;
+  border: 2px solid magenta !important;
+  border-color: transparent !important; /* HIDE BORDER */
 }
 
 .artwork-display { /* For homepage content */
@@ -522,7 +526,7 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
 /* Desktop Styles */
 @media (min-width: 1024px) {
   .mobile-gallery-container {
-    /* padding-bottom: 105px; */ /* Ensuring this is commented out or removed */
+    padding-bottom: calc(150px - 3vh); /* CORRECTED: This is the one to change */
   }
   .lights-image {
     left: 0;
@@ -544,8 +548,7 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
   }
 
   .gallery-main {
-    padding-top: 20px;
-    padding-bottom: 1rem;
+    padding: 0 !important; /* ADDED to remove all padding */
     justify-content: flex-start;
   }
 
@@ -583,33 +586,64 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
   /* Desktop Styles for Events Page (Two Columns) */
   .events-list {
     flex-direction: row;
-    justify-content: space-around;
-    align-items: flex-start;
+    justify-content: center; 
+    align-items: flex-start; 
+    gap: 2rem; 
+    width: 100%; 
+    align-self: stretch; 
+    flex-grow: 1; /* ADDED: Allow events-list to take available vertical space */
+    min-height: 0; /* ADDED: Paired with flex-grow */
   }
 
   .event-item {
-    width: 48%; /* Adjusted from 45% to make items closer */
-    /* max-height: 75vh; */ /* REMOVED */
-    height: 100%; /* ADDED to fill parent (.events-list) height */
-    margin-bottom: 0; /* Vertical margin between items not needed when side-by-side */
-    /* overflow: visible; */ /* CHANGED */
-    overflow: hidden; /* ADDED to clip internal content if it overflows event-item */
+    width: 45%; 
+    height: 100%; 
+    margin-bottom: 0; 
+    overflow: hidden; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; /* ADDED: to vertically center the blue box */
+    /* align-items will be set by :nth-child rules to push content left/right */
   }
 
-  .event-item .framed-artwork {
-    flex-grow: 1;
-    flex-shrink: 1;
-    min-height: 0;
-    max-width: 100%; /* ADDED to override base style and allow full width */
-    margin-bottom: 1vh; 
-    width: 100%;
+  .event-item:nth-child(1) {
+    align-items: flex-end; /* Aligns .framed-artwork to the right */
+  }
+
+  .event-item:nth-child(2) {
+    align-items: flex-start; /* Aligns .framed-artwork to the left */
+  }
+
+  /* Container for the actual event image AND its plaque */
+  .event-item .framed-artwork { 
+    width: auto; 
+    max-width: 70%; 
+    height: 100%; 
+    flex-grow: 1; 
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column; 
+    align-items: center; 
+    box-sizing: border-box; 
   }
 
-  .event-item .plaque-image {
-    /* max-height: 25% and other styles inherited from base */
+  /* The actual main image for the event */
+  .event-item .artwork-frame { 
+    max-width: 100%;
+    /* max-height: 100%; REMOVED in favor of flex properties */
+    object-fit: contain;
+    flex-grow: 1; /* ADDED: Allow image to take available space */
+    flex-shrink: 1; /* ADDED: Allow image to shrink */
+    min-height: 0; /* ADDED: Allow image to shrink below its intrinsic height */
+  }
+
+  /* The plaque image, now a child of .framed-artwork */
+  .event-item .framed-artwork .plaque-image {
+    margin-top: 1vh; 
+    margin-left: auto; 
+    margin-right: auto;
+    max-width: 80%; 
+    object-fit: contain; 
+    flex-shrink: 0; 
   }
 
   .mobile-gallery-container {
@@ -642,56 +676,32 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
   stroke-width: 2; 
 }
 
+/* --- START DIAGNOSTIC BORDERS FOR EVENTS PAGE --- */
+.events-list {
+  border: 2px solid red !important;
+  border-color: transparent !important; /* HIDE BORDER */
+}
+.event-item {
+  border: 2px solid limegreen !important;
+  border-color: transparent !important; /* HIDE BORDER */
+}
+.event-item .framed-artwork {
+  border: 2px solid blue !important;
+  border-color: transparent !important; /* HIDE BORDER */
+}
+.event-item .artwork-frame {
+  border: 2px solid cyan !important;
+  border-color: transparent !important; /* HIDE BORDER */
+}
+.event-item .framed-artwork .plaque-image {
+  border: 2px solid yellow !important;
+  border-color: transparent !important; /* HIDE BORDER */
+}
+/* --- END DIAGNOSTIC BORDERS FOR EVENTS PAGE --- */
+
 .header-logo-image {
   /* Adjust size as needed, width/height are set on Image component */
   /* filter: brightness(0) invert(1); /* Uncomment if your logow.png is black and needs to be white */
-}
-
-/* Styles for the new events page layout to fit without scroll */
-.events-list {
-  display: flex;
-  flex-direction: column;
-  align-items: center; 
-  width: 100%;
-  justify-content: space-around; /* Changed from flex-start, to distribute space for items */
-  height: 100%; /* Fill parent (.gallery-main) */
-}
-
-.event-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 90%; 
-  margin-bottom: 2vh; 
-  flex-shrink: 1;   /* Corrected to 1 to allow shrinking */
-  flex-grow: 1;   
-  flex-basis: 0;  
-  min-height: 0;  
-  /* max-height: calc( (100vh - 60px - 70px - 80px - 4vh) / 2 - 2vh ); Removed */
-}
-
-.event-item:last-child {
-  margin-bottom: 0;
-}
-
-.event-item .framed-artwork {
-  flex-grow: 1;
-  flex-shrink: 1;
-  min-height: 0;
-  max-width: 100%; /* ADDED to override base style and allow full width */
-  margin-bottom: 1vh; 
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.event-item .plaque-image {
-  /* max-height: 4vh; Removed fixed vh */
-  flex-shrink: 0; /* Plaque takes its natural height */
-  width: auto; /* Adjust as needed, e.g., max-width: 60% */
-  max-width: 60%;
-  object-fit: contain;
 }
 
 .info-icon-overlay {
@@ -1317,14 +1327,18 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
   margin-bottom: 1vh; 
   width: 100%;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column; /* ADDED to stack image and plaque */
+  align-items: center; /* Centers image and plaque horizontally */
+  justify-content: center; /* Vertically centers if there's space, might need adjustment */
 }
 
 .event-item .artwork-frame { /* Image itself */
   max-width: 100%;
-  max-height: 100%; /* Fill the .framed-artwork container */
+  /* max-height: 100%; REMOVED in favor of flex properties */
   object-fit: contain;
+  flex-grow: 1; /* ADDED: Allow image to take available space */
+  flex-shrink: 1; /* ADDED: Allow image to shrink */
+  min-height: 0; /* ADDED: Allow image to shrink below its intrinsic height */
 }
 
 .event-item .plaque-image {
@@ -1339,55 +1353,69 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
 @media (min-width: 1024px) {
   .events-list {
     flex-direction: row;
-    justify-content: space-around; /* Distributes space around the two items */
-    align-items: flex-start; /* Aligns the top of the items if they have different heights */
+    justify-content: center; 
+    align-items: flex-start; 
+    gap: 2rem; 
+    width: 100%; 
+    align-self: stretch; 
+    flex-grow: 1; /* ADDED: Allow events-list to take available vertical space */
+    min-height: 0; /* ADDED: Paired with flex-grow */
   }
 
   .event-item {
-    width: 48%; /* Adjusted from 45% to make items closer */
-    /* max-height: 75vh; */ /* REMOVED */
-    height: 100%; /* ADDED to fill parent (.events-list) height */
-    margin-bottom: 0; /* Vertical margin between items not needed when side-by-side */
-    /* overflow: visible; */ /* CHANGED */
-    overflow: hidden; /* ADDED to clip internal content if it overflows event-item */
+    width: 45%; 
+    height: 100%; /* ADDED: Take full height of .events-list */
+    margin-bottom: 0; 
+    overflow: hidden; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; /* ADDED: to vertically center the blue box */
+    /* align-items will be set by :nth-child rules below */
   }
 
-  .event-item .framed-artwork {
-    flex-grow: 1;
-    flex-shrink: 1;
-    min-height: 0;
-    max-width: 100%; /* ADDED to override base style and allow full width */
-    margin-bottom: 1vh; 
-    width: 100%;
+  .event-item:nth-child(1) {
+    align-items: flex-end; /* Pushes .framed-artwork to the right */
+  }
+
+  .event-item:nth-child(2) {
+    align-items: flex-start; /* Pushes .framed-artwork to the left */
+  }
+
+  /* Container for the actual event image AND its plaque */
+  .event-item .framed-artwork { 
+    width: auto; 
+    max-width: 70%; 
+    height: 100%; 
+    flex-grow: 1; 
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column; 
+    align-items: center; 
+    box-sizing: border-box; 
   }
 
-  .event-item .plaque-image {
-    position: relative; /* Allow z-index to apply */
-    z-index: 1; /* Lift plaque slightly */
-    /* max-height: 25% and other styles inherited from base */
+  /* The actual main image for the event */
+  .event-item .artwork-frame { 
+    max-width: 100%;
+    /* max-height: 100%; REMOVED in favor of flex properties */
+    object-fit: contain;
+    flex-grow: 1; /* ADDED: Allow image to take available space */
+    flex-shrink: 1; /* ADDED: Allow image to shrink */
+    min-height: 0; /* ADDED: Allow image to shrink below its intrinsic height */
   }
 
-  /* NEW RULES START HERE */
-  .event-item .framed-artwork {
-    flex-grow: 1;
-    flex-shrink: 1;
-    min-height: 0;
-    max-width: 100%; /* ADDED to override base style and allow full width */
-    margin-bottom: 1vh; 
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  /* The plaque image, now a child of .framed-artwork */
+  .event-item .framed-artwork .plaque-image {
+    margin-top: 1vh; 
+    margin-left: auto; 
+    margin-right: auto;
+    max-width: 80%; 
+    object-fit: contain; 
+    flex-shrink: 0; 
   }
 
-  .event-item .plaque-image {
-    /* Inherits max-height: 25% and flex-shrink: 0 from base .event-item .plaque-image */
-    /* No new desktop-specific overrides needed here, relying on inherited properties */
+  .mobile-gallery-container {
+    padding-bottom: calc(150px - 3vh); /* CORRECTED: This is the one to change */
   }
-  /* NEW RULES END HERE */
 }
 
 /* RSVP Form Padding Adjustments */
