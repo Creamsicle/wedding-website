@@ -420,7 +420,7 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
 
 /* New class for Home Page plaque wrapper for spacing */
 .home-plaque-wrapper {
-  margin-top: 2rem; /* Consistent spacing */
+  margin-top: 0 !important; /* Default for mobile-first approach */
   flex-shrink: 0; /* Plaque takes its natural height */
 }
 
@@ -1149,6 +1149,51 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
   border: 2px solid limegreen !important;
 }
 /* END Diagnostic Borders */
+
+/* Homepage Specific Layout Adjustments */
+.gallery-main-home {
+  padding: 0 !important;
+}
+
+.artwork-display-home {
+  padding: 0 !important;
+}
+
+.artwork-display-home .home-plaque-wrapper {
+  margin-top: 0 !important; /* Default for mobile-first approach */
+}
+
+@media (min-width: 1024px) {
+  .artwork-display-home .home-plaque-wrapper {
+    margin-top: 1rem !important; /* 1rem margin for desktop */
+  }
+  .artwork-display-home .plaque-image-home {
+    max-width: 20% !important; /* Smaller plaque on desktop */
+  }
+  /* Add other desktop-specific home page overrides here if needed */
+}
+
+@media (max-width: 767px) { /* Assuming 767px as mobile breakpoint, adjust if needed */
+  .artwork-display-home .home-content-block {
+    max-width: 100% !important; /* Full width on mobile */
+    width: 100% !important; /* Ensure width is also 100% */
+  }
+  .artwork-display-home .plaque-image-home {
+    max-width: 30% !important; /* plaque on mobile, reduced from 40% */
+  }
+  .artwork-display-home .home-content-block {
+    height: 100%; /* Ensure full height of red box */
+    justify-content: space-between; /* To push plaque to bottom */
+  }
+  .artwork-display-home .hero-image-container {
+    flex: 1 1 0; /* More explicit flex property to fill space */
+    min-height: 0; /* Still keep min-height for content scaling */
+    display: flex; /* ADDED to help child Image with fill to expand */
+    flex-direction: column; /* ADDED */
+  }
+  /* Add other mobile-specific home page overrides here if needed */
+}
+/* END Homepage Specific Layout Adjustments */
 
 /* Added for RSVP card animation */
 @layer utilities {

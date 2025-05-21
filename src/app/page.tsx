@@ -8,8 +8,8 @@ export default function HomePage() {
     <div className="mobile-gallery-container">
       <SiteHeader />
 
-      <main className="gallery-main diag-magenta">
-        <div className="artwork-display diag-red">
+      <main className="gallery-main diag-magenta gallery-main-home">
+        <div className="artwork-display diag-red artwork-display-home">
           <Image src="/images/Lights.png" alt="Gallery lights" width={1000} height={100} className="lights-image" />
           
           <div className="home-content-block frame-and-plaque-container w-full max-w-[75%] md:max-w-[340px] lg:max-w-[650px] mx-auto diag-limegreen">
@@ -19,7 +19,7 @@ export default function HomePage() {
                 alt="Artwork frame with photo" 
                 fill 
                 sizes="100vw" 
-                style={{ objectFit: 'contain' }}
+                className="artwork-frame"
               />
             </div>
             <div className="home-plaque-wrapper flex justify-center">
