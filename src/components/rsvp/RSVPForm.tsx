@@ -205,7 +205,7 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
   }
 
   return (
-    <div className="space-y-8 rsvp-form-container flex flex-col flex-grow">
+    <div className="space-y-8 rsvp-form-container flex flex-col flex-grow h-full">
       {instructionalText && (
         <p className="text-center text-white/90 mb-6 max-w-lg mx-auto text-lg font-medium">
           {instructionalText}
@@ -240,12 +240,11 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
           )}
         </form>
       ) : (
-        <div className="space-y-6">
+        <div className="space-y-6 flex flex-col flex-1 h-full">
           {/* Scrollable container for all guest cards */}
           <div 
             ref={formRef}
-            className="bg-gray-800/80 p-4 md:p-6 rounded-xl shadow-xl overflow-y-auto styled-scrollbar space-y-6"
-            style={{ maxHeight: 'calc(var(--dynamic-vh, 1vh) * 70)' }}
+            className="bg-gray-800/80 p-4 md:p-6 rounded-xl shadow-xl overflow-y-auto styled-scrollbar space-y-6 rsvp-guest-cards-container diag-blue flex-1"
           >
             <h3 className="text-2xl font-bold text-white mb-2 text-center">
               RSVP for Your Party

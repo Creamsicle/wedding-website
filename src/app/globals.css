@@ -420,7 +420,7 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
 
 /* New class for Home Page plaque wrapper for spacing */
 .home-plaque-wrapper {
-  margin-top: 0 !important; /* Default for mobile-first approach */
+  margin-top: 1rem !important; /* Changed from 0 to 1rem for consistent spacing */
   flex-shrink: 0; /* Plaque takes its natural height */
 }
 
@@ -1160,13 +1160,10 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
 }
 
 .artwork-display-home .home-plaque-wrapper {
-  margin-top: 0 !important; /* Default for mobile-first approach */
+  margin-top: 1rem !important; /* Changed from 0 to 1rem for consistent spacing */
 }
 
 @media (min-width: 1024px) {
-  .artwork-display-home .home-plaque-wrapper {
-    margin-top: 1rem !important; /* 1rem margin for desktop */
-  }
   .artwork-display-home .plaque-image-home {
     max-width: 20% !important; /* Smaller plaque on desktop */
   }
@@ -1195,6 +1192,26 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
 }
 /* END Homepage Specific Layout Adjustments */
 
+/* RSVP Page Specific Layout Adjustments */
+.rsvp-custom-main {
+  padding: 0 !important; /* Ensure magenta box has no padding on RSVP page */
+  margin-top: 1rem; /* Lower magenta box */
+}
+
+.gallery-main .gallery-section-rsvp {
+  flex-grow: 1; /* Allow it to take available space in gallery-main */
+  min-height: 0; /* Crucial for shrinking below content height */
+  overflow-y: auto; /* Make this section scrollable if content overflows */
+  padding: 1rem !important; /* NEW: 1rem padding on all sides */
+}
+
+.rsvp-form-area-wrapper { /* Green box */
+  height: 100%;
+  display: flex; /* To make its child (RSVPForm's root) fill it */
+  flex-direction: column;
+}
+/* END RSVP Page Specific Layout Adjustments */
+
 /* Added for RSVP card animation */
 @layer utilities {
   @keyframes subtleFadeIn {
@@ -1222,6 +1239,11 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
 }
 .bench-hidden .gallery-main-story {
   margin-bottom: 0 !important;
+}
+
+/* When bench is hidden on RSVP active state, remove parent container's bottom padding */
+.mobile-gallery-container.bench-hidden {
+  padding-bottom: 0 !important;
 }
 
 /* --- FAQ Page Overrides --- */
@@ -1395,6 +1417,7 @@ body.rsvp-form-active .rsvp-mobile-container {
 }
 
 .rsvp-mobile-container {
+  padding-top: 60px; /* Add padding to align header with other pages */
   height: 100%; /* Fill parent main element */
   width: 100%; 
   overflow-y: auto !important; /* Keep scrolling internal to this container */

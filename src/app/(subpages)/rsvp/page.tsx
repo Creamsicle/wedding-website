@@ -40,7 +40,7 @@ export default function RSVPPage() {
         <Image src="/images/Lights.png" alt="Gallery lights" width={1000} height={100} className="lights-image relative z-0" />
       )}
 
-      <main className="gallery-main rsvp-custom-main relative z-20">
+      <main className="gallery-main rsvp-custom-main relative z-20 diag-magenta">
         {/* Gradient layers - REMOVED */}
         {/* <div className="gallery-gradient-1" /> */}
         {/* <div className="gallery-gradient-2" /> */}
@@ -60,10 +60,10 @@ export default function RSVPPage() {
           }}
         /> */}
 
-        <div className="gallery-section pt-12 relative z-2">
+        <div className="gallery-section pt-12 relative z-2 diag-red gallery-section-rsvp">
           {/* Static paragraph removed, handled by RSVPForm */}
           
-          <div className="max-w-3xl mx-auto">
+          <div className="max-w-3xl mx-auto diag-limegreen rsvp-form-area-wrapper">
             <Suspense fallback={<div>Loading...</div>}>
               <RSVPForm onPartySelectStateChange={setIsPartySelected} />
             </Suspense>
