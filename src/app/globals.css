@@ -829,10 +829,8 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
 
 /* New wrapper for desktop layout */
 .story-content-wrapper {
-  position: relative; /* Allows absolute positioning of arrows relative to this wrapper */
   width: 100%;
   display: flex;
-  justify-content: center;
 }
 
 .arrow {
@@ -1475,7 +1473,7 @@ body.on-rsvp-mobile main {
 
 /* Desktop specific styles for arrows */
 @media (min-width: 1024px) { /* Adjust breakpoint as needed */
-  .story-content-wrapper .arrow {
+  .story-content-container > .arrow { /* Changed selector to target direct children arrows */
     position: absolute;
     top: 50%; /* Vertically center */
     transform: translateY(-50%); /* Adjust for exact centering if icons are not perfectly symmetrical */
@@ -1487,16 +1485,16 @@ body.on-rsvp-mobile main {
     transition: background-color 0.3s ease;
   }
 
-  .story-content-wrapper .arrow:hover {
+  .story-content-container > .arrow:hover { /* Changed selector */
     background-color: rgba(0,0,0,0.6);
   }
 
-  .story-content-wrapper .left-arrow {
-    left: -60px; /* Position left arrow outside the content container */
+  .story-content-container > .left-arrow { /* Changed selector */
+    left: 25%; /* Positioned at 1/4 mark of the container */
   }
 
-  .story-content-wrapper .right-arrow {
-    right: -60px; /* Position right arrow outside the content container */
+  .story-content-container > .right-arrow { /* Changed selector */
+    right: 25%; /* Positioned at 1/4 mark from the right of the container (effectively 3/4 mark) */
   }
 
   /* Adjust story content container to make space for absolute positioned arrows */
@@ -1504,6 +1502,7 @@ body.on-rsvp-mobile main {
     padding-left: 70px; /* Space for left arrow */
     padding-right: 70px; /* Space for right arrow */
     /* max-width will be inherited or can be redefined here if needed */
+    position: relative; /* Ensure this container is the positioning context for the arrows */
   }
 }
 

@@ -274,10 +274,16 @@ export default function StoryNewPage() {
           display: flex; 
           align-items: center;
           justify-content: center;
-          border: 8px solid white !important; 
-          padding: 0px;
+          border: 6px solid white !important; 
+          padding: 2px !important; /* Default padding for larger screens */
           position: relative; 
-          overflow: hidden; 
+          box-sizing: border-box !important; 
+          overflow: hidden !important; 
+        }
+        @media (max-width: 768px) {
+          .artwork-image-story-animated {
+            padding: 0px !important; /* No padding on mobile */
+          }
         }
         @keyframes fadeInStoryImage {
           from { opacity: 0; transform: scale(0.98); }
