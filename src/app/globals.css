@@ -338,6 +338,8 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
   background-image: url('/images/home-bg2.png'); /* Changed to home-bg2.png */
   background-size: cover;
   background-position: center;
+  padding-top: 60px; /* For fixed lights */
+  padding-bottom: 80px; /* For fixed bench - base */
   box-sizing: border-box; 
   -webkit-overflow-scrolling: auto; /* Attempt to disable iOS momentum scroll */
   touch-action: none; /* Disable panning/zooming touch actions for the main container */
@@ -345,7 +347,7 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
 
 .gallery-header {
   position: relative; /* Not fixed, flows after lights */
-  margin-top: 60px; /* Space for the fixed lights bar */
+  /* margin-top: 60px; */ /* Removed - handled by parent padding */
   width: 100%;
   padding: 0.5rem 1rem; /* Original padding */
   display: flex;
@@ -356,6 +358,7 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
   box-sizing: border-box;
   flex-shrink: 0;
   background-color: transparent; /* Explicitly transparent if needed */
+  border: 2px solid cyan !important; /* DIAGNOSTIC BORDER */
 }
 
 .logo span {
@@ -379,11 +382,11 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
   flex-direction: column;
   justify-content: flex-start; 
   align-items: center;
-  overflow: hidden; /* Restored */
+  overflow: hidden; /* Consider changing to auto or visible if clipping persists after sizing */
   position: relative; 
   padding: 1rem; /* Default padding */
   width: 100%; 
-  margin-bottom: 80px; /* Space for fixed bench (adjust if bench height changes) */
+  /* margin-bottom: 80px; */ /* Removed - handled by parent padding */
   touch-action: none; 
   box-sizing: border-box;
 }
@@ -512,10 +515,16 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
     /* transform: scale(1.75); /* Removed scale */
     /* transform-origin: center bottom; is inherited */
   }
+  .mobile-gallery-container {
+    padding-bottom: 100px; /* For tablet bench height */
+  }
 }
 
 /* Desktop Styles */
 @media (min-width: 1024px) {
+  .mobile-gallery-container { 
+    padding-bottom: 105px; /* For new desktop bench height (150px * 0.7) */
+  }
   .lights-image {
     left: 0;
     transform: none; 
@@ -526,11 +535,11 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
   }
 
   .bench-container {
-    height: 150px; /* Consistent height */
+    height: 105px; /* Consistent height (150px * 0.7) */
   }
   .bench-image {
     width: 100%; 
-    height: 150px; /* Consistent height */
+    height: 105px; /* Consistent height (150px * 0.7) */
     max-width: none; 
     object-fit: cover; 
     object-position: center top; /* Changed from center center to preserve top */
@@ -571,14 +580,14 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
   }
 
   .artwork-image-story {
-    max-height: 48vh !important; /* Adjusted for wider screens, keeping !important */
+    /* max-height: calc(var(--dynamic-vh, 1vh) * 37) !important; */ /* REMOVED */
   }
 
   .gallery-main-story {
-    justify-content: flex-start !important; /* Align to top on desktop, with !important */
+    justify-content: flex-start !important; /* CHANGED from center */
     padding-bottom: 150px; /* Space for desktop bench */
     margin-bottom: 0; /* Remove margin if any */
-    overflow-y: auto; /* Ensure scrolling if needed */
+    overflow-y: hidden; /* Changed to hidden to prevent scroll */
   }
 
   /* Desktop Styles for Events Page (Two Columns) */
@@ -605,14 +614,18 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
     /* Removed position: relative and z-index: 1; */
     /* max-height: 25% and other styles inherited from base */
   }
+
+  .mobile-gallery-container {
+    padding-bottom: 150px; /* For desktop bench height */
+  }
 }
 
 /* Add new media query for tablet bench spacing for gallery-main-story */
 @media (min-width: 400px) and (max-width: 1023px) {
   .gallery-main-story {
-    padding-bottom: 100px; /* Space for tablet bench */
-    margin-bottom: 0; /* Remove margin if any */
-    overflow-y: auto; /* Ensure scrolling if needed for consistency */
+    /* padding-bottom: 100px; */ /* Removed, parent container handles bench spacing */
+    margin-bottom: 0; 
+    /* overflow-y: auto; */ /* Changed to hidden by base style */
   }
 }
 
@@ -788,26 +801,38 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start; /* Changed from center */
+  justify-content: flex-start; /* Ensure this is flex-start */
   position: relative;
   width: 100%; 
   flex-grow: 1; 
-  overflow-y: auto; /* Changed from hidden */
+  overflow: hidden; 
   padding: 1rem; 
-  padding-bottom: 80px; /* Space for mobile bench */
-  margin-bottom: 0; /* Use padding for bench space */
-  /* touch-action and box-sizing will be inherited or should be here */
+  margin-bottom: 0; 
   box-sizing: border-box;
-  touch-action: pan-y; /* Allow vertical scroll */
+  border: 2px solid magenta !important; /* DIAGNOSTIC BORDER */
 }
 
 .story-content-container {
   display: flex;
   align-items: center; 
-  justify-content: center; /* Changed from space-between to group arrows and image */
-  width: 100%;
+  justify-content: center; 
   position: relative; 
-  /* flex-grow: 1; Removed */ 
+  width: 100%;
+  max-width: 1200px; 
+  margin: 0 auto; 
+  flex-shrink: 1; 
+  min-height: 0; 
+  flex-grow: 1; 
+  border: 2px solid red !important; /* DIAGNOSTIC BORDER */
+  overflow: hidden; 
+}
+
+/* New wrapper for desktop layout */
+.story-content-wrapper {
+  position: relative; /* Allows absolute positioning of arrows relative to this wrapper */
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .arrow {
@@ -829,33 +854,31 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
 }
 
 .framed-artwork-story {
-  border: 22px solid #333; 
+  border: 2px solid lime !important; /* DIAGNOSTIC BORDER */
   border-radius: 5px;
   padding: 8px; 
   background-color: transparent;
-  box-shadow: inset 0 0 0 8px white, 0 8px 16px rgba(0,0,0,0.25); 
-  box-sizing: border-box; 
+  box-sizing: border-box !important; 
   position: relative;
   display: flex; 
   align-items: center; 
-  justify-content: center;
-  max-width: 70%; /* Or whatever it was, this can be adjusted */
-  /* max-height: 100%; This line remains removed or commented out */
-  align-self: center; /* This was in the original, might be important */
-  flex-shrink: 0; /* This was in the original */
-  transition: width 0.4s ease-in-out, height 0.4s ease-in-out; /* This was in the original */
-  cursor: pointer; /* Added back if it was removed, or ensure it's present */
-  margin: 0 auto; /* If it centers, keep it */
+  justify-content: center; 
+  cursor: pointer; 
+  height: 100%; 
+  width: 100%; /* CHANGED from auto to fill parent (Red box) horizontally */
+  max-width: 100%; /* ADDED for clarity with width: 100% */
+  overflow: hidden; 
 }
 
 .artwork-image-story {
   display: block; 
-  width: auto; 
-  height: auto; 
-  max-width: 100%;   /* 100% of parent .framed-artwork-story content box */
-  /* max-height: 55vh; */  /* Replaced with dynamic vh */
-  max-height: calc(var(--dynamic-vh, 1vh) * 55);
-  object-fit: contain; 
+  /* width: 100%; */  /* REMOVED */
+  /* height: 100%; */ /* REMOVED */
+  /* align-self: stretch; */ /* REMOVED */
+  /* max-width: 100%; */   /* REMOVED */
+  /* max-height: 100%; */  /* REMOVED */
+  object-fit: contain !important; 
+  border: 3px dotted blue !important; /* DIAGNOSTIC BORDER */
 }
 
 .info-icon-on-image {
@@ -872,16 +895,18 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
 }
 
 .plaque-story {
-  margin-top: 15px; 
+  /* margin-top: 15px; */ /* Keep margin for positioning, but border will show its box */
   padding: 8px 15px; 
   background-color: white;
-  border: 1px solid #ccc;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+  /* border: 1px solid #ccc; */
+  border: 2px solid yellow !important; /* DIAGNOSTIC BORDER - Overrides existing border */
+  /* box-shadow: 0 2px 4px rgba(0,0,0,0.1); // Commented out for diagnosis */
   text-align: center;
   z-index: 1;
   color: #333; 
-  flex-shrink: 0;
-  cursor: pointer; /* Added to indicate clickability */
+  flex-shrink: 0; 
+  cursor: pointer; 
+  margin-top: 15px !important; /* Ensure margin-top is applied and has precedence */
 }
 
 .plaque-story h3 {
@@ -928,16 +953,13 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
   }
 
   .framed-artwork-story {
-    border-width: 15px;
     padding: 5px;
-    max-width: calc(100% - 60px);
+    max-width: calc(100% - 60px); /* Keep this for mobile to prevent touching edges */
+    /* width: 100% will be inherited but constrained by this max-width */
   }
 
   .artwork-image-story {
-    /* 
-    width: 200px !important; REMOVED 
-    height: 300px !important; REMOVED 
-    */
+    /* max-height: calc(var(--dynamic-vh, 1vh) * 31); */ /* REMOVED */
   }
 
   .info-icon-on-image {
@@ -989,9 +1011,9 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
     margin-top: 0;
   }
    .framed-artwork-story {
-    border-width: 12px;
     padding: 4px;
-    max-width: calc(100% - 50px);
+    max-width: calc(100% - 50px); /* Keep this for mobile to prevent touching edges */
+    /* width: 100% will be inherited but constrained by this max-width */
   }
   .arrow {
     font-size: 3rem; /* Slightly smaller for very small screens, but still larger */
@@ -1006,6 +1028,9 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
 
   .plaque-story p {
     font-size: 0.6rem;
+  }
+  .artwork-image-story {
+    /* max-height: calc(var(--dynamic-vh, 1vh) * 28); */ /* REMOVED */
   }
 }
 
@@ -1336,4 +1361,38 @@ body.on-rsvp-mobile main {
 .event-dialog-content > button:hover svg {
   color: var(--rust-primary) !important; /* Orange on hover */
   fill: var(--rust-primary) !important; /* Orange fill on hover */
+}
+
+/* Desktop specific styles for arrows */
+@media (min-width: 1024px) { /* Adjust breakpoint as needed */
+  .story-content-wrapper .arrow {
+    position: absolute;
+    top: 50%; /* Vertically center */
+    transform: translateY(-50%); /* Adjust for exact centering if icons are not perfectly symmetrical */
+    z-index: 30; /* Ensure arrows are above images */
+    cursor: pointer;
+    background-color: rgba(0,0,0,0.3);
+    border-radius: 50%;
+    padding: 8px;
+    transition: background-color 0.3s ease;
+  }
+
+  .story-content-wrapper .arrow:hover {
+    background-color: rgba(0,0,0,0.6);
+  }
+
+  .story-content-wrapper .left-arrow {
+    left: -60px; /* Position left arrow outside the content container */
+  }
+
+  .story-content-wrapper .right-arrow {
+    right: -60px; /* Position right arrow outside the content container */
+  }
+
+  /* Adjust story content container to make space for absolute positioned arrows */
+  .story-content-container {
+    padding-left: 70px; /* Space for left arrow */
+    padding-right: 70px; /* Space for right arrow */
+    /* max-width will be inherited or can be redefined here if needed */
+  }
 }

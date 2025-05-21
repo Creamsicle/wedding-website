@@ -20,7 +20,7 @@ export function useDynamicViewportHeight() {
       const vh = getWindowInnerHeight() * 0.01;
       document.documentElement.style.setProperty('--dynamic-vh', `${vh}px`);
       // Also update state if you need to use the raw pixel value in JS, though CSS var is primary
-      setDynamicVh(vh); 
+      setDynamicVh(vh);
     }
 
     if (typeof window !== 'undefined') {

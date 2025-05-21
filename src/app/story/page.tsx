@@ -21,8 +21,8 @@ interface StoryItem {
 const storyItems: StoryItem[] = [
   {
     id: 'story1',
-    src: '/images/placeholder1.webp', // Updated
-    alt: 'First story image',
+    src: '/images/story/1.png',
+    alt: 'Story image 1',
     title: 'Our First Adventure',
     details: 'Artist Name - 2023',
     originalWidth: 800, // Placeholder - UPDATE MANUALLY
@@ -31,8 +31,8 @@ const storyItems: StoryItem[] = [
   },
   {
     id: 'story2',
-    src: '/images/placeholder2.jpg', // Updated
-    alt: 'Second story image',
+    src: '/images/story/2.png',
+    alt: 'Story image 2',
     title: 'A Moment in Time',
     details: 'Photographer X - 2024',
     originalWidth: 700, // Placeholder - UPDATE MANUALLY
@@ -41,8 +41,8 @@ const storyItems: StoryItem[] = [
   },
   {
     id: 'story3',
-    src: '/images/placeholder3.jpg', // Updated
-    alt: 'Romantic couple in a tender moment',
+    src: '/images/story/3.png',
+    alt: 'Story image 3',
     title: 'Whispers of Affection',
     details: 'Captured Memories - 2022',
     originalWidth: 600, // Placeholder - UPDATE MANUALLY
@@ -51,8 +51,8 @@ const storyItems: StoryItem[] = [
   },
   {
     id: 'story4',
-    src: '/images/placeholder4.jpg', // Updated
-    alt: 'Couple enjoying a vibrant sunset',
+    src: '/images/story/4.png',
+    alt: 'Story image 4',
     title: 'Golden Hour Serenade',
     details: 'Nature\'s Palette - 2023',
     originalWidth: 1000, // Placeholder - UPDATE MANUALLY
@@ -61,8 +61,8 @@ const storyItems: StoryItem[] = [
   },
   {
     id: 'story5',
-    src: '/images/placeholder5.webp', // Updated
-    alt: 'Joyful couple celebrating their engagement',
+    src: '/images/story/5.png',
+    alt: 'Story image 5',
     title: 'The Promise of Forever',
     details: 'Eternal Vows - 2024',
     originalWidth: 750, // Placeholder - UPDATE MANUALLY
@@ -71,8 +71,8 @@ const storyItems: StoryItem[] = [
   },
   {
     id: 'story6',
-    src: '/images/placeholder6.jpeg', // Updated
-    alt: 'Elegant wedding celebration scene',
+    src: '/images/story/6.png',
+    alt: 'Story image 6',
     title: 'A Day to Remember',
     details: 'Festivities & Joy - 2025',
     originalWidth: 900, // Placeholder - UPDATE MANUALLY
@@ -81,13 +81,33 @@ const storyItems: StoryItem[] = [
   },
   {
     id: 'story7',
-    src: '/images/placeholder7.jpg', // Updated
-    alt: 'Adventurous couple exploring a new place',
+    src: '/images/story/7.png',
+    alt: 'Story image 7',
     title: 'Journeying Together',
     details: 'Explorers at Heart - 2023',
     originalWidth: 500, // Placeholder - UPDATE MANUALLY
     originalHeight: 700, // Placeholder - UPDATE MANUALLY
     description: 'With maps in hand and excitement in their eyes, they embarked on another adventure. Each new discovery, each shared experience, wove another thread into the rich tapestry of their life together. The path ahead was unknown, but they faced it with courage and love, eager for what lay beyond the next horizon, always side by side.',
+  },
+  {
+    id: 'story8',
+    src: '/images/story/8.png',
+    alt: 'Story image 8',
+    title: 'Another Chapter',
+    details: 'Moments - 2023',
+    originalWidth: 800, // Placeholder - UPDATE MANUALLY
+    originalHeight: 600, // Placeholder - UPDATE MANUALLY
+    description: 'Placeholder description for story 8.',
+  },
+  {
+    id: 'story9',
+    src: '/images/story/9.png',
+    alt: 'Story image 9',
+    title: 'Looking Ahead',
+    details: 'Future - 2023',
+    originalWidth: 800, // Placeholder - UPDATE MANUALLY
+    originalHeight: 600, // Placeholder - UPDATE MANUALLY
+    description: 'Placeholder description for story 9.',
   },
 ];
 
@@ -99,15 +119,35 @@ export default function StoryNewPage() {
   const [selectedStoryDescription, setSelectedStoryDescription] = useState<string | null>(null);
   const [animationTriggerKey, setAnimationTriggerKey] = useState(0); // For click hint animation
   const [overlayContentIsScrollable, setOverlayContentIsScrollable] = useState(false);
+  const [isLoading, setIsLoading] = useState(true); // Added loading state
 
   const overlayRef = useRef<HTMLDivElement>(null);
   const paragraphRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
     // Preload all story images when the component mounts
+    let loadedImagesCount = 0;
+    if (storyItems.length === 0) {
+      setIsLoading(false);
+      return;
+    }
     storyItems.forEach(item => {
       const img = new window.Image();
       img.src = item.src;
+      img.onload = () => {
+        loadedImagesCount++;
+        if (loadedImagesCount === storyItems.length) {
+          setIsLoading(false); // All images loaded
+        }
+      };
+      img.onerror = () => {
+        loadedImagesCount++; // Count errors as "loaded" to not block forever
+        if (loadedImagesCount === storyItems.length) {
+          setIsLoading(false);
+        }
+        // Optionally, handle image loading errors, e.g., log them
+        console.error(`Failed to load image: ${item.src}`);
+      };
     });
   }, []); // Empty dependency array ensures this runs only once on mount
 
@@ -228,10 +268,55 @@ export default function StoryNewPage() {
       <style jsx>{`
         .artwork-image-story-animated {
           animation: fadeInStoryImage 0.5s ease-in-out;
+          width: 100%; 
+          max-width: 100%; 
+          height: 100%; /* CHANGED to fill parent (.framed-artwork-story) */
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: 2px dashed orange !important; /* DIAGNOSTIC BORDER */
+          position: relative; 
+          overflow: hidden; 
         }
+        /* Media queries for artwork-image-story-animated max-height REMOVED */
+        /* @media (min-width: 1024px) {
+          .artwork-image-story-animated {
+            max-height: calc(var(--dynamic-vh, 1vh) * 37) !important; 
+          }
+        }
+        @media (max-width: 768px) and (min-width: 481px) { 
+          .artwork-image-story-animated {
+            max-height: calc(var(--dynamic-vh, 1vh) * 31); 
+          }
+        }
+        @media (max-width: 480px) { 
+          .artwork-image-story-animated {
+            max-height: calc(var(--dynamic-vh, 1vh) * 28); 
+          }
+        } */
         @keyframes fadeInStoryImage {
           from { opacity: 0; transform: scale(0.98); }
           to { opacity: 1; transform: scale(1); }
+        }
+        .loading-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh; /* Full viewport height */
+          width: 100%;
+          /* font-size: 1.5rem; Removed as we are using a spinner now */
+          /* color: white; Removed as spinner will have its own color */
+        }
+        .spinner {
+          border: 4px solid rgba(255, 255, 255, 0.3);
+          border-radius: 50%;
+          border-top-color: #fff; /* White color for the spinning part */
+          width: 50px;
+          height: 50px;
+          animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+          to { transform: rotate(360deg); }
         }
       `}</style>
       <div className="mobile-gallery-container">
@@ -239,59 +324,65 @@ export default function StoryNewPage() {
         
         <Image src="/images/Lights.png" alt="Gallery lights" width={1000} height={100} className="lights-image" />
 
-        <main className="gallery-main-story" 
-          onTouchStart={handleTouchStart} 
-          onTouchMove={handleTouchMove} 
-          onTouchEnd={handleTouchEnd}
-        >
-          <div className="story-content-container">
-            <div className="arrow left-arrow" onClick={prevItem}>
-              <ChevronLeft size={40} />
-            </div>
-            <div className="framed-artwork-story" onClick={toggleOverlay}>
-                {currentStory && (
-                    <div key={animationTriggerKey} className="artwork-image-story-animated">
-                        <Image
-                            src={currentStory.src}
-                            alt={currentStory.alt}
-                            width={currentStory.originalWidth} 
-                            height={currentStory.originalHeight}
-                            className="artwork-image-story"
-                            priority
-                        />
-                    </div>
-                )}
-                <Image 
-                  key={`hint-${animationTriggerKey}`}
-                  src="/click.svg"
-                  alt="Click for details" 
-                  width={50} 
-                  height={50} 
-                  className="clickable-image-hint"
-                />
-                {isOverlayVisible && selectedStoryDescription && (
-                  <div 
-                    ref={overlayRef}
-                    className={`image-text-overlay visible ${overlayContentIsScrollable ? 'has-scrollable-content' : ''}`}
-                    onClick={handleOverlayClick}
-                  >
-                    <p ref={paragraphRef}>{selectedStoryDescription}</p>
-                  </div>
-                )}
-            </div>
-            <div className="arrow right-arrow" onClick={nextItem}>
-              <ChevronRight size={40} />
-            </div>
+        {isLoading ? (
+          <div className="loading-container">
+            <div className="spinner"></div> {/* Spinner element */}
           </div>
-
-          <div 
-            className="plaque-story" 
-            onClick={toggleOverlay}
+        ) : (
+          <main className="gallery-main-story" 
+            onTouchStart={handleTouchStart} 
+            onTouchMove={handleTouchMove} 
+            onTouchEnd={handleTouchEnd}
           >
-            <h3>{currentStory.title}</h3>
-            <p>{currentStory.details}</p>
-          </div>
-        </main>
+            <div className="story-content-container">
+              <div className="arrow left-arrow" onClick={prevItem}>
+                <ChevronLeft size={40} />
+              </div>
+              <div className="framed-artwork-story" onClick={toggleOverlay}>
+                  {currentStory && (
+                      <div key={animationTriggerKey} className="artwork-image-story-animated">
+                          <Image
+                              src={currentStory.src}
+                              alt={currentStory.alt}
+                              layout="fill"
+                              objectFit="contain"
+                              className="artwork-image-story"
+                              priority
+                          />
+                      </div>
+                  )}
+                  <Image 
+                    key={`hint-${animationTriggerKey}`}
+                    src="/click.svg"
+                    alt="Click for details" 
+                    width={50} 
+                    height={50} 
+                    className="clickable-image-hint"
+                  />
+                  {isOverlayVisible && selectedStoryDescription && (
+                    <div 
+                      ref={overlayRef}
+                      className={`image-text-overlay visible ${overlayContentIsScrollable ? 'has-scrollable-content' : ''}`}
+                      onClick={handleOverlayClick}
+                    >
+                      <p ref={paragraphRef}>{selectedStoryDescription}</p>
+                    </div>
+                  )}
+              </div>
+              <div className="arrow right-arrow" onClick={nextItem}>
+                <ChevronRight size={40} />
+              </div>
+            </div>
+
+            <div 
+              className="plaque-story" 
+              onClick={toggleOverlay}
+            >
+              <h3>{currentStory.title}</h3>
+              <p>{currentStory.details}</p>
+            </div>
+          </main>
+        )}
 
         <div className="bench-container">
           <Image src="/images/bench.png" alt="Gallery bench" width={800} height={200} className="bench-image" />
