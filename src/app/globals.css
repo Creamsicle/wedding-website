@@ -357,7 +357,7 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
   box-sizing: border-box;
   flex-shrink: 0;
   background-color: transparent; /* Explicitly transparent if needed */
-  border: 2px solid cyan !important; /* DIAGNOSTIC BORDER */
+  /* border: 2px solid cyan !important; */ /* DIAGNOSTIC BORDER - REMOVED */
 }
 
 .logo span {
@@ -809,7 +809,7 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
   padding-bottom: calc(1rem - 5vh); /* Further reduced bottom padding */
   margin-bottom: 0; 
   box-sizing: border-box;
-  border: 2px solid magenta !important; /* DIAGNOSTIC BORDER */
+  /* border: 2px solid magenta !important; */ /* DIAGNOSTIC BORDER - REMOVED */
 }
 
 .story-content-container {
@@ -823,7 +823,7 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
   flex-shrink: 1; 
   min-height: 0; 
   flex-grow: 1; 
-  border: 2px solid red !important; /* DIAGNOSTIC BORDER */
+  /* border: 2px solid red !important; */ /* DIAGNOSTIC BORDER - REMOVED */
   overflow: hidden; /* RESTORED */
 }
 
@@ -898,7 +898,7 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
   padding: 8px 15px; 
   background-color: white;
   /* border: 1px solid #ccc; */
-  border: 2px solid yellow !important; /* DIAGNOSTIC BORDER - Overrides existing border */
+  /* border: 2px solid yellow !important; */ /* DIAGNOSTIC BORDER - REMOVED */
   /* box-shadow: 0 2px 4px rgba(0,0,0,0.1); // Commented out for diagnosis */
   text-align: center;
   z-index: 1;
@@ -1132,27 +1132,12 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
   animation: click-hint-animation 2.5s ease-in-out 0.2s 1 forwards;
 }
 
-/* Diagnostic Borders */
-.diag-magenta {
-  border: 2px solid magenta !important;
+/* Applied to .gallery-header for diagnosing SiteHeader issues */
+.gallery-header {
+  /* border: 2px solid cyan !important; */ /* DIAGNOSTIC BORDER - REMOVED */
 }
 
-.diag-red {
-  border: 2px solid red !important;
-}
-
-.diag-yellow {
-  border: 2px solid yellow !important;
-}
-
-.diag-blue {
-  border: 2px solid blue !important;
-}
-
-.diag-limegreen {
-  border: 2px solid limegreen !important;
-}
-/* END Diagnostic Borders */
+/* Further Diagnostic Styles */
 
 /* Homepage Specific Layout Adjustments */
 .gallery-main-home {
