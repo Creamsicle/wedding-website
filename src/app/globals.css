@@ -546,7 +546,6 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
   .gallery-main {
     padding-top: 20px;
     padding-bottom: 1rem;
-    margin-bottom: 150px;
     justify-content: flex-start;
   }
 
@@ -589,15 +588,24 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
   }
 
   .event-item {
-    width: 48%;
-    max-height: 65vh;
-    margin-bottom: 0;
-    overflow: visible;
+    width: 48%; /* Adjusted from 45% to make items closer */
+    /* max-height: 75vh; */ /* REMOVED */
+    height: 100%; /* ADDED to fill parent (.events-list) height */
+    margin-bottom: 0; /* Vertical margin between items not needed when side-by-side */
+    /* overflow: visible; */ /* CHANGED */
+    overflow: hidden; /* ADDED to clip internal content if it overflows event-item */
   }
 
   .event-item .framed-artwork {
-    flex-grow: 0;
-    max-height: 55%;
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-height: 0;
+    max-width: 100%; /* ADDED to override base style and allow full width */
+    margin-bottom: 1vh; 
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .event-item .plaque-image {
@@ -667,15 +675,15 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
 }
 
 .event-item .framed-artwork {
-  max-width: 70%; /* Or other desired width */
-  /* max-height: 20vh;  Removed fixed vh */
+  flex-grow: 1;
+  flex-shrink: 1;
+  min-height: 0;
+  max-width: 100%; /* ADDED to override base style and allow full width */
   margin-bottom: 1vh; 
-  flex-grow: 1; /* Image frame takes most of the item's space */
-  min-height: 0; /* Allow image frame to shrink */
-  width: 100%; /* Ensure it uses available width from parent for centering */
-  display: flex; /* Ensure image inside can be centered */
-  justify-content: center;
+  width: 100%;
+  display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .event-item .plaque-image {
@@ -1120,6 +1128,28 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
   animation: click-hint-animation 2.5s ease-in-out 0.2s 1 forwards;
 }
 
+/* Diagnostic Borders */
+.diag-magenta {
+  border: 2px solid magenta !important;
+}
+
+.diag-red {
+  border: 2px solid red !important;
+}
+
+.diag-yellow {
+  border: 2px solid yellow !important;
+}
+
+.diag-blue {
+  border: 2px solid blue !important;
+}
+
+.diag-limegreen {
+  border: 2px solid limegreen !important;
+}
+/* END Diagnostic Borders */
+
 /* Added for RSVP card animation */
 @layer utilities {
   @keyframes subtleFadeIn {
@@ -1226,15 +1256,15 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
 }
 
 .event-item .framed-artwork {
-  max-width: 65%; 
-  /* max-height: 60%; Removed percentage based on item, now using flex-grow */
-  margin-bottom: 1vh; 
   flex-grow: 1;
+  flex-shrink: 1;
   min-height: 0;
+  max-width: 100%; /* ADDED to override base style and allow full width */
+  margin-bottom: 1vh; 
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
 }
 
 .event-item .artwork-frame { /* Image itself */
@@ -1261,15 +1291,23 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
 
   .event-item {
     width: 48%; /* Adjusted from 45% to make items closer */
-    max-height: 75vh; /* Allow items to be reasonably tall on desktop */
+    /* max-height: 75vh; */ /* REMOVED */
+    height: 100%; /* ADDED to fill parent (.events-list) height */
     margin-bottom: 0; /* Vertical margin between items not needed when side-by-side */
-    overflow: visible; /* Ensure content isn't clipped by the item itself */
+    /* overflow: visible; */ /* CHANGED */
+    overflow: hidden; /* ADDED to clip internal content if it overflows event-item */
   }
 
   .event-item .framed-artwork {
-    flex-grow: 0; /* Prevent artwork from pushing plaque down */
-    max-height: 55%; /* Slightly reduce image height on desktop */
-    /* other styles inherited from base */
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-height: 0;
+    max-width: 100%; /* ADDED to override base style and allow full width */
+    margin-bottom: 1vh; 
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .event-item .plaque-image {
@@ -1280,9 +1318,15 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
 
   /* NEW RULES START HERE */
   .event-item .framed-artwork {
-    flex-grow: 0; 
-    flex-shrink: 0; 
-    /* Other properties like max-height: 60% are inherited from base .event-item .framed-artwork */
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-height: 0;
+    max-width: 100%; /* ADDED to override base style and allow full width */
+    margin-bottom: 1vh; 
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .event-item .plaque-image {

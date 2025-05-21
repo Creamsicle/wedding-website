@@ -89,15 +89,14 @@ export default function EventsNewPage() {
 
   return (
     <div className="mobile-gallery-container">
+      <Image src="/images/Lights.png" alt="Gallery lights" width={1000} height={100} className="lights-image" />
       <SiteHeader />
 
-      <main className="gallery-main">
-        <Image src="/images/Lights.png" alt="Gallery lights" width={1000} height={100} className="lights-image" />
-
-        <div className="events-list"> {/* New container for event items */}
+      <main className="gallery-main diag-magenta">
+        <div className="events-list diag-red"> {/* New container for event items */}
           {eventDetails.map((event) => (
-            <div key={event.id} className="event-item">
-              <div className="framed-artwork event-image-clickable" onClick={() => openDialog(event)}>
+            <div key={event.id} className="event-item diag-limegreen">
+              <div className="framed-artwork event-image-clickable diag-blue" onClick={() => openDialog(event)}>
                 <Image src={event.photo} alt={event.altPhoto} width={600} height={450} className="artwork-frame" />
                 {event.hasInfoIcon && (
                   <div className="info-icon-overlay">
@@ -113,7 +112,7 @@ export default function EventsNewPage() {
                 alt={event.altPlaque} 
                 width={300} 
                 height={100} 
-                className="plaque-image cursor-pointer" 
+                className="plaque-image cursor-pointer diag-yellow" 
                 onClick={() => openDialog(event)} 
               />
             </div>
@@ -208,11 +207,10 @@ export default function EventsNewPage() {
             </DialogContent>
           </Dialog>
         )}
-
-        <div className="bench-container">
-          <Image src="/images/bench.png" alt="Gallery bench" width={800} height={200} className="bench-image" />
-        </div>
       </main>
+      <div className="bench-container">
+        <Image src="/images/bench.png" alt="Gallery bench" width={800} height={200} className="bench-image" />
+      </div>
     </div>
   );
 } 
