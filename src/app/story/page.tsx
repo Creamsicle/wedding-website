@@ -268,32 +268,17 @@ export default function StoryNewPage() {
       <style jsx>{`
         .artwork-image-story-animated {
           animation: fadeInStoryImage 0.5s ease-in-out;
-          width: 100%; 
+          width: fit-content; 
           max-width: 100%; 
-          height: 100%; /* CHANGED to fill parent (.framed-artwork-story) */
-          display: flex;
+          height: 100%; 
+          display: flex; 
           align-items: center;
           justify-content: center;
-          border: 2px dashed orange !important; /* DIAGNOSTIC BORDER */
+          border: 8px solid white !important; 
+          padding: 0px;
           position: relative; 
           overflow: hidden; 
         }
-        /* Media queries for artwork-image-story-animated max-height REMOVED */
-        /* @media (min-width: 1024px) {
-          .artwork-image-story-animated {
-            max-height: calc(var(--dynamic-vh, 1vh) * 37) !important; 
-          }
-        }
-        @media (max-width: 768px) and (min-width: 481px) { 
-          .artwork-image-story-animated {
-            max-height: calc(var(--dynamic-vh, 1vh) * 31); 
-          }
-        }
-        @media (max-width: 480px) { 
-          .artwork-image-story-animated {
-            max-height: calc(var(--dynamic-vh, 1vh) * 28); 
-          }
-        } */
         @keyframes fadeInStoryImage {
           from { opacity: 0; transform: scale(0.98); }
           to { opacity: 1; transform: scale(1); }
@@ -340,12 +325,15 @@ export default function StoryNewPage() {
               </div>
               <div className="framed-artwork-story" onClick={toggleOverlay}>
                   {currentStory && (
-                      <div key={animationTriggerKey} className="artwork-image-story-animated">
+                      <div 
+                        key={animationTriggerKey} 
+                        className="artwork-image-story-animated story-image-white-frame"
+                      >
                           <Image
                               src={currentStory.src}
                               alt={currentStory.alt}
-                              layout="fill"
-                              objectFit="contain"
+                              width={currentStory.originalWidth}
+                              height={currentStory.originalHeight}
                               className="artwork-image-story"
                               priority
                           />

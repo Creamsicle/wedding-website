@@ -330,19 +330,18 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
 .mobile-gallery-container {
   display: flex;
   flex-direction: column;
-  /* height: 100vh; */ /* Replaced with dynamic vh */
   height: calc(var(--dynamic-vh, 1vh) * 100);
   width: 100vw; 
   overflow: hidden !important; 
   position: relative; 
-  background-image: url('/images/home-bg2.png'); /* Changed to home-bg2.png */
+  background-image: url('/images/home-bg2.png'); 
   background-size: cover;
   background-position: center;
-  padding-top: 60px; /* For fixed lights */
-  padding-bottom: 80px; /* For fixed bench - base */
+  padding-top: 60px; 
+  padding-bottom: 80px; /* REVERTED to original base padding */
   box-sizing: border-box; 
-  -webkit-overflow-scrolling: auto; /* Attempt to disable iOS momentum scroll */
-  touch-action: none; /* Disable panning/zooming touch actions for the main container */
+  -webkit-overflow-scrolling: auto; 
+  touch-action: none; 
 }
 
 .gallery-header {
@@ -516,67 +515,58 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
     /* transform-origin: center bottom; is inherited */
   }
   .mobile-gallery-container {
-    padding-bottom: 100px; /* For tablet bench height */
+    padding-bottom: 100px; /* REVERTED to original tablet padding */
   }
 }
 
 /* Desktop Styles */
 @media (min-width: 1024px) {
-  .mobile-gallery-container { 
-    padding-bottom: 105px; /* For new desktop bench height (150px * 0.7) */
+  .mobile-gallery-container {
+    /* padding-bottom: 105px; */ /* Ensuring this is commented out or removed */
   }
   .lights-image {
     left: 0;
-    transform: none; 
+    transform: none;
     width: 100%;
-    max-width: none; 
-    /* height: auto; Removed to inherit fixed height */
-    /* object-fit: cover; will be inherited from base */
+    max-width: none;
   }
 
   .bench-container {
-    height: 105px; /* Consistent height (150px * 0.7) */
+    height: 105px;
   }
   .bench-image {
-    width: 100%; 
-    height: 105px; /* Consistent height (150px * 0.7) */
-    max-width: none; 
-    object-fit: cover; 
-    object-position: center top; /* Changed from center center to preserve top */
-    /* transform: none; */ /* Scale already removed, ensure no transform */
-    transform: none; /* Explicitly remove any transform */
-    /* object-position: center bottom; is inherited */
+    width: 100%;
+    height: 105px;
+    max-width: none;
+    object-fit: cover;
+    object-position: center top;
+    transform: none;
   }
 
   .gallery-main {
     padding-top: 20px;
-    padding-bottom: 1rem; /* Changed from 150px */
-    margin-bottom: 150px; /* Added to account for 150px fixed bench */
+    padding-bottom: 1rem;
+    margin-bottom: 150px;
     justify-content: flex-start;
   }
 
-  /* Add this new rule for homepage artwork display on desktop */
   .artwork-display {
-    justify-content: flex-start; /* Align frame and plaque to the top */
-    padding-top: 2vh; /* Add some padding from the top of gallery-main */
-    /* max-height: calc(100vh - 230px); REMOVED THIS LINE */
-    /* flex-direction: column is inherited from base style */
+    justify-content: flex-start;
+    padding-top: 2vh;
   }
 
-  /* Styles for the container of the fill-mode hero image */
   .artwork-display .hero-image-container {
-    max-width: 650px; /* Increased from 540px for larger desktop image */
-    width: 100%; 
-    /* height: 60vh; Removed to allow flex-grow from base to manage height */
-    margin-bottom: 0; /* Ensure no margin so plaque spacing is solely from home-plaque-wrapper */
+    max-width: 650px;
+    width: 100%;
+    margin-bottom: 0;
   }
 
   .plaque-image {
     max-width: 150px;
   }
   .plaque-image-home {
-    max-width: 60px; /* Reduced size, was 72px */
-    flex-shrink: 0; /* Ensure it doesn't shrink if its wrapper is constrained */
+    max-width: 60px;
+    flex-shrink: 0;
   }
 
   .artwork-image-story {
@@ -584,39 +574,38 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
   }
 
   .gallery-main-story {
-    justify-content: flex-start !important; /* CHANGED from center */
-    padding-bottom: 150px; /* Space for desktop bench */
-    margin-bottom: 0; /* Remove margin if any */
-    overflow-y: hidden; /* Changed to hidden to prevent scroll */
+    justify-content: flex-start !important;
+    padding-top: 0;
+    padding-bottom: calc(150px - 5vh); /* This was correctly set to 5vh previously */
+    margin-bottom: 0;
+    overflow-y: hidden;
   }
 
   /* Desktop Styles for Events Page (Two Columns) */
   .events-list {
     flex-direction: row;
-    justify-content: space-around; /* Distributes space around the two items */
-    align-items: flex-start; /* Aligns the top of the items if they have different heights */
+    justify-content: space-around;
+    align-items: flex-start;
   }
 
   .event-item {
-    width: 48%; /* Adjusted from 45% to make items closer */
-    max-height: 65vh; /* Reduced height to prevent clipping */
-    margin-bottom: 0; /* Vertical margin between items not needed when side-by-side */
-    overflow: visible; /* Ensure content isn't clipped by the item itself */
+    width: 48%;
+    max-height: 65vh;
+    margin-bottom: 0;
+    overflow: visible;
   }
 
   .event-item .framed-artwork {
-    flex-grow: 0; /* Prevent artwork from pushing plaque down */
-    max-height: 55%; /* Slightly reduce image height on desktop */
-    /* other styles inherited from base, like margin-bottom: 1vh */
+    flex-grow: 0;
+    max-height: 55%;
   }
 
   .event-item .plaque-image {
-    /* Removed position: relative and z-index: 1; */
     /* max-height: 25% and other styles inherited from base */
   }
 
   .mobile-gallery-container {
-    padding-bottom: 150px; /* For desktop bench height */
+    padding-bottom: calc(150px - 3vh); /* CORRECTED: This is the one to change */
   }
 }
 
@@ -801,12 +790,15 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start; /* Ensure this is flex-start */
+  justify-content: flex-start; 
   position: relative;
   width: 100%; 
   flex-grow: 1; 
   overflow: hidden; 
-  padding: 1rem; 
+  padding-top: 0; /* Red top to Magenta top */
+  padding-left: 1rem; /* Keep horizontal padding */
+  padding-right: 1rem; /* Keep horizontal padding */
+  padding-bottom: calc(1rem - 5vh); /* Further reduced bottom padding */
   margin-bottom: 0; 
   box-sizing: border-box;
   border: 2px solid magenta !important; /* DIAGNOSTIC BORDER */
@@ -824,7 +816,7 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
   min-height: 0; 
   flex-grow: 1; 
   border: 2px solid red !important; /* DIAGNOSTIC BORDER */
-  overflow: hidden; 
+  overflow: hidden; /* RESTORED */
 }
 
 /* New wrapper for desktop layout */
@@ -854,31 +846,28 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
 }
 
 .framed-artwork-story {
-  border: 2px solid lime !important; /* DIAGNOSTIC BORDER */
+  border: 16px solid black !important; /* CHANGED to 16px */
   border-radius: 5px;
-  padding: 8px; 
+  /* padding: 8px; */ /* REMOVED */
   background-color: transparent;
   box-sizing: border-box !important; 
   position: relative;
   display: flex; 
   align-items: center; 
   justify-content: center; 
-  cursor: pointer; 
   height: 100%; 
-  width: 100%; /* CHANGED from auto to fill parent (Red box) horizontally */
-  max-width: 100%; /* ADDED for clarity with width: 100% */
+  width: fit-content; 
+  max-width: 100%; 
+  cursor: pointer; 
   overflow: hidden; 
 }
 
 .artwork-image-story {
   display: block; 
-  /* width: 100%; */  /* REMOVED */
-  /* height: 100%; */ /* REMOVED */
-  /* align-self: stretch; */ /* REMOVED */
-  /* max-width: 100%; */   /* REMOVED */
-  /* max-height: 100%; */  /* REMOVED */
+  width: auto; 
+  height: 100%; 
   object-fit: contain !important; 
-  border: 3px dotted blue !important; /* DIAGNOSTIC BORDER */
+  /* border: 3px dotted blue !important; */ /* DIAGNOSTIC BORDER - REMOVED */
 }
 
 .info-icon-on-image {
@@ -933,8 +922,10 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
 @media (max-width: 768px) {
   .gallery-main-story {
     padding-top: 0;
-    /* padding-bottom: 0; Removed to allow base bench padding */
     justify-content: center; /* Center content vertically if space allows */
+    padding-left: 0.5rem; /* Reduced horizontal padding */
+    padding-right: 0.5rem; /* Reduced horizontal padding */
+    padding-bottom: 0.5rem; /* Reduced bottom padding */
   }
 
   .story-content-container {
@@ -953,13 +944,21 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
   }
 
   .framed-artwork-story {
-    padding: 5px;
-    max-width: calc(100% - 60px); /* Keep this for mobile to prevent touching edges */
-    /* width: 100% will be inherited but constrained by this max-width */
+    padding: 0px !important; 
+    /* max-width: calc(100% - 60px); */ /* REMOVED for full width */
+    width: 100%; /* ADDED: Make black frame full width of Red */
+    height: auto; 
+    max-height: 100%; 
+    border-width: 8px !important; 
   }
 
   .artwork-image-story {
     /* max-height: calc(var(--dynamic-vh, 1vh) * 31); */ /* REMOVED */
+  }
+
+  /* Override for white frame thickness on mobile */
+  .story-image-white-frame {
+    border-width: 4px !important; /* Halved for mobile */
   }
 
   .info-icon-on-image {
@@ -973,7 +972,7 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
   }
 
   .plaque-story {
-    margin-top: 10px;
+    margin-top: 5px !important; /* Reduced margin-top */
     padding: 6px 10px;
     max-width: calc(100% - 40px);
     box-sizing: border-box;
@@ -1003,23 +1002,27 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
 @media (max-width: 480px) {
   .gallery-main-story {
     padding-top: 0;
-    /* padding-bottom: 0; Removed to allow base bench padding */
-    /* justify-content will be inherited from max-width: 768px if not specified, or can be reiterated */
     justify-content: center; /* Center content vertically if space allows */
+    padding-left: 0.25rem; /* Further reduced horizontal padding */
+    padding-right: 0.25rem; /* Further reduced horizontal padding */
+    padding-bottom: 0.25rem; /* Further reduced bottom padding */
   }
   .story-content-container {
     margin-top: 0;
   }
    .framed-artwork-story {
-    padding: 4px;
-    max-width: calc(100% - 50px); /* Keep this for mobile to prevent touching edges */
-    /* width: 100% will be inherited but constrained by this max-width */
+    padding: 0px !important; 
+    /* max-width: calc(100% - 50px); */ /* REMOVED for full width */
+    width: 100%; /* ADDED: Make black frame full width of Red */
+    height: auto; 
+    max-height: 100%; 
+    border-width: 8px !important; 
   }
   .arrow {
     font-size: 3rem; /* Slightly smaller for very small screens, but still larger */
   }
   .plaque-story {
-    margin-top: 8px;
+    margin-top: 4px !important; /* Further reduced margin-top */
     padding: 5px 8px;
   }
    .plaque-story h3 {
@@ -1031,6 +1034,11 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
   }
   .artwork-image-story {
     /* max-height: calc(var(--dynamic-vh, 1vh) * 28); */ /* REMOVED */
+  }
+
+  /* Override for white frame thickness on mobile */
+  .story-image-white-frame {
+    border-width: 4px !important; /* Halved for mobile */
   }
 }
 
