@@ -126,27 +126,29 @@ export default function StoryNewPage() {
 
   useEffect(() => {
     // Preload all story images when the component mounts
-    let loadedImagesCount = 0;
     if (storyItems.length === 0) {
       setIsLoading(false);
       return;
     }
+
+    let successfulLoads = 0;
+    const totalImages = storyItems.length;
+
     storyItems.forEach(item => {
       const img = new window.Image();
       img.src = item.src;
       img.onload = () => {
-        loadedImagesCount++;
-        if (loadedImagesCount === storyItems.length) {
-          setIsLoading(false); // All images loaded
+        successfulLoads++;
+        if (successfulLoads === totalImages) {
+          setIsLoading(false); // All images loaded successfully
         }
       };
       img.onerror = () => {
-        loadedImagesCount++; // Count errors as "loaded" to not block forever
-        if (loadedImagesCount === storyItems.length) {
-          setIsLoading(false);
-        }
-        // Optionally, handle image loading errors, e.g., log them
+        // If an image fails to load, isLoading remains true,
+        // and the spinner continues to show.
         console.error(`Failed to load image: ${item.src}`);
+        // Optionally, you could implement a retry mechanism or show a specific error state here.
+        // For now, we prevent the gallery from loading if any image fails.
       };
     });
   }, []); // Empty dependency array ensures this runs only once on mount
