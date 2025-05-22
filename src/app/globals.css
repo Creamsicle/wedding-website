@@ -226,7 +226,7 @@
 
 .gallery-container {
   @apply min-h-screen relative overflow-hidden;
-  background: black;
+  background: transparent;
 }
 
 .gallery-gradient-1 {
@@ -714,32 +714,56 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
 
 /* Styles for the event image to be clickable and have hover/load animations */
 .event-image-clickable {
+  position: relative; /* Needed for absolute positioning of overlay items */
+  display: inline-block; /* Ensures it wraps content correctly */
   cursor: pointer;
-  transition: transform 0.3s ease-in-out; /* For hover effect */
-  position: relative; /* Needed if we add pseudo-elements for more complex animations later */
-  animation: pulse-attention 1.5s ease-out 0.5s 1; /* Iteration count changed from 2 to 1 */
+  /* animation: pulse-attention 1.5s ease-out 0.5s 1; */ /* Iteration count changed from 2 to 1 */
 }
 
 .event-image-clickable:hover {
   transform: scale(1.05); /* Grow slightly on hover */
 }
 
-@keyframes pulse-attention {
-  0% {
-    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
-    transform: scale(1);
+@keyframes click-hint-animation {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.8;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8)); /* Adjusted base shadow */
   }
-  70% {
-    box-shadow: 0 0 10px 15px rgba(255, 255, 255, 0);
-    transform: scale(1.02);
+  25% {
+    transform: scale(1.15) rotate(-7deg); /* Increased scale and rotation */
+    opacity: 1;
+    filter: drop-shadow(0 0 25px rgba(255, 255, 255, 1)); /* Significantly increased shadow */
   }
-  100% {
-    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
-    transform: scale(1);
+  50% {
+    transform: scale(0.9) rotate(7deg); /* Adjusted scale and rotation */
+    opacity: 0.8;
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.9)); /* Increased shadow */
+  }
+  75% {
+    transform: scale(1.1) rotate(0deg); /* Adjusted scale */
+    opacity: 1;
+    filter: drop-shadow(0 0 30px rgba(255, 255, 255, 1)); /* Significantly increased shadow */
   }
 }
 
-/* Styles for the Event Details Dialog */
+.clickable-image-hint {
+  position: absolute;
+  bottom: 60px; /* Adjust as needed, increased from 10px */
+  right: 15px;  /* Adjust as needed, increased from 10px */
+  z-index: 10; /* Ensure it's above the image */
+  pointer-events: none; /* So it doesn't interfere with clicks on the image */
+  opacity: 0; /* Start hidden, animation will make it appear */
+  /* Apply a base highly visible drop shadow that the animation will build upon */
+  filter: drop-shadow(0px 8px 20px rgba(255, 255, 255, 0.9)); 
+  animation: click-hint-animation 2.5s ease-in-out 0.2s 1 forwards;
+}
+
+/* Ensure the hover effect on the parent still triggers the hint to be visible if desired */
+.event-image-clickable:hover .clickable-image-hint {
+  opacity: 1;
+}
+
 .event-dialog-content {
   /* shadcn DialogContent is already responsive and centered */
   /* Default max-width is sm (32rem) for DialogContent if not overridden by shadcn theme */
@@ -862,9 +886,8 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
 }
 
 .framed-artwork-story {
-  border: 16px solid black !important; /* CHANGED to 16px */
-  border-radius: 5px;
-  /* padding: 8px; */ /* REMOVED */
+  border: 1px solid transparent !important;
+  border-radius: 5px; 
   background-color: transparent;
   box-sizing: border-box !important; 
   position: relative;
@@ -876,6 +899,7 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
   max-width: 100%; 
   cursor: pointer; 
   overflow: hidden; 
+  padding: 16px !important; /* Increased to 16px */
 }
 
 .artwork-image-story {
@@ -962,12 +986,14 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
   }
 
   .framed-artwork-story {
-    padding: 0px !important; 
-    /* max-width: calc(100% - 60px); */ /* REMOVED for full width */
-    width: 100%; /* ADDED: Make black frame full width of Red */
+    padding: 16px !important; /* Increased to 16px */
+    width: 100%; 
     height: auto; 
     max-height: 100%; 
-    border-width: 8px !important; 
+    border-width: 1px !important; /* Reverted to 1px */
+    border-color: transparent !important; /* Reverted to transparent */
+    border-style: solid !important;
+    border-radius: 5px; /* Matching main rule */
   }
 
   .artwork-image-story {
@@ -976,8 +1002,11 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
 
   /* Override for white frame thickness on mobile */
   .story-image-white-frame {
-    border-width: 3px !important; /* Adjusted for padding */
-    padding: 1px !important; /* Added padding */
+    border: 8px solid white !important; /* Changed to 8px white */
+    padding: 0 !important; 
+    border-radius: 2px; /* Changed to 2px */
+    box-shadow: 0 0 0 16px black; /* 16px black outline */
+    overflow: hidden !important; 
   }
 
   .info-icon-on-image {
@@ -1030,12 +1059,14 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
     margin-top: 0;
   }
    .framed-artwork-story {
-    padding: 0px !important; 
-    /* max-width: calc(100% - 50px); */ /* REMOVED for full width */
-    width: 100%; /* ADDED: Make black frame full width of Red */
+    padding: 16px !important; /* Increased to 16px */
+    width: 100%; 
     height: auto; 
     max-height: 100%; 
-    border-width: 8px !important; 
+    border-width: 1px !important; /* Reverted to 1px */
+    border-color: transparent !important; /* Reverted to transparent */
+    border-style: solid !important;
+    border-radius: 5px; /* Matching main rule */
   }
   .arrow {
     font-size: 3rem; /* Slightly smaller for very small screens, but still larger */
@@ -1057,8 +1088,11 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
 
   /* Override for white frame thickness on mobile */
   .story-image-white-frame {
-    border-width: 1px !important; /* Adjusted for padding */
-    padding: 1px !important; /* Added padding */
+    border: 8px solid white !important; /* Changed to 8px white */
+    padding: 0 !important; 
+    border-radius: 2px; /* Changed to 2px */
+    box-shadow: 0 0 0 16px black; /* 16px black outline */
+    overflow: hidden !important; 
   }
 }
 
@@ -1507,7 +1541,7 @@ body.on-rsvp-mobile main {
     transform: translateY(-50%); /* Adjust for exact centering if icons are not perfectly symmetrical */
     z-index: 30; /* Ensure arrows are above images */
     cursor: pointer;
-    background-color: rgba(0,0,0,0.3);
+    background-color: transparent; /* Changed from rgba(0,0,0,0.3) */
     border-radius: 50%;
     padding: 8px;
     transition: background-color 0.3s ease;
@@ -1518,11 +1552,11 @@ body.on-rsvp-mobile main {
   }
 
   .story-content-container > .left-arrow { /* Changed selector */
-    left: 25%; /* Positioned at 1/4 mark of the container */
+    left: 15%; /* Changed from 25% */
   }
 
   .story-content-container > .right-arrow { /* Changed selector */
-    right: 25%; /* Positioned at 1/4 mark from the right of the container (effectively 3/4 mark) */
+    right: 15%; /* Changed from 25% */
   }
 
   /* Adjust story content container to make space for absolute positioned arrows */
@@ -1536,6 +1570,9 @@ body.on-rsvp-mobile main {
 
 /* Override for white frame thickness on mobile */
 .story-image-white-frame {
-  border-width: 1px !important; /* Further reduced, adjusted for padding */
-  padding: 1px !important; /* Added padding */
+  border: 8px solid white !important; 
+  padding: 0 !important; 
+  border-radius: 2px; /* Changed to 2px */
+  box-shadow: 0 0 0 16px black; 
+  overflow: hidden !important; 
 }

@@ -3,6 +3,7 @@
 import { useState, FormEvent, useRef, useEffect } from 'react';
 import { searchGuests, submitRSVP } from '@/lib/firebase/rsvp';
 import type { GuestParty, RSVPResponse } from '@/lib/firebase/rsvp';
+import Image from 'next/image';
 type ResponseFieldValue = string | boolean;
 
 interface RSVPFormProps {
@@ -201,7 +202,16 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
 
   if (isSubmitted) {
     return (
-      <div className="text-center card-hover p-8 rounded-lg shadow-lg">
+      <div className="text-center card-hover p-8 rounded-lg shadow-lg flex flex-col items-center">
+        <div className="mb-8 w-full max-w-md">
+          <Image 
+            src="/images/rsvp1.png" 
+            alt="RSVP Confirmation Image" 
+            width={600}
+            height={400}
+            className="rounded-lg object-contain" 
+          />
+        </div>
         <h2 className="text-2xl font-bold text-white mb-4">Thank you for your RSVP!</h2>
         <p className="text-[var(--rust-light)] mb-6">Your response has been recorded.</p>
         <button
