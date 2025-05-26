@@ -17,7 +17,7 @@ const initialNavLinks = [
   { href: "/events", label: "EXHIBITIONS" },
   { href: "/story", label: "HISTORY" },
   { href: "/faq", label: "FAQ" },
-  { href: "/rsvp", label: "RSVP" },
+  { href: "/rsvp", label: "ADMISSIONS" },
 ];
 
 const MOBILE_MAX_WIDTH = 768;
@@ -113,7 +113,7 @@ export default function SiteHeader({ className }: SiteHeaderProps) {
               {currentNavLinks.map((link) => (
                 <DropdownMenuItem key={link.href} asChild>
                   <Link href={link.href}>
-                    {(link.label === "FAQ" || link.label === "RSVP") ? link.label : toTitleCase(link.label)}
+                    {(link.label === "FAQ" || link.label === "ADMISSIONS") ? (link.label === "ADMISSIONS" ? "Admissions" : link.label) : toTitleCase(link.label)}
                   </Link>
                 </DropdownMenuItem>
               ))}

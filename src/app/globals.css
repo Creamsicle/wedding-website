@@ -1110,7 +1110,7 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
   align-items: center;
   justify-content: center;
   padding: 20px;
-  text-align: center;
+  text-align: left;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
