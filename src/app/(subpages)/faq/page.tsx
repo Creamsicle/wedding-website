@@ -114,133 +114,121 @@ export default function NewFaqPage() {
             {/* Lights image is kept if desired, or can be removed if the FAQ section should be cleaner */}
             <Image src="/images/Lights.png" alt="Gallery lights" width={1000} height={100} className="lights-image" style={{ marginBottom: '5vh'}} />
 
-            <div className="w-full max-w-2xl px-4"> {/* Added container for accordion */} 
+            <div className="w-full max-w-2xl px-4"> {/* Added container for accordion */}
               <Accordion type="single" collapsible className="w-full">
-                {/* Repeating the question from the image, using the first FAQ item's answer */}
-                {Array.from({ length: 4 }).map((_, index) => (
-                  <AccordionItem value={`item-image-${index}`} key={`item-image-${index}`} className="border-b border-white/50 py-4"> {/* Adjusted styling */} 
-                    <AccordionTrigger className="hover:no-underline text-white/90 text-lg justify-between w-full">
-                      What if it rains? Am I allowed to feel it on my skin?
-                    </AccordionTrigger>
-                    <AccordionContent className="pt-4 text-white/80 text-base">
-                      {index === 0 ? "No, while we love your little ones, both wedding celebrations will be adults-only except for our immediate nieces and nephews. We hope that you will understand this decision and that you will still be able to join us to celebrate." : "Placeholder answer, replace with actual content or remove if not needed."}
-                    </AccordionContent>
-                  </AccordionItem>
-                ))}
+                <AccordionItem value="kids" className="border-b border-white/50 py-4">
+                  <AccordionTrigger className="hover:no-underline text-white/90 text-lg justify-between w-full">
+                    Can I bring my kids?
+                  </AccordionTrigger>
+                  <AccordionContent className="pt-4 text-white/80 text-base">
+                    While we love your little ones, both wedding events will be adults-only except for our immediate nieces and nephews. We hope that you will still be able to join us to celebrate!
+                  </AccordionContent>
+                </AccordionItem>
 
-                {/* Original FAQ items from existing page, adapted to new styling */}
                 <AccordionItem value="dress-code" className="border-b border-white/50 py-4">
                   <AccordionTrigger className="hover:no-underline text-white/90 text-lg justify-between w-full">
                     What should I wear?
                   </AccordionTrigger>
                   <AccordionContent className="pt-4 text-white/80 text-base">
-                    <p className="mb-4"><strong>Friday:</strong> For the Hindu ceremony at Queen&apos;s Manor Event Centre, the dress code is Indian formal (shalwars, sarees, kurthas, sherwanis, lehengas)! If you do not have any Indian attire, please know that western formal is also alright! What&apos;s most important is that you feel comfortable to come celebrate with us.</p>
-                    <p>
-                      <strong>Saturday:</strong> For the wedding at the Art Gallery of Hamilton, the dress code is formal and vibrant. We&apos;ll check the weather leading up to the day to adjust if needed, but note that we&apos;re hoping the ceremony can be outside (unless it rains).
-                    </p>
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="arrival" className="border-b border-white/50 py-4">
-                  <AccordionTrigger className="hover:no-underline text-white/90 text-lg justify-between w-full">
-                    When should I arrive?
-                  </AccordionTrigger>
-                  <AccordionContent className="pt-4 text-white/80 text-base">
-                    <p className="mb-4"><strong>Friday:</strong> Please arrive at Queen&apos;s Manor Event Centre at least 15 minutes before the ceremony start time to ensure you&apos;re comfortably seated.</p>
-                    <p><strong>Saturday:</strong> For the Art Gallery of Hamilton ceremony, we recommend arriving 15-20 minutes early to find parking and make your way to the ceremony location.</p>
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="photos" className="border-b border-white/50 py-4">
-                  <AccordionTrigger className="hover:no-underline text-white/90 text-lg justify-between w-full">
-                    Can I take photos during the ceremony?
-                  </AccordionTrigger>
-                  <AccordionContent className="pt-4 text-white/80 text-base">
-                    We kindly ask that you refrain from taking photos during the ceremonies - we have professional photographers who will capture these special moments. We encourage you to be present with us during the ceremonies and enjoy taking photos during the reception celebrations!
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="parking" className="border-b border-white/50 py-4">
-                  <AccordionTrigger className="hover:no-underline text-white/90 text-lg justify-between w-full">
-                    Where should I park?
-                  </AccordionTrigger>
-                  <AccordionContent className="pt-4 text-white/80 text-base">
-                    <p className="mb-4"><strong>Friday (Queen&apos;s Manor):</strong> There is ample free parking available at the venue.</p>
-                    <p><strong>Saturday (Art Gallery):</strong> Parking is available in the Art Gallery of Hamilton parkade and several nearby municipal lots. More detailed parking information can be found on our Travel & Accommodations page.</p>
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="cancel" className="border-b border-white/50 py-4">
-                  <AccordionTrigger className="hover:no-underline text-white/90 text-lg justify-between w-full">
-                    What if I need to cancel?
-                  </AccordionTrigger>
-                  <AccordionContent className="pt-4 text-white/80 text-base">
-                    We understand that circumstances can change. If you need to cancel your attendance, please let us know as soon as possible through the RSVP form or by contacting us directly. This helps us with our planning and arrangements with the venues and caterers.
+                    <p className="mb-4"><b>Friday:</b> For the Hindu ceremony at Queen's Manor Event Centre, Indian Formal is recommended if you happen to have it! Anything from shalwar kameez to saris, or from sherwanis to kurtas. If you don't already have any Indian attire any respectful formal attire will be equally well suited to the occasion. What's most important is that you feel comfortable to come celebrate with us.</p>
+                    <p><b>Saturday:</b> For our wedding at the Art Gallery of Hamilton, the dress code is formal and VIBRANT! What "vibrant" means is entirely up to the wearer. Again, no need to purchase anything specific or push your comfort zone. We simply hope that in fitting the art gallery theme, you wear something fun, bold and bright  – anything that makes you feel vivacious! We'll check the weather leading up to the day to adjust if needed, but note that we're hoping the daytime ceremony will be outside, reception inside. There will be an inside rain plan if needed.</p>
                   </AccordionContent>
                 </AccordionItem>
 
                 <AccordionItem value="registry" className="border-b border-white/50 py-4">
                   <AccordionTrigger className="hover:no-underline text-white/90 text-lg justify-between w-full">
-                    Gifts Registry
+                    Do you have a gifts registry?
                   </AccordionTrigger>
                   <AccordionContent className="pt-4 text-white/80 text-base">
-                    <p className="mb-4">Gifts! We do not have a registry, as we have everything we need. ♥ Should you wish to give us a gift, we would gratefully accept contributions to a honeymoon fund, or for dangerous adventures abroad.</p>
-                    <p>Since cash can be hard, our e-transfer joint account is here: [ ] or we will have a box at the venues for cards as well.</p>
+                    <p className="mb-4">Your presence is the greatest gift of all! ♥ Should you wish to give us a gift, we would gratefully accept contributions to a honeymoon fund (or for dangerous adventures abroad.)</p>
+                    <p>We will have a box at the venues for cards, and/or if you prefer to be cashless our e-transfer joint account is: neilandchels@gmail.com</p>
                   </AccordionContent>
                 </AccordionItem>
 
                 <AccordionItem value="one-event" className="border-b border-white/50 py-4">
                   <AccordionTrigger className="hover:no-underline text-white/90 text-lg justify-between w-full">
-                    Is it ok if I only attend one of the events?
+                    Is it okay if I only attend one of the events?
                   </AccordionTrigger>
                   <AccordionContent className="pt-4 text-white/80 text-base">
-                    Of course! We love and appreciate all of you, and totally understand if you can&apos;t come to both. You are all very welcome to come to either event, or both! If you can&apos;t make it, totally understand just let us know.
+                    Of course! We love and appreciate all of you, and entirely understand if you can&apos;t make it to both. You are all very welcome to come to either event! Please RSVP accordingly and we look forward to seeing you at what's feasible for you.
                   </AccordionContent>
                 </AccordionItem>
 
                 <AccordionItem value="dietary" className="border-b border-white/50 py-4">
                   <AccordionTrigger className="hover:no-underline text-white/90 text-lg justify-between w-full">
-                    Allergies / Dietary restrictions
+                    What if I have allergies / dietary restrictions?
                   </AccordionTrigger>
                   <AccordionContent className="pt-4 text-white/80 text-base">
-                    We should be able to accommodate for all of your allergies or dietary restrictions (for both events), however please make sure to let us know in your RSVP. You can reach out to us also if you have any other concerns.
+                    We should be able to accommodate for all of your allergies or dietary restrictions (for both events), however please make sure to let us know in your RSVP. You can reach out to us also if you have any other concerns. Our venues are optimistic they can find something delicious for even the most difficult of allergies!
                   </AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="travel" className="border-b border-white/50 py-4">
+                <AccordionItem value="stay" className="border-b border-white/50 py-4">
                   <AccordionTrigger className="hover:no-underline text-white/90 text-lg justify-between w-full">
-                    Accommodation / Parking / Travel
+                    Where should I stay?
                   </AccordionTrigger>
                   <AccordionContent className="pt-4 text-white/80 text-base">
-                    Check out the &quot;Travel & Accommodations page&quot; :)
+                    We&apos;ll be staying at the <a href="https://www.marriott.com/en-us/hotels/yhmsi-sheraton-hamilton-hotel/overview/" target="_blank" rel="noopener noreferrer" className="underline hover:text-white">Sheraton Hamilton Hotel</a> located steps away from the venue. We&apos;re not doing a fixed block of rooms, but we get a preferred rate through the Art Gallery of Hamilton. If you'd be interested in staying there as well we certainly encourage all efforts to party with us late! Reach out for details.
                   </AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="poem" className="py-4"> {/* Removed border-bottom for the last item for cleaner look if desired, or add border-white/50 */} 
+                <AccordionItem value="parking" className="border-b border-white/50 py-4">
                   <AccordionTrigger className="hover:no-underline text-white/90 text-lg justify-between w-full">
-                    What&apos;s one of your favourite Mary Oliver poems?
+                    I plan on driving. Where should I park?
                   </AccordionTrigger>
                   <AccordionContent className="pt-4 text-white/80 text-base">
-                    <div className="space-y-4">
-                      <p className="font-serif text-xl mb-2">Don&apos;t Hesitate</p>
-                      <p className="whitespace-pre-line">
-                        If you suddenly and unexpectedly feel joy,
-                        don&apos;t hesitate. Give in to it. There are plenty
-                        of lives and whole towns destroyed or about
-                        to be. We are not wise, and not very often
-                        kind. And much can never be redeemed.
-                        
-                        Still, life has some possibility left. Perhaps this
-                        is its way of fighting back, that sometimes
-                        something happens better than all the riches
-                        or power in the world. It could be anything,
-                        but very likely you notice it in the instant
-                        when love begins. Anyway, that&apos;s often the
-                        case. Anyway, whatever it is, don&apos;t be afraid
-                        of its plenty. Joy is not made to be a crumb.
-                      </p>
-                      <p className="mt-4 italic">BUT ALSO, read &quot;Wild Geese&quot; and &quot;Dogfish&quot; and everything else by Mary Oliver, we love her</p>
-                    </div>
+                    <p className="mb-4"><b>Friday:</b> There's boundless parking at the venue! Seamless and easy.</p>
+                    <p><b>Saturday:</b> For the Art Gallery of Hamilton there's ample paid lots nearby. The nearest paid lots are around Jackson Square. Street parking is $2/hr at any meter, or the paid lots should have comparable weekend flat rates.</p>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="photos" className="border-b border-white/50 py-4">
+                  <AccordionTrigger className="hover:no-underline text-white/90 text-lg justify-between w-full">
+                    Can I take photos during the wedding ceremony?
+                  </AccordionTrigger>
+                  <AccordionContent className="pt-4 text-white/80 text-base">
+                    We kindly ask that you refrain from taking photos during the ceremonies. We have professional photographers who will capture these special moments, ideally without phones in them! We encourage you to be present with us during the ceremonies and enjoy taking tons of photos during the reception.
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="cancel" className="border-b border-white/50 py-4"> {/* Added border-bottom back */}
+                  <AccordionTrigger className="hover:no-underline text-white/90 text-lg justify-between w-full">
+                    What if I need to cancel?
+                  </AccordionTrigger>
+                  <AccordionContent className="pt-4 text-white/80 text-base">
+                    It happens! If you need to cancel after RSVP&apos;ing &quot;yes,&quot; <b>please let us know</b> as soon as possible so that we can accommodate.
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="poems" className="py-4"> {/* New last item, no bottom border */}
+                  <AccordionTrigger className="hover:no-underline text-white/90 text-lg justify-between w-full">
+                    What are some of your favourite poems?
+                  </AccordionTrigger>
+                  <AccordionContent className="pt-4 text-white/80 text-base">
+                    <Accordion type="single" collapsible className="w-full">
+                      <AccordionItem value="chelsea-poem" className="border-b border-white/30 py-3">
+                        <AccordionTrigger className="hover:no-underline text-white/85 text-md justify-between w-full">
+                          Chelsea
+                        </AccordionTrigger>
+                        <AccordionContent className="pt-3 text-white/75 text-sm">
+                          <h4 className="font-semibold text-white/100 mb-2">DON&apos;T HESITATE</h4>
+                          <p dangerouslySetInnerHTML={{ __html: `If you suddenly and unexpectedly feel joy,<br />don\'t hesitate. Give in to it. There are plenty<br />of lives and whole towns destroyed<br />or about to be. We are not wise, and not very often<br />kind. And much can never be redeemed.<br />Still, life has some possibility left. Perhaps this<br />is its way of fighting back, that sometimes<br />something happens better than all the riches<br />or power in the world. It could be anything,<br />but very likely you notice it in the instant<br />when love begins. Anyway, that's often the<br />case. Anyway, whatever it is, don't be afraid<br />of its plenty. Joy is not made to be a crumb.` }} />
+                          <p className="italic text-white/80 mt-2 mb-2"><em>Mary Oliver</em></p>
+                          <p className="mt-3 text-white/75">BUT ALSO, read &quot;<a href="http://www.phys.unm.edu/~tw/fas/yits/archive/oliver_wildgeese.html" target="_blank" rel="noopener noreferrer" className="underline hover:text-white">Wild Geese</a>&quot; and &quot;<a href="https://www.poetseers.org/contemporary-poets/mary-oliver/mary-oliver-poems/dogfish/" target="_blank" rel="noopener noreferrer" className="underline hover:text-white">Dogfish</a>&quot; and everything else by Mary Oliver, we love her</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="neil-poem" className="py-3"> {/* Last sub-item */}
+                        <AccordionTrigger className="hover:no-underline text-white/85 text-md justify-between w-full">
+                          Neil
+                        </AccordionTrigger>
+                        <AccordionContent className="pt-3 text-white/75 text-sm">
+                          <h4 className="font-semibold text-white/100 mb-2">WHAT I DIDN&apos;T KNOW BEFORE</h4>
+                          <p dangerouslySetInnerHTML={{ __html: `was how horses simply give birth to other<br />horses. Not a baby by any means, not<br />a creature of liminal spaces, but already<br />a four-legged beast hellbent on walking,<br />scrambling after the mother. A horse gives way<br />to another horse and then suddenly there are<br />two horses, just like that. That's how I loved you.<br />You, off the long train from Red Bank carrying<br />a coffee as big as your arm, a bag with two<br />computers swinging in it unwieldy at your<br />side. I remember we broke into laughter<br />when we saw each other. What was between<br />us wasn't a fragile thing to be coddled, cooed<br />over. It came out fully formed, ready to run.` }} />
+                          <p className="italic text-white/80 mt-2 mb-2"><em>Ada Limon</em></p>
+                          <p className="mt-3 text-white/75">Another personal favourite (that&apos;s slightly less fitting for the occasion) is &quot;<a href="https://www.poetryfoundation.org/poems/47993/famous" target="_blank" rel="noopener noreferrer" className="underline hover:text-white">Famous</a>&quot; by Naomi Shihab Nye</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>

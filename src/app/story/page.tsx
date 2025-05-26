@@ -40,7 +40,7 @@ Then, just as quickly, the maelstrom pulled me back. I figured I\'d probably nev
     src: '/images/story/2.png',
     alt: 'Story image 2',
     title: 'Elastic Connection',
-    details: 'Screenshotted IG Story - 2/9',
+    details: 'IG Story Screenshot - 2/9',
     originalWidth: 1170,
     originalHeight: 1540,
     description: `<b>CV:</b> I barely made it to the rave. I was exhausted and had come back from another city, but my friends were (gratefully) persistent, I lived very close, <i>and</i> I had a ticket. Sometimes you don't have a choice. You have to go dance.
