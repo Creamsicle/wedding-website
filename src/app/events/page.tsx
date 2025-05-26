@@ -214,7 +214,7 @@ export default function EventsNewPage() {
                           <div className="text-white/90 text-sm pt-0">
                             <ul className="list-none pl-0 space-y-2" style={{ listStyle: 'none' }}>
                               <li style={{ listStyle: 'none' }}><b>1. Baraat</b> – The groom arrives at the wedding venue with a procession of family and friends, accompanied by music and celebration.</li>
-                              <li style={{ listStyle: 'none' }}><b>2. Samdhi Milan</b> – The bride's family warmly greets the groom's family, symbolizing the joyous union of two families.</li>
+                              <li style={{ listStyle: 'none' }}><b>2. Samdhi Milan</b> – The bride&apos;s family warmly greets the groom&apos;s family, symbolizing the joyous union of two families.</li>
                               <li style={{ listStyle: 'none' }}><b>3. Kanya Aagman</b> – The bride arrives</li>
                               <li style={{ listStyle: 'none' }}><b>4. Punyahavachanam</b> – Prayers are offered</li>
                               <li style={{ listStyle: 'none' }}><b>5. Mangal Sutra and Sindoor</b> – The groom gifts the bride a sacred necklace (mangal sutra) and applies red vermillion (sindoor) to her head. The mangal sutra and sindoor are the hallmarks of a married woman, similar to a wedding ring.</li>
