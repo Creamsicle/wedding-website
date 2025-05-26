@@ -130,8 +130,8 @@ export default function NewFaqPage() {
                     What should I wear?
                   </AccordionTrigger>
                   <AccordionContent className="pt-4 text-white/80 text-base">
-                    <p className="mb-4"><b>Friday:</b> For the Hindu ceremony at Queen's Manor Event Centre, Indian Formal is recommended if you happen to have it! Anything from shalwar kameez to saris, or from sherwanis to kurtas. If you don't already have any Indian attire any respectful formal attire will be equally well suited to the occasion. What's most important is that you feel comfortable to come celebrate with us.</p>
-                    <p><b>Saturday:</b> For our wedding at the Art Gallery of Hamilton, the dress code is formal and VIBRANT! What "vibrant" means is entirely up to the wearer. Again, no need to purchase anything specific or push your comfort zone. We simply hope that in fitting the art gallery theme, you wear something fun, bold and bright  – anything that makes you feel vivacious! We'll check the weather leading up to the day to adjust if needed, but note that we're hoping the daytime ceremony will be outside, reception inside. There will be an inside rain plan if needed.</p>
+                    <p className="mb-4"><b>Friday:</b> For the Hindu ceremony at Queen&apos;s Manor Event Centre, Indian Formal is recommended if you happen to have it! Anything from shalwar kameez to saris, or from sherwanis to kurtas. If you don&apos;t already have any Indian attire any respectful formal attire will be equally well suited to the occasion. What&apos;s most important is that you feel comfortable to come celebrate with us.</p>
+                    <p><b>Saturday:</b> For our wedding at the Art Gallery of Hamilton, the dress code is formal and VIBRANT! What &quot;vibrant&quot; means is entirely up to the wearer. Again, no need to purchase anything specific or push your comfort zone. We simply hope that in fitting the art gallery theme, you wear something fun, bold and bright  – anything that makes you feel vivacious! We&apos;ll check the weather leading up to the day to adjust if needed, but note that we&apos;re hoping the daytime ceremony will be outside, reception inside. There will be an inside rain plan if needed.</p>
                   </AccordionContent>
                 </AccordionItem>
 
@@ -150,7 +150,7 @@ export default function NewFaqPage() {
                     Is it okay if I only attend one of the events?
                   </AccordionTrigger>
                   <AccordionContent className="pt-4 text-white/80 text-base">
-                    Of course! We love and appreciate all of you, and entirely understand if you can&apos;t make it to both. You are all very welcome to come to either event! Please RSVP accordingly and we look forward to seeing you at what's feasible for you.
+                    Of course! We love and appreciate all of you, and entirely understand if you can&apos;t make it to both. You are all very welcome to come to either event! Please RSVP accordingly and we look forward to seeing you at what&apos;s feasible for you.
                   </AccordionContent>
                 </AccordionItem>
 
@@ -168,7 +168,7 @@ export default function NewFaqPage() {
                     Where should I stay?
                   </AccordionTrigger>
                   <AccordionContent className="pt-4 text-white/80 text-base">
-                    We&apos;ll be staying at the <a href="https://www.marriott.com/en-us/hotels/yhmsi-sheraton-hamilton-hotel/overview/" target="_blank" rel="noopener noreferrer" className="underline hover:text-white">Sheraton Hamilton Hotel</a> located steps away from the venue. We&apos;re not doing a fixed block of rooms, but we get a preferred rate through the Art Gallery of Hamilton. If you'd be interested in staying there as well we certainly encourage all efforts to party with us late! Reach out for details.
+                    We&apos;ll be staying at the <a href="https://www.marriott.com/en-us/hotels/yhmsi-sheraton-hamilton-hotel/overview/" target="_blank" rel="noopener noreferrer" className="underline hover:text-white">Sheraton Hamilton Hotel</a> located steps away from the venue. We&apos;re not doing a fixed block of rooms, but we get a preferred rate through the Art Gallery of Hamilton. If you&apos;d be interested in staying there as well we certainly encourage all efforts to party with us late! Reach out for details.
                   </AccordionContent>
                 </AccordionItem>
 
@@ -177,8 +177,8 @@ export default function NewFaqPage() {
                     I plan on driving. Where should I park?
                   </AccordionTrigger>
                   <AccordionContent className="pt-4 text-white/80 text-base">
-                    <p className="mb-4"><b>Friday:</b> There's boundless parking at the venue! Seamless and easy.</p>
-                    <p><b>Saturday:</b> For the Art Gallery of Hamilton there's ample paid lots nearby. The nearest paid lots are around Jackson Square. Street parking is $2/hr at any meter, or the paid lots should have comparable weekend flat rates.</p>
+                    <p className="mb-4"><b>Friday:</b> There&apos;s boundless parking at the venue! Seamless and easy.</p>
+                    <p><b>Saturday:</b> For the Art Gallery of Hamilton there&apos;s ample paid lots nearby. The nearest paid lots are around Jackson Square. Street parking is $2/hr at any meter, or the paid lots should have comparable weekend flat rates.</p>
                   </AccordionContent>
                 </AccordionItem>
 
@@ -212,7 +212,7 @@ export default function NewFaqPage() {
                         </AccordionTrigger>
                         <AccordionContent className="pt-3 text-white/75 text-sm">
                           <h4 className="font-semibold text-white/100 mb-2">DON&apos;T HESITATE</h4>
-                          <p dangerouslySetInnerHTML={{ __html: `If you suddenly and unexpectedly feel joy,<br />don\'t hesitate. Give in to it. There are plenty<br />of lives and whole towns destroyed<br />or about to be. We are not wise, and not very often<br />kind. And much can never be redeemed.<br />Still, life has some possibility left. Perhaps this<br />is its way of fighting back, that sometimes<br />something happens better than all the riches<br />or power in the world. It could be anything,<br />but very likely you notice it in the instant<br />when love begins. Anyway, that's often the<br />case. Anyway, whatever it is, don't be afraid<br />of its plenty. Joy is not made to be a crumb.` }} />
+                          <p dangerouslySetInnerHTML={{ __html: `If you suddenly and unexpectedly feel joy,<br />don\'t hesitate. Give in to it. There are plenty<br />of lives and whole towns destroyed<br />or about to be. We are not wise, and not very often<br />kind. And much can never be redeemed.<br />Still, life has some possibility left. Perhaps this<br />is its way of fighting back, that sometimes<br />something happens better than all the riches<br />or power in the world. It could be anything,<br />but very likely you notice it in the instant<br />when love begins. Anyway, that&apos;s often the<br />case. Anyway, whatever it is, don&apos;t be afraid<br />of its plenty. Joy is not made to be a crumb.` }} />
                           <p className="italic text-white/80 mt-2 mb-2"><em>Mary Oliver</em></p>
                           <p className="mt-3 text-white/75">BUT ALSO, read &quot;<a href="http://www.phys.unm.edu/~tw/fas/yits/archive/oliver_wildgeese.html" target="_blank" rel="noopener noreferrer" className="underline hover:text-white">Wild Geese</a>&quot; and &quot;<a href="https://www.poetseers.org/contemporary-poets/mary-oliver/mary-oliver-poems/dogfish/" target="_blank" rel="noopener noreferrer" className="underline hover:text-white">Dogfish</a>&quot; and everything else by Mary Oliver, we love her</p>
                         </AccordionContent>
@@ -223,7 +223,7 @@ export default function NewFaqPage() {
                         </AccordionTrigger>
                         <AccordionContent className="pt-3 text-white/75 text-sm">
                           <h4 className="font-semibold text-white/100 mb-2">WHAT I DIDN&apos;T KNOW BEFORE</h4>
-                          <p dangerouslySetInnerHTML={{ __html: `was how horses simply give birth to other<br />horses. Not a baby by any means, not<br />a creature of liminal spaces, but already<br />a four-legged beast hellbent on walking,<br />scrambling after the mother. A horse gives way<br />to another horse and then suddenly there are<br />two horses, just like that. That's how I loved you.<br />You, off the long train from Red Bank carrying<br />a coffee as big as your arm, a bag with two<br />computers swinging in it unwieldy at your<br />side. I remember we broke into laughter<br />when we saw each other. What was between<br />us wasn't a fragile thing to be coddled, cooed<br />over. It came out fully formed, ready to run.` }} />
+                          <p dangerouslySetInnerHTML={{ __html: `was how horses simply give birth to other<br />horses. Not a baby by any means, not<br />a creature of liminal spaces, but already<br />a four-legged beast hellbent on walking,<br />scrambling after the mother. A horse gives way<br />to another horse and then suddenly there are<br />two horses, just like that. That&apos;s how I loved you.<br />You, off the long train from Red Bank carrying<br />a coffee as big as your arm, a bag with two<br />computers swinging in it unwieldy at your<br />side. I remember we broke into laughter<br />when we saw each other. What was between<br />us wasn&apos;t a fragile thing to be coddled, cooed<br />over. It came out fully formed, ready to run.` }} />
                           <p className="italic text-white/80 mt-2 mb-2"><em>Ada Limon</em></p>
                           <p className="mt-3 text-white/75">Another personal favourite (that&apos;s slightly less fitting for the occasion) is &quot;<a href="https://www.poetryfoundation.org/poems/47993/famous" target="_blank" rel="noopener noreferrer" className="underline hover:text-white">Famous</a>&quot; by Naomi Shihab Nye</p>
                         </AccordionContent>
