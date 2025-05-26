@@ -23,7 +23,7 @@ export default function HomePage() {
               />
             </div>
             <div className="home-plaque-wrapper flex justify-center">
-              <Image src="/images/hero-plaque.png" alt="Artwork plaque" width={300} height={100} className="plaque-image-home" />
+              <Image src="/images/hero-plaque1.png" alt="Artwork plaque" width={300} height={100} className="plaque-image-home" />
             </div>
           </div>
 

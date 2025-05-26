@@ -24,7 +24,8 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (searchName.length < 2) {
+    const trimmedSearchName = searchName.trim();
+    if (trimmedSearchName.length < 2) {
       setSearchError('Please enter at least 2 characters');
       return;
     }
@@ -34,7 +35,7 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
     setSearchResults([]);
 
     try {
-      const results = await searchGuests(searchName);
+      const results = await searchGuests(trimmedSearchName);
       setSearchResults(results);
       if (results.length === 0) {
         setSearchError('No matches found. Please try a different name.');
@@ -250,7 +251,7 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
           </div>
           <button
             type="submit"
-            className="w-full bg-rust-500 hover:bg-rust-600 text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-150 shadow-lg"
+            className="w-full bg-rust-500 hover:bg-rust-600 text-white font-semibold py-3 px-4 rounded-lg transition-colors transition-transform duration-150 shadow-lg border border-white/25 hover:-translate-y-0.5"
             disabled={isSearching}
           >
             {isSearching ? 'Searching...' : 'Search'}
@@ -609,7 +610,7 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
                     disabled={isSubmitting}
                     className="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-150 shadow-lg disabled:opacity-70"
                   >
-                    {isSubmitting ? 'Submitting...' : 'Submit RSVP'}
+                    {isSubmitting ? 'Submitting...' : (selectedParty.partyMembers.length === 1 ? 'Submit RSVP' : 'Submit RSVP for All Guests')}
                   </button>
                 )}
               </div>
@@ -666,7 +667,7 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
                       disabled={isSubmitting}
                       className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-150 shadow-lg disabled:opacity-70"
                     >
-                      {isSubmitting ? 'Submitting...' : 'Submit RSVP for All Guests'}
+                      {isSubmitting ? 'Submitting...' : (selectedParty.partyMembers.length === 1 ? 'Submit RSVP' : 'Submit RSVP for All Guests')}
                     </button>
                   </div>
                 )}

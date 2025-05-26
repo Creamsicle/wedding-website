@@ -40,9 +40,24 @@ export interface RSVPResponse {
 export async function searchGuests(searchName: string): Promise<GuestParty[]> {
   try {
     console.log('Starting guest search for:', searchName);
+
+    // Add a check for empty searchName after trimming (already done on client, but good for robustness)
+    if (!searchName || searchName.trim() === '') {
+      console.log('Empty search name received, returning no results.');
+      return [];
+    }
+
     const guestsRef = collection(db, 'guests');
-    const searchTerms = searchName.toLowerCase().split(' ');
+    // Filter out empty strings that might result from multiple spaces in the input
+    const searchTerms = searchName.toLowerCase().split(' ').filter(term => term !== '');
     
+    // If, after filtering, there are no valid search terms (e.g., input was just spaces),
+    // return empty results to prevent querying with empty terms.
+    if (searchTerms.length === 0) {
+      console.log('No valid search terms after filtering, returning no results.');
+      return [];
+    }
+
     console.log('Search terms:', searchTerms);
     const parties: { [key: string]: GuestParty } = {};
     const foundPartyIds = new Set<string>();

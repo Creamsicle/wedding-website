@@ -140,7 +140,7 @@ export default function NewFaqPage() {
                     Do you have a gifts registry?
                   </AccordionTrigger>
                   <AccordionContent className="pt-4 text-white/80 text-base">
-                    <p className="mb-4">Your presence is the greatest gift of all! ♥ Should you wish to give us a gift, we would gratefully accept contributions to a honeymoon fund (or for dangerous adventures abroad.)</p>
+                    <p className="mb-4">Your presence is the greatest gift of all! ♥ Should you wish to give us a gift, we would gratefully accept contributions to a honeymoon fund (or for dangerous adventures abroad).</p>
                     <p>We will have a box at the venues for cards, and/or if you prefer to be cashless our e-transfer joint account is: neilandchels@gmail.com</p>
                   </AccordionContent>
                 </AccordionItem>

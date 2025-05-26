@@ -24,7 +24,7 @@ const storyItems: StoryItem[] = [
     src: '/images/story/1.png',
     alt: 'Story image 1',
     title: 'Opening Theory',
-    details: 'Linda Arki - 1/9',
+    details: 'Linda Arki\n1/9',
     originalWidth: 1170,
     originalHeight: 1525,
     description: `<b>NG:</b> I wish I was cool enough to claim it was love at first sight. Technically, it was our second but I won't spoil the gallery to come.
@@ -40,12 +40,12 @@ Then, just as quickly, the maelstrom pulled me back. I figured I\'d probably nev
     src: '/images/story/2.png',
     alt: 'Story image 2',
     title: 'Elastic Connection',
-    details: 'IG Story Screenshot - 2/9',
+    details: 'IG Story Screenshot\n2/9',
     originalWidth: 1170,
     originalHeight: 1540,
     description: `<b>CV:</b> I barely made it to the rave. I was exhausted and had come back from another city, but my friends were (gratefully) persistent, I lived very close, <i>and</i> I had a ticket. Sometimes you don't have a choice. You have to go dance.
 
-Grande Bizarre, if you haven't been there, is the most gorgeous venue in Toronto. Their outdoor space has elegant, secret-garden-like hanging flowers, cute wooden cabana bars with expensive gin & tonics, and POOLS that nobody (but maybe me later) would be swimming in.
+Grand Bizarre, if you haven't been there, is the most gorgeous venue in Toronto. Their outdoor space has elegant, secret-garden-like hanging flowers, cute wooden cabana bars with expensive gin & tonics, and POOLS that nobody (but maybe me later) would be swimming in.
 
 My friends had brought an addition to our group: Neil! I was psyched to chat with someone new. He said he ran the chess club which was wild, since I had been a dozen times and had only ran into him <i>once</i>. Dubious, but I entertained that this could be true. 
 
@@ -60,7 +60,7 @@ Before the end of the night, Neil said he had to leave for a birthday party and 
     src: '/images/story/3.png',
     alt: 'Story image 3',
     title: 'Colliding',
-    details: 'Michael Sousa - 3/9',
+    details: 'Michael Sousa\n3/9',
     originalWidth: 1170,
     originalHeight: 886,
     description: `<b>NG:</b> The very next Wednesday after the rave, Chels tracked me down at Pub Chess. Well that's where we'd met, <i>nothing</i> suspicious there. She mentioned she was looking for a job at a tech startup: <i>oddly</i> convenient, because I had just co-founded one with two close friends. We even had a booth at the biggest tech conference in North America the following week. How delightfully serendipitous! No way she could've possibly uncovered that info from, say, my LinkedIn over the past few days. 
@@ -76,7 +76,7 @@ I'm equal parts excited and terrified. I was hopelessly in love with someone I n
     src: '/images/story/4.png',
     alt: 'Story image 4',
     title: 'Love is Real',
-    details: 'Neil’s Lockscreen - 4/9',
+    details: "Neil's Lockscreen\n4/9",
     originalWidth: 1170,
     originalHeight: 1360,
     description: `<b>NG:</b> We're at our third rave together in six weeks. Strictly professional business raves, of course. Around 1 AM, Chels leans over and asks, "Do you want to go swimming?" I'm in. Honestly, I would've said yes to just about anything she suggested. She simply nods and says, "Okay great, we'll get back to that."
@@ -92,7 +92,7 @@ We take a quick dip, and afterwards we're curled up together for warmth as the s
     src: '/images/story/5.png',
     alt: 'Story image 5',
     title: 'Chasing Rainbows',
-    details: 'Unknown CNE Stranger - 5/9',
+    details: 'Unknown CNE Stranger\n5/9',
     originalWidth: 1170,
     originalHeight: 1546,
     description: `<b>CV:</b> Thank god Neil was into me. I had been telling my friends for weeks that we were going to get married.
@@ -106,7 +106,7 @@ He meets all of my friends at dances and the CNE, they instantly love him (who w
     src: '/images/story/6.png',
     alt: 'Story image 6',
     title: 'My Favourite Painter',
-    details: 'Sherif Darrag - 6/9',
+    details: 'Sherif Darrag\n6/9',
     originalWidth: 1170,
     originalHeight: 1545,
     description: `<b>CV:</b> We've always loved art, individually and together. 
@@ -120,7 +120,7 @@ For our first anniversary, as an ode to our love for art, we bought passes to th
     src: '/images/story/7.png',
     alt: 'Story image 7',
     title: 'Lost in Lisbon',
-    details: 'Chandler Ferry - 7/9',
+    details: 'Chandler Ferry\n7/9',
     originalWidth: 1170,
     originalHeight: 1538,
     description: `<b>CV:</b> Our first trip abroad and it's for the largest tech summit in the world: Web Summit in Lisbon! We expect to mainly work, and explore/enjoy what we can in between conference events. It's camp again, together! 
@@ -134,8 +134,8 @@ So, so, psyched that we weren't just coworkers.`,
     id: 'story8',
     src: '/images/story/8.png',
     alt: 'Story image 8',
-    title: 'You’re My Home',
-    details: 'NG - 8/9',
+    title: "You're My Home",
+    details: 'NG\n8/9',
     originalWidth: 1170,
     originalHeight: 1540,
     description: `<b>CV:</b> We talked about moving in, and realized — wait, what if we buy it??!! I sat on the floor of Neil's old apartment, in SHOCK after signing the contract for the most money I've ever seen in my life. A mortgage is crazy, and it's hilarious that we can have one (together). 
@@ -147,7 +147,7 @@ After moving in, Neil convinced me we should paint our walls. A celebration of n
     src: '/images/story/9.png',
     alt: 'Story image 9',
     title: 'Looking Ahead',
-    details: 'Caitlin Baker - 9/9',
+    details: 'Caitlin Baker\n9/9',
     originalWidth: 1170,
     originalHeight: 1525,
     description: `<b>NG:</b> In January 2024, we were chatting about resolutions. Chels immediately made one specific goal clear. Honestly? I was thrilled. Clear expectations <i>and</i> a green light to propose? Sign me up.
@@ -334,7 +334,7 @@ export default function StoryNewPage() {
           max-width: 100%; 
           max-height: 100%; 
           border-radius: 2px; /* Changed to 2px */
-          box-shadow: 0 0 0 16px black; /* 16px black "outline" */
+          box-shadow: 0 0 0 12px black; /* 12px black "outline" for desktop */
         }
         .framed-artwork-story { 
           display: flex;
@@ -347,12 +347,16 @@ export default function StoryNewPage() {
           border: 1px solid transparent; 
           position: relative; 
         }
+        .plaque-story {
+          text-align: left; /* Added to align text left */
+        }
         @media (max-width: 768px) {
           .artwork-image-story-animated {
             padding: 0 !important; /* No padding on mobile - white border acts as padding */
             /* Ensure width and height allow for aspect ratio scaling */
             /* width: 100%; Let it take full width of parent - Removed, max-width and aspect-ratio handle it */
             /* height will be determined by aspect ratio of image via its child - Handled by aspect-ratio */
+            box-shadow: 0 0 0 16px black; /* Restore 16px black "outline" for mobile */
           }
           .framed-artwork-story {
             padding: 0; /* Smaller padding for black frame on mobile -> Changed to 0 */
@@ -435,16 +439,16 @@ export default function StoryNewPage() {
                               <p ref={paragraphRef} dangerouslySetInnerHTML={{ __html: selectedStoryDescription }} />
                             </div>
                           )}
+                          <Image 
+                            key={`hint-${animationTriggerKey}`}
+                            src="/click.svg"
+                            alt="Click for details" 
+                            width={50} 
+                            height={50} 
+                            className={currentIndex === 0 ? "clickable-image-hint" : "clickable-image-hint-subtle"}
+                          />
                       </div>
                   )}
-                  <Image 
-                    key={`hint-${animationTriggerKey}`}
-                    src="/click.svg"
-                    alt="Click for details" 
-                    width={50} 
-                    height={50} 
-                    className="clickable-image-hint"
-                  />
               </div>
               <div className="arrow right-arrow" onClick={nextItem}>
                 <ChevronRight size={40} />
@@ -456,7 +460,14 @@ export default function StoryNewPage() {
               onClick={toggleOverlay}
             >
               <h3>{currentStory.title}</h3>
-              <p>{currentStory.details}</p>
+              <p>
+                {currentStory.details.split('\n').map((line, index, array) => (
+                  <React.Fragment key={index}>
+                    {line}
+                    {index < array.length - 1 && <br />}
+                  </React.Fragment>
+                ))}
+              </p>
             </div>
           </main>
         )}
