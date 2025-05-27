@@ -52,6 +52,7 @@
     "eslint": "^9",
     "eslint-config-next": "15.3.2",
     "firebase-functions": "^6.0.1",
+    "ics": "^3.7.6",
     "nodemailer": "^7.0.3",
     "tailwindcss": "^4",
     "ts-node": "^10.9.2",
