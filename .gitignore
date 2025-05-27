@@ -35,6 +35,5 @@ yarn-error.log*
 next-env.d.ts
 
 # Ignore compiled JS files from scripts directory if TS is source
-src/scripts/addSpecificGuests.js
 
 .vercel
