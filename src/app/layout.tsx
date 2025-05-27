@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Chelsea & Neil's Wedding",
-  description: "Join us on our special day",
+  description: "We hope you can join us on October 10-11, 2025",
   icons: {
     icon: [
       { url: '/pigeon.svg', type: 'image/svg+xml' },

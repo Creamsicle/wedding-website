@@ -32,7 +32,7 @@ ChartJS.register(
 // Define the keys that can be sorted
 type SortableKey = 
   | 'fullName' 
-  | 'partyId' 
+  | 'physicalAddressPresent'
   | 'responseTimestamp' 
   | 'rsvpResponse.email' 
   | 'rsvpResponse.hinduCeremonyAttending' 
@@ -809,7 +809,6 @@ export default function Dashboard() {
               <thead className="bg-[var(--navy-dark)] sticky top-0 z-10"><tr>{/* Table Header Row, sticky, with click handlers and no whitespace before <tr> */}
                   {[
                     { label: 'Name', key: 'fullName' }, 
-                    { label: 'Party ID', key: 'partyId'},
                     { label: 'Response Date', key: 'responseTimestamp' },
                     { label: 'Email', key: 'rsvpResponse.email' },
                     { label: 'Hindu Ceremony', key: 'rsvpResponse.hinduCeremonyAttending' },
@@ -818,8 +817,9 @@ export default function Dashboard() {
                     { label: 'Dietary Restrictions', key: 'rsvpResponse.dietaryRestrictions'},
                     { label: 'Needs Ride (Fri)', key: 'rsvpResponse.needsRideToHinduCeremony'},
                     { label: 'Needs Ride (Sat)', key: 'rsvpResponse.needsRideToWedding'},
-                    { label: 'Can Offer Ride', key: 'rsvpResponse.canOfferRide'}
-                  ].map((header, index) => (
+                    { label: 'Can Offer Ride', key: 'rsvpResponse.canOfferRide'},
+                    { label: 'Address?', key: 'physicalAddressPresent' }
+                  ].map((header, index, arr) => (
                     <th 
                       key={header.key}
                       scope="col" 
@@ -827,7 +827,7 @@ export default function Dashboard() {
                         index === 0 ? 'sticky left-0 z-20 bg-[var(--navy-dark)]' : ''
                       }`}
                       onClick={() => handleSort(header.key as SortableKey)}
-                      style={index === 0 ? { minWidth: '150px' } : {}}
+                      style={index === 0 ? { minWidth: '150px' } : (header.key === 'physicalAddressPresent' ? { width: '80px' } : {})}
                     >
                       <div className="flex items-center">
                         {header.label}
@@ -847,6 +847,10 @@ export default function Dashboard() {
                                             ? rsvp.timestamp.toDate().toLocaleDateString() 
                                             : 'No Response';
                   const mealPreferenceDisplay = rsvp?.weddingReceptionAttending ? (rsvp?.mealPreference || 'Not Selected') : 'N/A';
+                  const physicalAddress = rsvp?.physicalAddress;
+                  const formattedAddress = physicalAddress ? 
+                    `${physicalAddress.street || ''}${physicalAddress.street && (physicalAddress.city || physicalAddress.province || physicalAddress.postalCode || physicalAddress.country) ? ', ' : ''}${physicalAddress.city || ''}${physicalAddress.city && (physicalAddress.province || physicalAddress.postalCode || physicalAddress.country) ? ', ' : ''}${physicalAddress.province || ''}${physicalAddress.province && (physicalAddress.postalCode || physicalAddress.country) ? ', ' : ''}${physicalAddress.postalCode || ''}${physicalAddress.postalCode && physicalAddress.country ? ', ' : ''}${physicalAddress.country || ''}`
+                    .replace(/ , $/g, '').replace(/, ,/g, ', ').trim() : '';
                   
                   return (
                     <tr key={guest.id}>
@@ -854,7 +858,6 @@ export default function Dashboard() {
                         {guest.firstName} {guest.lastName}
                         {guest.isPlusOne && <span className="text-xs text-gray-400 ml-1">(+1)</span>}
                       </td>
-                      <td className="px-4 py-3 whitespace-nowrap text-sm">{guest.partyId}</td>
                       <td className="px-4 py-3 whitespace-nowrap text-sm">{responseDateDisplay}</td>
                       <td className="px-4 py-3 whitespace-nowrap text-sm">{rsvp?.email || '-'}</td>
                       <td className="px-4 py-3 whitespace-nowrap text-sm">
@@ -875,6 +878,13 @@ export default function Dashboard() {
                       </td>
                       <td className="px-4 py-3 whitespace-nowrap text-sm">
                         {rsvp ? (rsvp.canOfferRide ? '✓ Yes' : '✗ No') : '-'}
+                      </td>
+                      <td className="px-4 py-3 whitespace-nowrap text-sm text-center">
+                        {rsvp?.physicalAddress?.street ? (
+                          <span title={formattedAddress}>✓</span>
+                        ) : (
+                          ''
+                        )}
                       </td>
                     </tr>
                   );
@@ -900,32 +910,31 @@ function StatCard({ title, value, subtext }: { title: string; value: number | st
 
 // Helper function to get sortable value from guest object (can be nested)
 const getSortableValue = (guest: GuestWithResponse, key: SortableKey): string | number | boolean | null => {
-  if (key === 'none') return null;
-
+  const rsvp = guest.rsvpResponse;
   switch (key) {
     case 'fullName':
-      return `${guest.lastName || ''} ${guest.firstName || ''}`.trim().toLowerCase();
-    case 'partyId':
-      return guest.partyId?.toLowerCase() || null;
+      return `${guest.firstName} ${guest.lastName}`.toLowerCase();
+    case 'physicalAddressPresent':
+      return !!(rsvp?.physicalAddress?.street);
     case 'responseTimestamp':
-      // Ensure toDate exists and is a function before calling getTime
-      return guest.rsvpResponse?.timestamp?.toDate?.().getTime() ?? null;
-    default: // Handles 'rsvpResponse.property' keys
-      if (key.startsWith('rsvpResponse.')) {
-        // Extracts the property name from 'rsvpResponse.propertyName'
-        const rsvpKey = key.substring('rsvpResponse.'.length) as keyof Omit<RSVPResponse, 'timestamp'>;
-        
-        if (guest.rsvpResponse && rsvpKey in guest.rsvpResponse) {
-          const value = guest.rsvpResponse[rsvpKey];
-          if (typeof value === 'string') {
-            return value.toLowerCase(); // Lowercase strings for consistent sorting
-          }
-          // This will return booleans as is, or other types if they exist in RSVPResponse
-          return value as string | boolean | null; // Ensure return type matches
-        }
-        return null; // Property not found in rsvpResponse
-      }
-      // Should not be reached if all keys in SortableKey are handled
-      return null; 
+      return rsvp?.timestamp ? rsvp.timestamp.toMillis() : null;
+    case 'rsvpResponse.email':
+      return rsvp?.email?.toLowerCase() || null;
+    case 'rsvpResponse.hinduCeremonyAttending':
+      return rsvp?.hinduCeremonyAttending ? 1 : 0;
+    case 'rsvpResponse.weddingReceptionAttending':
+      return rsvp?.weddingReceptionAttending ? 1 : 0;
+    case 'rsvpResponse.mealPreference':
+      return rsvp?.mealPreference?.toLowerCase() || null;
+    case 'rsvpResponse.dietaryRestrictions':
+      return rsvp?.dietaryRestrictions?.toLowerCase() || null;
+    case 'rsvpResponse.needsRideToHinduCeremony':
+      return rsvp?.needsRideToHinduCeremony ? 1 : 0;
+    case 'rsvpResponse.needsRideToWedding':
+      return rsvp?.needsRideToWedding ? 1 : 0;
+    case 'rsvpResponse.canOfferRide':
+      return rsvp?.canOfferRide ? 1 : 0;
+    default:
+      return null;
   }
 }; 
