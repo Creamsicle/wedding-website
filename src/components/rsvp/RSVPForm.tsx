@@ -125,7 +125,7 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
 
       // If weddingReceptionAttending is set to false, clear mealPreference
       if (field === 'weddingReceptionAttending' && value === false) {
-        newResponses[guestId].mealPreference = undefined;
+        delete newResponses[guestId].mealPreference;
       }
       
       // Validate email if the field is 'email' - REMOVED FROM HERE
