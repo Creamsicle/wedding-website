@@ -21,6 +21,25 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
   const [currentGuestCardIndex, setCurrentGuestCardIndex] = useState(0);
   const formRef = useRef<HTMLDivElement>(null);
   const [isSearching, setIsSearching] = useState(false);
+  const [emailErrors, setEmailErrors] = useState<{ [key: string]: string }>({});
+
+  const validateEmail = (email: string): boolean => {
+    // Basic email validation regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const handleEmailBlur = (guestId: string, email: string) => {
+    if (email && !validateEmail(email)) {
+      setEmailErrors(prevErrors => ({ ...prevErrors, [guestId]: 'Invalid email format' }));
+    } else {
+      setEmailErrors(prevErrors => {
+        const updatedErrors = { ...prevErrors };
+        delete updatedErrors[guestId];
+        return updatedErrors;
+      });
+    }
+  };
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,7 +75,7 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
       [guest.id]: {
         hinduCeremonyAttending: false,
         weddingReceptionAttending: false,
-        mealPreference: 'Chicken' as const,
+        mealPreference: undefined,
         dietaryRestrictions: '',
         needsRideToHinduCeremony: false,
         hinduCeremonyRideDetails: '',
@@ -103,6 +122,25 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
           [field]: value
         }
       };
+
+      // If weddingReceptionAttending is set to false, clear mealPreference
+      if (field === 'weddingReceptionAttending' && value === false) {
+        newResponses[guestId].mealPreference = undefined;
+      }
+      
+      // Validate email if the field is 'email' - REMOVED FROM HERE
+      // if (field === 'email' && typeof value === 'string') {
+      //   if (value && !validateEmail(value)) {
+      //     setEmailErrors(prevErrors => ({ ...prevErrors, [guestId]: 'Invalid email format' }));
+      //   } else {
+      //     setEmailErrors(prevErrors => {
+      //       const updatedErrors = { ...prevErrors };
+      //       delete updatedErrors[guestId];
+      //       return updatedErrors;
+      //     });
+      //   }
+      // }
+
       return newResponses;
     });
   };
@@ -196,7 +234,7 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
     if (searchResults.length > 0) {
       instructionalText = "Please select your party";
     } else {
-      instructionalText = "Please enter your name to find your invitation and RSVP for your party.";
+      instructionalText = "Please enter your name to find your invitation and RSVP for your party before July 15.";
     }
   }
   // No specific text needed if a party is selected, as that section has its own heading
@@ -491,9 +529,13 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
                       id={`email-${guest.id}`}
                       value={responses[guest.id]?.email || ''}
                       onChange={(e) => handleResponseChange(guest.id, 'email', e.target.value)}
+                      onBlur={(e) => handleEmailBlur(guest.id, e.target.value)}
                       placeholder="your.email@example.com"
                       className="w-full px-3 py-2 bg-[var(--navy-primary)] text-white rounded border border-[var(--rust-light)]"
                     />
+                    {emailErrors[guest.id] && (
+                      <p className="mt-1 text-sm text-red-400">{emailErrors[guest.id]}</p>
+                    )}
                   </div>
                   
                   <div>

@@ -154,6 +154,15 @@ export default function NewFaqPage() {
                   </AccordionContent>
                 </AccordionItem>
 
+                <AccordionItem value="rsvp-deadline" className="border-b border-white/50 py-4">
+                  <AccordionTrigger className="hover:no-underline text-white/90 text-lg justify-between w-full">
+                    When should I RSVP by?
+                  </AccordionTrigger>
+                  <AccordionContent className="pt-4 text-white/80 text-base">
+                    Please RSVP by July 15. If you need to make any changes to your RSVP before then, simply resubmit the RSVP form. If you need to make changes after July 15 please contact Chelsea or Neil ASAP.
+                  </AccordionContent>
+                </AccordionItem>
+
                 <AccordionItem value="dietary" className="border-b border-white/50 py-4">
                   <AccordionTrigger className="hover:no-underline text-white/90 text-lg justify-between w-full">
                     What if I have allergies / dietary restrictions?

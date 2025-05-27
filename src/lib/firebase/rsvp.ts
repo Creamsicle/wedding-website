@@ -1,5 +1,5 @@
 import { db } from './config';
-import { collection, query, where, getDocs, updateDoc, doc } from 'firebase/firestore';
+import { collection, query, where, getDocs, updateDoc, doc, Timestamp } from 'firebase/firestore';
 
 export interface GuestParty {
   id: string;
@@ -11,13 +11,14 @@ export interface Guest {
   firstName: string;
   lastName: string;
   partyId: string;
+  isPlusOne?: boolean;
   rsvpResponse?: RSVPResponse;
 }
 
 export interface RSVPResponse {
   hinduCeremonyAttending: boolean;
   weddingReceptionAttending: boolean;
-  mealPreference: 'Chicken' | 'Steak' | 'Vegetarian Risotto';
+  mealPreference?: 'Chicken' | 'Steak' | 'Vegetarian Risotto';
   dietaryRestrictions: string;
   needsRideToHinduCeremony: boolean;
   hinduCeremonyRideDetails?: string;
@@ -34,7 +35,7 @@ export interface RSVPResponse {
     country: string;
   };
   otherComments?: string;
-  timestamp: Date;
+  timestamp: Timestamp;
 }
 
 export async function searchGuests(searchName: string): Promise<GuestParty[]> {
@@ -128,7 +129,7 @@ export async function submitRSVP(guestId: string, response: RSVPResponse): Promi
   await updateDoc(guestRef, {
     rsvpResponse: {
       ...response,
-      timestamp: new Date()
+      timestamp: Timestamp.now()
     }
   });
 }
@@ -172,7 +173,7 @@ export async function exportToCSV(): Promise<string> {
       response?.weddingRideDetails || '',
       response?.canOfferRide ? 'Yes' : 'No',
       response?.rideOfferDetails || '',
-      response?.timestamp ? response.timestamp.toISOString() : ''
+      response?.timestamp ? response.timestamp.toDate().toISOString() : ''
     ]);
   });
   
