@@ -173,9 +173,19 @@ export default function StoryNewPage() {
   const [animationTriggerKey, setAnimationTriggerKey] = useState(0); // For click hint animation
   const [overlayContentIsScrollable, setOverlayContentIsScrollable] = useState(false);
   const [isLoading, setIsLoading] = useState(true); // Added loading state
+  const [isMobileView, setIsMobileView] = useState(false); // State for mobile view
 
   const overlayRef = useRef<HTMLDivElement>(null);
   const paragraphRef = useRef<HTMLParagraphElement>(null);
+
+  useEffect(() => {
+    // Determine if it's mobile view on initial load
+    const handleResize = () => {
+      setIsMobileView(window.innerWidth < 769);
+    };
+    handleResize(); // Set initial value
+    // Note: We are not adding a resize listener to keep the image fixed after initial load
+  }, []);
 
   useEffect(() => {
     // Preload all story images when the component mounts
@@ -398,7 +408,11 @@ export default function StoryNewPage() {
       <div className="mobile-gallery-container">
         <SiteHeader />
         
-        <Image src="/images/Lights.png" alt="Gallery lights" width={1000} height={100} className="lights-image" />
+        {isMobileView ? (
+          <Image src="/images/Lights2.png" alt="Gallery lights mobile" width={1000} height={100} className="lights-image" />
+        ) : (
+          <Image src="/images/Lights.png" alt="Gallery lights" width={1000} height={100} className="lights-image" />
+        )}
 
         {isLoading ? (
           <div className="loading-container">

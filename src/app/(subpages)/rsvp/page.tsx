@@ -2,7 +2,7 @@
 
 import { RSVPForm } from '@/components/rsvp/RSVPForm';
 import { Suspense } from 'react';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { useMobileRedirect } from '@/lib/hooks/useMobileRedirect';
@@ -11,6 +11,14 @@ export default function RSVPPage() {
   useMobileRedirect('/rsvp-mobile');
 
   const [isPartySelected, setIsPartySelected] = useState(false);
+  const [isMobileView, setIsMobileView] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobileView(window.innerWidth < 769);
+    };
+    handleResize();
+  }, []);
 
   // const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 }); // No longer needed for spotlight
 
@@ -37,7 +45,11 @@ export default function RSVPPage() {
 
       {/* Conditionally render Lights ONLY if party is NOT selected */} 
       {!isPartySelected && (
-        <Image src="/images/Lights.png" alt="Gallery lights" width={1000} height={100} className="lights-image relative z-0" />
+        isMobileView ? (
+          <Image src="/images/Lights2.png" alt="Gallery lights mobile" width={1000} height={100} className="lights-image relative z-0" />
+        ) : (
+          <Image src="/images/Lights.png" alt="Gallery lights" width={1000} height={100} className="lights-image relative z-0" />
+        )
       )}
 
       <main className="gallery-main rsvp-custom-main relative z-20 diag-magenta">

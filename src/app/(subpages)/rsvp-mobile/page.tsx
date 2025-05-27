@@ -24,7 +24,9 @@ export default function RSVPMobilePage() { // Renamed component
     <div className="rsvp-mobile-container"> {/* Simplified container class */}
       <DynamicViewportHeightInitializer />
       {!isPartySelected && (
-        <SiteHeader />
+        <div style={{ paddingTop: '60px' }}> {/* Added wrapper div with conditional padding */}
+          <SiteHeader />
+        </div>
       )}
 
       {/* Lights image removed */}

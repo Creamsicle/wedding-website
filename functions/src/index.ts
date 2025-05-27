@@ -300,8 +300,8 @@ export const sendRsvpConfirmationEmail = functions.firestore
     const mailOptions: nodemailer.SendMailOptions = {
       from: `"${APP_NAME}" <${gmailEmail}>`,
       to: recipientEmails,
-      subject: `RSVP Confirmation for your Party - ${APP_NAME}`,
-      html: generateEmailHtml(nameOfTriggeringGuest, partyMembers, isAnyPartyMemberAttendingHindu, isAnyPartyMemberAttendingWedding),
+      subject: `RSVP Confirmation - ${APP_NAME}`,
+      html: generateEmailHtml(partyMembers, isAnyPartyMemberAttendingHindu, isAnyPartyMemberAttendingWedding),
       attachments: attachments.length > 0 ? attachments : undefined,
     };
 
@@ -325,7 +325,7 @@ export const sendRsvpConfirmationEmail = functions.firestore
 // --- End Firebase Cloud Function ---
 
 // --- HTML Email Generation Function ---
-function generateEmailHtml(triggeringGuestName: string, partyMembers: Guest[], isAnyPartyMemberAttendingHindu: boolean, isAnyPartyMemberAttendingWedding: boolean): string {
+function generateEmailHtml(partyMembers: Guest[], isAnyPartyMemberAttendingHindu: boolean, isAnyPartyMemberAttendingWedding: boolean): string {
   const formatBoolean = (value: boolean | undefined) => (value ? "Yes" : "No");
   const notProvided = "<i style='color: #757575;'>Not provided</i>";
   const isSinglePersonParty = partyMembers.length === 1;
@@ -371,9 +371,20 @@ function generateEmailHtml(triggeringGuestName: string, partyMembers: Guest[], i
   const closingRemarksHtml = closingRemarksArr.join("\n");
 
   const websiteLinkHtml = `<a href="https://vandergoel.com" style='${linkStyle}'>Visit Our Wedding Website</a>`;
-  const greeting = isSinglePersonParty ? 
-    `<p style='${paragraphStyle}'>Dear ${triggeringGuestName},</p>` : 
-    `<p style='${paragraphStyle}'>Dear ${triggeringGuestName} and party,</p>`;
+  
+  let greeting = "";
+  if (isSinglePersonParty) {
+    greeting = `<p style='${paragraphStyle}'>Dear ${partyMembers[0].firstName},</p>`;
+  } else {
+    const names = partyMembers.map(member => member.firstName);
+    if (names.length > 1) {
+      const lastPerson = names.pop();
+      greeting = `<p style='${paragraphStyle}'>Dear ${names.join(', ')}, and ${lastPerson},</p>`;
+    } else if (names.length === 1) { // Should not happen if isSinglePersonParty is false, but good to handle
+      greeting = `<p style='${paragraphStyle}'>Dear ${names[0]},</p>`;
+    }
+  }
+
   const summaryLeadIn = isSinglePersonParty ? 
     `<p style='${paragraphStyle}'>Here's a summary of your response:</p>`:
     `<p style='${paragraphStyle}'>Here's a summary of your party's responses:</p>`;

@@ -1,7 +1,7 @@
 'use client'; // Required for using hooks like useState
 
 import Image from 'next/image';
-import { useState } from 'react'; // Need useState for dialog state
+import React, { useState, useEffect } from 'react'; // Added React, useState, useEffect
 import { Button } from '@/components/ui/button'; // Added Button import back
 import { Info } from 'lucide-react'; // Info is used in the body
 import {
@@ -82,6 +82,16 @@ const eventDetails: EventDetail[] = [
 export default function EventsNewPage() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<EventDetail | null>(null);
+  const [isMobileView, setIsMobileView] = useState(false); // State for mobile view
+
+  useEffect(() => {
+    // Determine if it's mobile view on initial load
+    const handleResize = () => {
+      setIsMobileView(window.innerWidth < 769);
+    };
+    handleResize(); // Set initial value
+    // Note: We are not adding a resize listener to keep the image fixed after initial load
+  }, []);
 
   const openDialog = (event: EventDetail) => {
     setSelectedEvent(event);
@@ -90,7 +100,11 @@ export default function EventsNewPage() {
 
   return (
     <div className="mobile-gallery-container">
-      <Image src="/images/Lights.png" alt="Gallery lights" width={1000} height={100} className="lights-image" />
+      {isMobileView ? (
+        <Image src="/images/Lights2.png" alt="Gallery lights mobile" width={1000} height={100} className="lights-image" />
+      ) : (
+        <Image src="/images/Lights.png" alt="Gallery lights" width={1000} height={100} className="lights-image" />
+      )}
       <SiteHeader />
 
       <main className="gallery-main diag-magenta">
