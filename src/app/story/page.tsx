@@ -24,7 +24,7 @@ const storyItems: StoryItem[] = [
     src: '/images/story/1.png',
     alt: 'Story image 1',
     title: 'Opening Theory',
-    details: 'Linda Arki\n1/9',
+    details: 'Linda Arki\n1/10',
     originalWidth: 1170,
     originalHeight: 1525,
     description: `<b>NG:</b> I wish I was cool enough to claim it was love at first sight. Technically, it was our second but I won't spoil the gallery to come.
@@ -40,7 +40,7 @@ Then, just as quickly, the maelstrom pulled me back. I figured I\'d probably nev
     src: '/images/story/2.png',
     alt: 'Story image 2',
     title: 'Elastic Connection',
-    details: 'IG Story Screenshot\n2/9',
+    details: 'IG Story Screenshot\n2/10',
     originalWidth: 1170,
     originalHeight: 1540,
     description: `<b>CV:</b> I barely made it to the rave. I was exhausted and had come back from another city, but my friends were (gratefully) persistent, I lived very close, <i>and</i> I had a ticket. Sometimes you don't have a choice. You have to go dance.
@@ -60,9 +60,9 @@ Before the end of the night, Neil said he had to leave for a birthday party and 
     src: '/images/story/3.png',
     alt: 'Story image 3',
     title: 'Colliding',
-    details: 'Michael Sousa\n3/9',
+    details: 'Michael Sousa\n3/10',
     originalWidth: 1170,
-    originalHeight: 886,
+    originalHeight: 880,
     description: `<b>NG:</b> The very next Wednesday after the rave, Chels tracked me down at Pub Chess. Well that's where we'd met, <i>nothing</i> suspicious there. She mentioned she was looking for a job at a tech startup: <i>oddly</i> convenient, because I had just co-founded one with two close friends. We even had a booth at the biggest tech conference in North America the following week. How delightfully serendipitous! No way she could've possibly uncovered that info from, say, my LinkedIn over the past few days. 
 
 Well, if Chels was job hunting, the least I could do was help her network. About 30 minutes before a "networking boat cruise," I texted her saying it was probably too late for this one, but she should come to the evening events after. She instantly replied, "I'll make the boat," jumped in an Uber, read half our pitch deck en route, and snuck on board as "my co-founder who just landed and definitely, totally has a real admission wristband."
@@ -72,11 +72,25 @@ From that point on, Chels became an absolute force on our team. I figured she'd 
 I'm equal parts excited and terrified. I was hopelessly in love with someone I now technically managed: not my finest HR strategy. With no possible clear signals she might feel the same way, I decided the only responsible thing to do was keep it strictly professional.`,
   },
   {
+    id: 'story3half',
+    src: '/images/story/3half.png',
+    alt: 'Story image 3.5',
+    title: 'Fallsing for You',
+    details: 'Ali Waseem\n4/10',
+    originalWidth: 2268,
+    originalHeight: 3370,
+    description: `Neil calls me at 10 PM on a Tuesday and says "Want to go on an adventure right now? [I] can have the details if [I] want them, but there's fun in mystery." I need no details. I tactically don all black and mentally prepare for anything. 
+
+He picks me up and I'm whisked to Niagara Falls. We're with one of his oldest friends (who sneakily took this picture I didn't know existed until now!!) and learn meaningfully about each other in the car through musical games. The Falls are beautiful at night and so much more peaceful. 
+
+I was already in love with him but this was clear progress! More like a date than anything we'd done before! Surely he must <i>know</i> we were meant for each other!!!`,
+  },
+  {
     id: 'story4',
     src: '/images/story/4.png',
     alt: 'Story image 4',
     title: 'Love is Real',
-    details: "Neil's Lockscreen\n4/9",
+    details: "Neil's Lockscreen\n5/10",
     originalWidth: 1170,
     originalHeight: 1360,
     description: `<b>NG:</b> We're at our third rave together in six weeks. Strictly professional business raves, of course. Around 1 AM, Chels leans over and asks, "Do you want to go swimming?" I'm in. Honestly, I would've said yes to just about anything she suggested. She simply nods and says, "Okay great, we'll get back to that."
@@ -92,7 +106,7 @@ We take a quick dip, and afterwards we're curled up together for warmth as the s
     src: '/images/story/5.png',
     alt: 'Story image 5',
     title: 'Chasing Rainbows',
-    details: 'Unknown CNE Stranger\n5/9',
+    details: 'Unknown CNE Stranger\n6/10',
     originalWidth: 1170,
     originalHeight: 1546,
     description: `<b>CV:</b> Thank god Neil was into me. I had been telling my friends for weeks that we were going to get married.
@@ -106,7 +120,7 @@ He meets all of my friends at dances and the CNE, they instantly love him (who w
     src: '/images/story/6.png',
     alt: 'Story image 6',
     title: 'My Favourite Painter',
-    details: 'Sherif Darrag\n6/9',
+    details: 'Sherif Darrag\n7/10',
     originalWidth: 1170,
     originalHeight: 1545,
     description: `<b>CV:</b> We've always loved art, individually and together. 
@@ -120,7 +134,7 @@ For our first anniversary, as an ode to our love for art, we bought passes to th
     src: '/images/story/7.png',
     alt: 'Story image 7',
     title: 'Lost in Lisbon',
-    details: 'Chandler Ferry\n7/9',
+    details: 'Chandler Ferry\n8/10',
     originalWidth: 1170,
     originalHeight: 1538,
     description: `<b>CV:</b> Our first trip abroad and it's for the largest tech summit in the world: Web Summit in Lisbon! We expect to mainly work, and explore/enjoy what we can in between conference events. It's camp again, together! 
@@ -135,7 +149,7 @@ So, so, psyched that we weren't just coworkers.`,
     src: '/images/story/8.png',
     alt: 'Story image 8',
     title: "You're My Home",
-    details: 'NG\n8/9',
+    details: 'NG\n9/10',
     originalWidth: 1170,
     originalHeight: 1540,
     description: `<b>CV:</b> We talked about moving in, and realized — wait, what if we buy it??!! I sat on the floor of Neil's old apartment, in SHOCK after signing the contract for the most money I've ever seen in my life. A mortgage is crazy, and it's hilarious that we can have one (together). 
@@ -147,7 +161,7 @@ After moving in, Neil convinced me we should paint our walls. A celebration of n
     src: '/images/story/9.png',
     alt: 'Story image 9',
     title: 'Looking Ahead',
-    details: 'Caitlin Baker\n9/9',
+    details: 'Caitlin Baker\n10/10',
     originalWidth: 1170,
     originalHeight: 1525,
     description: `<b>NG:</b> In January 2024, we were chatting about resolutions. Chels immediately made one specific goal clear. Honestly? I was thrilled. Clear expectations <i>and</i> a green light to propose? Sign me up.
