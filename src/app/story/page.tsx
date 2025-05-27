@@ -79,11 +79,11 @@ I'm equal parts excited and terrified. I was hopelessly in love with someone I n
     details: 'Ali Waseem\n4/10',
     originalWidth: 2268,
     originalHeight: 3370,
-    description: `<b>CV:</b> After weeks of being strictly professional (driving me insane), Neil calls me at 10 PM on a Tuesday and says "Want to go on an adventure right now? [I] can have the details if [I] want them, but there's fun in mystery." I need no details. I tactically don all black and mentally prepare for anything. 
+    description: `<b>CV:</b> After weeks of being strictly professional (driving me insane), Neil calls me at 10pm on a Tuesday.  "Want to go on an adventure right now? I'll pick you up." He offers details if I want them. I don't want them. I tactically don all black and my running shoes (for our likely-needed criminal getaway). 
 
-He picks me up and I'm whisked to Niagara Falls. We're with one of his oldest friends (who sneakily took this picture I didn't know existed until now!!) and learn meaningfully about each other in the car through musical games. The Falls are beautiful at night and so much more peaceful. 
+He picks me up and I'm whisked to Niagara Falls. We're with one of his oldest friends (who sneakily took this picture I didn't know existed until now!!) and we take turns playing songs for each other in the car, learning about each other through vulnerable memories attached to the music. (It's a phenomenal game and date idea. Write that down!) The Falls are beautiful at night and fittingly, ravey. 
 
-I was already in love with him but this was clear progress! More like a date than anything we'd done before! Surely he must <i>know</i> we were meant for each other!!!`,
+I was already in love with Neil, but this was clear progress... and seemingly mutual! More like a date than anything we'd done before! He MUST know that we're meant for each other.`,
   },
   {
     id: 'story4',
