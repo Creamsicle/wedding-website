@@ -819,7 +819,7 @@ export default function Dashboard() {
                     { label: 'Needs Ride (Sat)', key: 'rsvpResponse.needsRideToWedding'},
                     { label: 'Can Offer Ride', key: 'rsvpResponse.canOfferRide'},
                     { label: 'Address?', key: 'physicalAddressPresent' }
-                  ].map((header, index, arr) => (
+                  ].map((header, index) => (
                     <th 
                       key={header.key}
                       scope="col" 
