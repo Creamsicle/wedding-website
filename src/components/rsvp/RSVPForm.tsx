@@ -123,9 +123,16 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
         }
       };
 
-      // If weddingReceptionAttending is set to false, clear mealPreference
-      if (field === 'weddingReceptionAttending' && value === false) {
-        delete newResponses[guestId].mealPreference;
+      if (field === 'weddingReceptionAttending') {
+        if (value === true) {
+          // If they are attending and mealPreference is not set (or was deleted), default it.
+          if (newResponses[guestId].mealPreference === undefined) {
+            newResponses[guestId].mealPreference = 'Chicken'; 
+          }
+        } else {
+          // If they are not attending, delete mealPreference.
+          delete newResponses[guestId].mealPreference;
+        }
       }
       
       // Validate email if the field is 'email' - REMOVED FROM HERE
@@ -168,9 +175,19 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
     
     setIsSubmitting(true);
     try {
+      // Create a deep copy of responses to modify before submission if needed
+      const finalResponses = JSON.parse(JSON.stringify(responses));
+
+      selectedParty.partyMembers.forEach(guest => {
+        const guestResponse = finalResponses[guest.id];
+        if (guestResponse.weddingReceptionAttending === true && guestResponse.mealPreference === undefined) {
+          guestResponse.mealPreference = 'Chicken'; // Ensure default if attending and undefined
+        }
+      });
+
       await Promise.all(
         selectedParty.partyMembers.map(guest =>
-          submitRSVP(guest.id, responses[guest.id])
+          submitRSVP(guest.id, finalResponses[guest.id]) // Use the modified finalResponses
         )
       );
       setIsSubmitted(true);
