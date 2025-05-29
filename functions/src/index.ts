@@ -370,7 +370,7 @@ function generateEmailHtml(partyMembers: Guest[], isAnyPartyMemberAttendingHindu
   );
   const closingRemarksHtml = closingRemarksArr.join("\n");
 
-  const websiteLinkHtml = `<a href="https://vandergoel.com" style='${linkStyle}'>Visit Our Wedding Website</a>`;
+  const websiteLinkHtml = `<a href="https://vandergoel.com/login?pw=artgallery" style='${linkStyle}'>Visit Our Wedding Website</a>`;
   
   let greeting = "";
   if (isSinglePersonParty) {
