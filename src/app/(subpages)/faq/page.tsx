@@ -199,16 +199,48 @@ export default function NewFaqPage() {
                   </AccordionTrigger>
                   <AccordionContent className="pt-4 text-white/80 text-base">
                     <p className="mb-4"><b>Friday:</b> There&apos;s boundless parking at the venue! Seamless and easy.</p>
-                    <p><b>Saturday:</b> For the Art Gallery of Hamilton there&apos;s ample paid lots nearby. The nearest lot is located just steps away from the venue at the <a href="https://maps.app.goo.gl/E2dfnujae8ahBURk8" target="_blank" rel="noopener noreferrer" className="underline hover:text-white">Convention Centre Parking</a>, or there's several available lots near Jackson Square. Metered street parking is also available. </p>
+                    <p><b>Saturday:</b> For the Art Gallery of Hamilton there&apos;s ample paid lots nearby. The nearest lot is located just steps away from the venue at the <a href="https://maps.app.goo.gl/E2dfnujae8ahBURk8" target="_blank" rel="noopener noreferrer" className="underline hover:text-white">Convention Centre Parking</a>, or there&apos;s several available lots near Jackson Square. Metered street parking is also available. </p>
                   </AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="photos" className="py-4"> {/* New last item, no bottom border */}
+                <AccordionItem value="photos" className="border-b border-white/50 py-4">
                   <AccordionTrigger className="hover:no-underline text-white/90 text-lg justify-between w-full">
                     Should I take photos during the wedding ceremony?
                   </AccordionTrigger>
                   <AccordionContent className="pt-4 text-white/80 text-base">
                     We kindly ask that you refrain from taking photos during the ceremonies. We have professional photographers who will capture these special moments, ideally without phones in them! We encourage you to be present with us during the ceremonies and enjoy taking tons of photos during the reception.
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="poems" className="py-4"> {/* New last item, no bottom border */}
+                  <AccordionTrigger className="hover:no-underline text-white/90 text-lg justify-between w-full">
+                    What are some of your favourite poems?
+                  </AccordionTrigger>
+                  <AccordionContent className="pt-4 text-white/80 text-base">
+                    <Accordion type="single" collapsible className="w-full">
+                      <AccordionItem value="chelsea-poem" className="border-b border-white/50 py-3"> {/* First sub-item with bottom border */}
+                        <AccordionTrigger className="hover:no-underline text-white/85 text-md justify-between w-full">
+                          Chelsea
+                        </AccordionTrigger>
+                        <AccordionContent className="pt-3 text-white/75 text-sm">
+                          <h4 className="font-semibold text-white/100 mb-2">Untitled</h4>
+                          <p dangerouslySetInnerHTML={{ __html: `Your voice, a sweet melody, a gentle refrain,<br />Echoes in my heart, easing all my pain.<br />A symphony of love, in every word you say,<br />With you, my dearest, joy brightens every day.<br />Your laughter, like music, a delightful, happy sound,<br />In your presence, true happiness I&apos;ve found.<br />When you speak my name, my heart takes flight,<br />In your love&apos;s embrace, everything feels right.<br />My handsome man, with a voice so clear and true,<br />Forever and always, I&apos;ll be loving you.` }} />
+                          <p className="italic text-white/80 mt-2 mb-2"><em>ChatGPT, with edits by Chelsea & Neil</em></p>
+                          <p className="mt-3 text-white/75">I also love &quot;<a href="https://www.poetryfoundation.org/poems/46473/if--2" target="_blank" rel="noopener noreferrer" className="underline hover:text-white">If—</a>&quot; by Rudyard Kipling and &quot;<a href="https://www.poetryfoundation.org/poems/45752/the-love-song-of-j-alfred-prufrock" target="_blank" rel="noopener noreferrer" className="underline hover:text-white">The Love Song of J. Alfred Prufrock</a>&quot; by T.S. Eliot. We also almost chose &quot;<a href="https://www.poetryfoundation.org/poems/146748/i-like-my-body-when-it-is-with-your" target="_blank" rel="noopener noreferrer" className="underline hover:text-white">i like my body when it is with your</a>&quot; by E.E. Cummings for our invitations; we don&apos;t talk about the last stanza. We have too many favourites, don&apos;t hesitate to ask for more!</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="neil-poem" className="py-3"> {/* Last sub-item */}
+                        <AccordionTrigger className="hover:no-underline text-white/85 text-md justify-between w-full">
+                          Neil
+                        </AccordionTrigger>
+                        <AccordionContent className="pt-3 text-white/75 text-sm">
+                          <h4 className="font-semibold text-white/100 mb-2">WHAT I DIDN&apos;T KNOW BEFORE</h4>
+                          <p dangerouslySetInnerHTML={{ __html: `was how horses simply give birth to other<br />horses. Not a baby by any means, not<br />a creature of liminal spaces, but already<br />a four-legged beast hellbent on walking,<br />scrambling after the mother. A horse gives way<br />to another horse and then suddenly there are<br />two horses, just like that. That&apos;s how I loved you.<br />You, off the long train from Red Bank carrying<br />a coffee as big as your arm, a bag with two<br />computers swinging in it unwieldy at your<br />side. I remember we broke into laughter<br />when we saw each other. What was between<br />us wasn&apos;t a fragile thing to be coddled, cooed<br />over. It came out fully formed, ready to run.` }} />
+                          <p className="italic text-white/80 mt-2 mb-2"><em>Ada Limon</em></p>
+                          <p className="mt-3 text-white/75">Another personal favourite (that&apos;s slightly less fitting for the occasion) is &quot;<a href="https://www.poetryfoundation.org/poems/47993/famous" target="_blank" rel="noopener noreferrer" className="underline hover:text-white">Famous</a>&quot; by Naomi Shihab Nye</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
