@@ -225,7 +225,7 @@ export default function NewFaqPage() {
                         </AccordionTrigger>
                         <AccordionContent className="pt-3 text-white/75 text-sm">
                           <h4 className="font-semibold text-white/100 mb-2">WHAT I DIDN&apos;T KNOW BEFORE</h4>
-                          <p dangerouslySetInnerHTML={{ __html: `was how horses simply give birth to other<br />horses. Not a baby by any means, not<br />a creature of liminal spaces, but already<br />a four-legged beast hellbent on walking,<br />scrambling after the mother. A horse gives way<br />to another horse and then suddenly there are<br />two horses, just like that. That&apos;s how I loved you.<br />You, off the long train from Red Bank carrying<br />a coffee as big as your arm, a bag with two<br />computers swinging in it unwieldy at your<br />side. I remember we broke into laughter<br />when we saw each other. What was between<br />us wasn&apos;t a fragile thing to be coddled, cooed<br />over. It came out fully formed, ready to run.` }} />
+                          <p>This is a test line for Neil&apos;s poem to see if Vercel cache is the issue. This line is intentionally short.</p>
                           <p className="italic text-white/80 mt-2 mb-2"><em>Ada Limon</em></p>
                           <p className="mt-3 text-white/75">Another personal favourite (that&apos;s slightly less fitting for the occasion) is &quot;<a href="https://www.poetryfoundation.org/poems/47993/famous" target="_blank" rel="noopener noreferrer" className="underline hover:text-white">Famous</a>&quot; by Naomi Shihab Nye</p>
                         </AccordionContent>
