@@ -42,6 +42,10 @@ export default function NewFaqPage() {
 
 
     const handleScroll = () => {
+      if (!scrollableParentDiv) {
+        console.warn("handleScroll called but scrollableParentDiv is null");
+        return;
+      }
       const currentScrollY = scrollableParentDiv.scrollTop;
       const scrollDifference = lastScrollY.current - currentScrollY;
 
@@ -116,12 +120,12 @@ export default function NewFaqPage() {
 
             <div className="w-full max-w-2xl px-4"> {/* Added container for accordion */}
               <Accordion type="single" collapsible className="w-full">
-                <AccordionItem value="kids" className="border-b border-white/50 py-4">
+                <AccordionItem value="one-event" className="border-b border-white/50 py-4">
                   <AccordionTrigger className="hover:no-underline text-white/90 text-lg justify-between w-full">
-                    Can I bring my kids?
+                    Is it okay if I only attend one of the events?
                   </AccordionTrigger>
                   <AccordionContent className="pt-4 text-white/80 text-base">
-                    While we love your little ones, both wedding events will be adults-only except for our immediate nieces and nephews. We hope that you will still be able to join us to celebrate!
+                    Of course! We love and appreciate all of you, and entirely understand if you can&apos;t make it to both. You are all very welcome to come to either event! Please RSVP accordingly and we look forward to seeing you at what&apos;s feasible for you.
                   </AccordionContent>
                 </AccordionItem>
 
@@ -132,25 +136,6 @@ export default function NewFaqPage() {
                   <AccordionContent className="pt-4 text-white/80 text-base">
                     <p className="mb-4"><b>Friday:</b> For the Hindu ceremony at Queen&apos;s Manor Event Centre, Indian Formal is recommended if you happen to have it! Anything from shalwar kameez to saris, or from sherwanis to kurtas. If you don&apos;t already have any Indian attire any respectful formal attire will be equally well suited to the occasion. What&apos;s most important is that you feel comfortable to come celebrate with us.</p>
                     <p><b>Saturday:</b> For our wedding at the Art Gallery of Hamilton, the dress code is formal and VIBRANT! What &quot;vibrant&quot; means is entirely up to the wearer. Again, no need to purchase anything specific or push your comfort zone. We simply hope that in fitting the art gallery theme, you wear something fun, bold and bright  – anything that makes you feel vivacious! We&apos;ll check the weather leading up to the day to adjust if needed, but note that we&apos;re hoping the daytime ceremony will be outside, reception inside. There will be an inside rain plan if needed.</p>
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="registry" className="border-b border-white/50 py-4">
-                  <AccordionTrigger className="hover:no-underline text-white/90 text-lg justify-between w-full">
-                    Do you have a gifts registry?
-                  </AccordionTrigger>
-                  <AccordionContent className="pt-4 text-white/80 text-base">
-                    <p className="mb-4">Your presence is the greatest gift of all! ♥ Should you wish to give us a gift, we would gratefully accept contributions to a honeymoon fund (or for dangerous adventures abroad).</p>
-                    <p>We will have a box at the venues for cards, and/or if you prefer to be cashless our e-transfer joint account is: neilandchels@gmail.com</p>
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="one-event" className="border-b border-white/50 py-4">
-                  <AccordionTrigger className="hover:no-underline text-white/90 text-lg justify-between w-full">
-                    Is it okay if I only attend one of the events?
-                  </AccordionTrigger>
-                  <AccordionContent className="pt-4 text-white/80 text-base">
-                    Of course! We love and appreciate all of you, and entirely understand if you can&apos;t make it to both. You are all very welcome to come to either event! Please RSVP accordingly and we look forward to seeing you at what&apos;s feasible for you.
                   </AccordionContent>
                 </AccordionItem>
 
@@ -168,7 +153,34 @@ export default function NewFaqPage() {
                     What if I have allergies / dietary restrictions?
                   </AccordionTrigger>
                   <AccordionContent className="pt-4 text-white/80 text-base">
-                    We should be able to accommodate for all of your allergies or dietary restrictions (for both events), however please make sure to let us know in your RSVP. You can reach out to us also if you have any other concerns. Our venues are optimistic they can find something delicious for even the most difficult of allergies!
+                    We should be able to accommodate for any allergies or dietary restrictions for both events, however please make sure to let us know in your RSVP. You can reach out to us also if you have any other concerns. Our venues are optimistic they can find something delicious for even the most difficult of allergies!
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="registry" className="border-b border-white/50 py-4">
+                  <AccordionTrigger className="hover:no-underline text-white/90 text-lg justify-between w-full">
+                    Do you have a gifts registry?
+                  </AccordionTrigger>
+                  <AccordionContent className="pt-4 text-white/80 text-base">
+                    <p className="mb-4">Your presence is the greatest gift of all! We&apos;re so excited to celebrate with you! ♥ If you&apos;d like to contribute to our new chapter, we would gratefully accept contributions to a honeymoon fund (or for dangerous adventures abroad).</p>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="kids" className="border-b border-white/50 py-4">
+                  <AccordionTrigger className="hover:no-underline text-white/90 text-lg justify-between w-full">
+                    Can I bring my kids?
+                  </AccordionTrigger>
+                  <AccordionContent className="pt-4 text-white/80 text-base">
+                    While we love your little ones, both wedding events will be adults-only except for our immediate nieces and nephews. We hope that you will still be able to join us to celebrate!
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="cancel" className="border-b border-white/50 py-4">
+                  <AccordionTrigger className="hover:no-underline text-white/90 text-lg justify-between w-full">
+                    What if I need to cancel?
+                  </AccordionTrigger>
+                  <AccordionContent className="pt-4 text-white/80 text-base">
+                    It happens! If you need to cancel after RSVP&apos;ing &quot;yes,&quot; <b>please let us know</b> as soon as possible so that we can accommodate.
                   </AccordionContent>
                 </AccordionItem>
 
@@ -187,25 +199,16 @@ export default function NewFaqPage() {
                   </AccordionTrigger>
                   <AccordionContent className="pt-4 text-white/80 text-base">
                     <p className="mb-4"><b>Friday:</b> There&apos;s boundless parking at the venue! Seamless and easy.</p>
-                    <p><b>Saturday:</b> For the Art Gallery of Hamilton there&apos;s ample paid lots nearby. The nearest paid lots are around Jackson Square. Street parking is $2/hr at any meter, or the paid lots should have comparable weekend flat rates.</p>
+                    <p><b>Saturday:</b> For the Art Gallery of Hamilton there&apos;s ample paid lots nearby. The nearest lot is located just steps away from the venue at the <a href="https://maps.app.goo.gl/E2dfnujae8ahBURk8" target="_blank" rel="noopener noreferrer" className="underline hover:text-white">Convention Centre Parking</a>, or there's several available lots near Jackson Square. Metered street parking is also available. </p>
                   </AccordionContent>
                 </AccordionItem>
 
                 <AccordionItem value="photos" className="border-b border-white/50 py-4">
                   <AccordionTrigger className="hover:no-underline text-white/90 text-lg justify-between w-full">
-                    Can I take photos during the wedding ceremony?
+                    Should I take photos during the wedding ceremony?
                   </AccordionTrigger>
                   <AccordionContent className="pt-4 text-white/80 text-base">
                     We kindly ask that you refrain from taking photos during the ceremonies. We have professional photographers who will capture these special moments, ideally without phones in them! We encourage you to be present with us during the ceremonies and enjoy taking tons of photos during the reception.
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="cancel" className="border-b border-white/50 py-4"> {/* Added border-bottom back */}
-                  <AccordionTrigger className="hover:no-underline text-white/90 text-lg justify-between w-full">
-                    What if I need to cancel?
-                  </AccordionTrigger>
-                  <AccordionContent className="pt-4 text-white/80 text-base">
-                    It happens! If you need to cancel after RSVP&apos;ing &quot;yes,&quot; <b>please let us know</b> as soon as possible so that we can accommodate.
                   </AccordionContent>
                 </AccordionItem>
 

@@ -76,13 +76,16 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
         hinduCeremonyAttending: false,
         weddingReceptionAttending: false,
         mealPreference: undefined,
-        dietaryRestrictions: '',
+        dietaryRestrictionsHindu: '',
+        dietaryRestrictionsWedding: '',
         needsRideToHinduCeremony: false,
         hinduCeremonyRideDetails: '',
         needsRideToWedding: false,
         weddingRideDetails: '',
-        canOfferRide: false,
-        rideOfferDetails: '',
+        canOfferRideHindu: false,
+        rideOfferDetailsHindu: '',
+        canOfferRideWedding: false,
+        rideOfferDetailsWedding: '',
         email: '',
         physicalAddress: {
           street: '',
@@ -123,31 +126,20 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
         }
       };
 
-      if (field === 'weddingReceptionAttending') {
-        if (value === true) {
-          // If they are attending and mealPreference is not set (or was deleted), default it.
-          if (newResponses[guestId].mealPreference === undefined) {
-            newResponses[guestId].mealPreference = 'Chicken'; 
-          }
-        } else {
-          // If they are not attending, delete mealPreference.
-          delete newResponses[guestId].mealPreference;
+      // Logic for inheriting dietary restrictions
+      if (field === 'weddingReceptionAttending' && value === true) {
+        if (newResponses[guestId].dietaryRestrictionsHindu && !newResponses[guestId].dietaryRestrictionsWedding) {
+          newResponses[guestId].dietaryRestrictionsWedding = newResponses[guestId].dietaryRestrictionsHindu;
         }
+        // If they are attending and mealPreference is not set (or was deleted), default it.
+        if (newResponses[guestId].mealPreference === undefined) {
+          newResponses[guestId].mealPreference = 'Chicken'; 
+        }
+      } else if (field === 'weddingReceptionAttending' && value === false) {
+        // If they are not attending, delete mealPreference.
+        delete newResponses[guestId].mealPreference;
       }
       
-      // Validate email if the field is 'email' - REMOVED FROM HERE
-      // if (field === 'email' && typeof value === 'string') {
-      //   if (value && !validateEmail(value)) {
-      //     setEmailErrors(prevErrors => ({ ...prevErrors, [guestId]: 'Invalid email format' }));
-      //   } else {
-      //     setEmailErrors(prevErrors => {
-      //       const updatedErrors = { ...prevErrors };
-      //       delete updatedErrors[guestId];
-      //       return updatedErrors;
-      //     });
-      //   }
-      // }
-
       return newResponses;
     });
   };
@@ -371,40 +363,94 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
 
                   {responses[guest.id]?.hinduCeremonyAttending && (
                     <div className="pl-6 space-y-4 mt-3 border-l-2 border-rust-500/50">
+                      {/* Dietary Restrictions for Hindu Ceremony - Placed first */}
                       <div>
                         <label className="block text-[var(--rust-light)] mb-2">
-                          Do you need a ride to the Brampton Hindu ceremony?
+                          Dietary Restrictions or Allergies (Friday)
                         </label>
-                        <div className="space-x-4">
-                          <label className="inline-flex items-center">
-                            <input
-                              type="radio"
-                              checked={responses[guest.id]?.needsRideToHinduCeremony === true}
-                              onChange={() => handleResponseChange(guest.id, 'needsRideToHinduCeremony', true)}
-                              className="form-radio text-[var(--rust-primary)]"
-                            />
-                            <span className="ml-2 text-white">Yes</span>
-                          </label>
-                          <label className="inline-flex items-center">
-                            <input
-                              type="radio"
-                              checked={responses[guest.id]?.needsRideToHinduCeremony === false}
-                              onChange={() => handleResponseChange(guest.id, 'needsRideToHinduCeremony', false)}
-                              className="form-radio text-[var(--rust-primary)]"
-                            />
-                            <span className="ml-2 text-white">No</span>
-                          </label>
-                        </div>
-                        {responses[guest.id]?.needsRideToHinduCeremony && (
-                          <textarea
-                            value={responses[guest.id]?.hinduCeremonyRideDetails || ''}
-                            onChange={(e) => handleResponseChange(guest.id, 'hinduCeremonyRideDetails', e.target.value)}
-                            placeholder="Please provide details on where you're coming from"
-                            className="mt-2 w-full px-3 py-2 bg-[var(--navy-primary)] text-white rounded border border-[var(--rust-light)]"
-                            rows={3}
-                          />
-                        )}
+                        <textarea
+                          value={responses[guest.id]?.dietaryRestrictionsHindu || ''}
+                          onChange={(e) => handleResponseChange(guest.id, 'dietaryRestrictionsHindu', e.target.value)}
+                          placeholder="Please list any dietary restrictions or allergies for Friday's event"
+                          className="w-full px-3 py-2 bg-[var(--navy-primary)] text-white rounded border border-[var(--rust-light)]"
+                          rows={2}
+                        />
                       </div>
+
+                      {/* Ride questions for Hindu ceremony, conditional on showRideQuestions */}
+                      {guest.showRideQuestions === true && (
+                        <>
+                          <div className="mt-4"> {/* Need ride for Hindu */}
+                            <label className="block text-[var(--rust-light)] mb-2">
+                              Do you need a ride to the Brampton Hindu ceremony from one of our friends?
+                            </label>
+                            <div className="space-x-4">
+                              <label className="inline-flex items-center">
+                                <input
+                                  type="radio"
+                                  checked={responses[guest.id]?.needsRideToHinduCeremony === true}
+                                  onChange={() => handleResponseChange(guest.id, 'needsRideToHinduCeremony', true)}
+                                  className="form-radio text-[var(--rust-primary)]"
+                                />
+                                <span className="ml-2 text-white">Yes</span>
+                              </label>
+                              <label className="inline-flex items-center">
+                                <input
+                                  type="radio"
+                                  checked={responses[guest.id]?.needsRideToHinduCeremony === false}
+                                  onChange={() => handleResponseChange(guest.id, 'needsRideToHinduCeremony', false)}
+                                  className="form-radio text-[var(--rust-primary)]"
+                                />
+                                <span className="ml-2 text-white">No</span>
+                              </label>
+                            </div>
+                            {responses[guest.id]?.needsRideToHinduCeremony && (
+                              <textarea
+                                value={responses[guest.id]?.hinduCeremonyRideDetails || ''}
+                                onChange={(e) => handleResponseChange(guest.id, 'hinduCeremonyRideDetails', e.target.value)}
+                                placeholder="Please provide details on where you're coming from"
+                                className="mt-2 w-full px-3 py-2 bg-[var(--navy-primary)] text-white rounded border border-[var(--rust-light)]"
+                                rows={3}
+                              />
+                            )}
+                          </div>
+                      
+                          <div className="mt-4"> {/* Offer ride for Hindu */}
+                            <label className="block text-[var(--rust-light)] mb-2">
+                              Can you offer a ride to the Brampton Hindu ceremony to one of our friends?
+                            </label>
+                            <div className="space-x-4">
+                              <label className="inline-flex items-center">
+                                <input
+                                  type="radio"
+                                  checked={responses[guest.id]?.canOfferRideHindu === true}
+                                  onChange={() => handleResponseChange(guest.id, 'canOfferRideHindu', true)}
+                                  className="form-radio text-[var(--rust-primary)]"
+                                />
+                                <span className="ml-2 text-white">Yes</span>
+                              </label>
+                              <label className="inline-flex items-center">
+                                <input
+                                  type="radio"
+                                  checked={responses[guest.id]?.canOfferRideHindu === false}
+                                  onChange={() => handleResponseChange(guest.id, 'canOfferRideHindu', false)}
+                                  className="form-radio text-[var(--rust-primary)]"
+                                />
+                                <span className="ml-2 text-white">No</span>
+                              </label>
+                            </div>
+                            {responses[guest.id]?.canOfferRideHindu && (
+                              <textarea
+                                value={responses[guest.id]?.rideOfferDetailsHindu || ''}
+                                onChange={(e) => handleResponseChange(guest.id, 'rideOfferDetailsHindu', e.target.value)}
+                                placeholder="Please provide details (e.g., where from, how many seats)"
+                                className="mt-2 w-full px-3 py-2 bg-[var(--navy-primary)] text-white rounded border border-[var(--rust-light)]"
+                                rows={3}
+                              />
+                            )}
+                          </div>
+                        </>
+                      )}
                     </div>
                   )}
 
@@ -451,90 +497,96 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
                         </select>
                       </div>
 
+                      {/* Dietary Restrictions for Wedding - Placed after Meal Preference */}
                       <div>
                         <label className="block text-[var(--rust-light)] mb-2">
-                          Dietary Restrictions or Allergies
+                          Dietary Restrictions or Allergies (Saturday)
                         </label>
                         <textarea
-                          value={responses[guest.id]?.dietaryRestrictions || ''}
-                          onChange={(e) => handleResponseChange(guest.id, 'dietaryRestrictions', e.target.value)}
-                          placeholder="Please list any dietary restrictions or allergies we should be aware of"
+                          value={responses[guest.id]?.dietaryRestrictionsWedding || ''}
+                          onChange={(e) => handleResponseChange(guest.id, 'dietaryRestrictionsWedding', e.target.value)}
+                          placeholder="Please list any dietary restrictions or allergies for Saturday's event"
                           className="w-full px-3 py-2 bg-[var(--navy-primary)] text-white rounded border border-[var(--rust-light)]"
                           rows={2}
                         />
                       </div>
-                      <div>
-                        <label className="block text-[var(--rust-light)] mb-2">
-                          Do you need a ride to the Hamilton Wedding/Reception?
-                        </label>
-                        <div className="space-x-4">
-                          <label className="inline-flex items-center">
-                            <input
-                              type="radio"
-                              checked={responses[guest.id]?.needsRideToWedding === true}
-                              onChange={() => handleResponseChange(guest.id, 'needsRideToWedding', true)}
-                              className="form-radio text-[var(--rust-primary)]"
-                            />
-                            <span className="ml-2 text-white">Yes</span>
-                          </label>
-                          <label className="inline-flex items-center">
-                            <input
-                              type="radio"
-                              checked={responses[guest.id]?.needsRideToWedding === false}
-                              onChange={() => handleResponseChange(guest.id, 'needsRideToWedding', false)}
-                              className="form-radio text-[var(--rust-primary)]"
-                            />
-                            <span className="ml-2 text-white">No</span>
-                          </label>
-                        </div>
-                        {responses[guest.id]?.needsRideToWedding && (
-                          <textarea
-                            value={responses[guest.id]?.weddingRideDetails || ''}
-                            onChange={(e) => handleResponseChange(guest.id, 'weddingRideDetails', e.target.value)}
-                            placeholder="Please provide details on where you\'re coming from"
-                            className="mt-2 w-full px-3 py-2 bg-[var(--navy-primary)] text-white rounded border border-[var(--rust-light)]"
-                            rows={3}
-                          />
-                        )}
-                      </div>
+                      
+                      {/* Ride questions for Wedding, conditional on showRideQuestions */}
+                      {guest.showRideQuestions === true && (
+                        <>
+                          <div className="mt-4"> {/* Need ride for wedding */}
+                            <label className="block text-[var(--rust-light)] mb-2">
+                              Do you need a ride to the Hamilton Wedding/Reception from one of our friends?
+                            </label>
+                            <div className="space-x-4">
+                              <label className="inline-flex items-center">
+                                <input
+                                  type="radio"
+                                  checked={responses[guest.id]?.needsRideToWedding === true}
+                                  onChange={() => handleResponseChange(guest.id, 'needsRideToWedding', true)}
+                                  className="form-radio text-[var(--rust-primary)]"
+                                />
+                                <span className="ml-2 text-white">Yes</span>
+                              </label>
+                              <label className="inline-flex items-center">
+                                <input
+                                  type="radio"
+                                  checked={responses[guest.id]?.needsRideToWedding === false}
+                                  onChange={() => handleResponseChange(guest.id, 'needsRideToWedding', false)}
+                                  className="form-radio text-[var(--rust-primary)]"
+                                />
+                                <span className="ml-2 text-white">No</span>
+                              </label>
+                            </div>
+                            {responses[guest.id]?.needsRideToWedding && (
+                              <textarea
+                                value={responses[guest.id]?.weddingRideDetails || ''}
+                                onChange={(e) => handleResponseChange(guest.id, 'weddingRideDetails', e.target.value)}
+                                placeholder="Please provide details on where you're coming from"
+                                className="mt-2 w-full px-3 py-2 bg-[var(--navy-primary)] text-white rounded border border-[var(--rust-light)]"
+                                rows={3}
+                              />
+                            )}
+                          </div>
+
+                          <div className="mt-4"> {/* Offer ride for wedding */}
+                            <label className="block text-[var(--rust-light)] mb-2">
+                              Can you offer a ride to the Hamilton Wedding/Reception to one of our friends?
+                            </label>
+                            <div className="space-x-4">
+                              <label className="inline-flex items-center">
+                                <input
+                                  type="radio"
+                                  checked={responses[guest.id]?.canOfferRideWedding === true}
+                                  onChange={() => handleResponseChange(guest.id, 'canOfferRideWedding', true)}
+                                  className="form-radio text-[var(--rust-primary)]"
+                                />
+                                <span className="ml-2 text-white">Yes</span>
+                              </label>
+                              <label className="inline-flex items-center">
+                                <input
+                                  type="radio"
+                                  checked={responses[guest.id]?.canOfferRideWedding === false}
+                                  onChange={() => handleResponseChange(guest.id, 'canOfferRideWedding', false)}
+                                  className="form-radio text-[var(--rust-primary)]"
+                                />
+                                <span className="ml-2 text-white">No</span>
+                              </label>
+                            </div>
+                            {responses[guest.id]?.canOfferRideWedding && (
+                              <textarea
+                                value={responses[guest.id]?.rideOfferDetailsWedding || ''}
+                                onChange={(e) => handleResponseChange(guest.id, 'rideOfferDetailsWedding', e.target.value)}
+                                placeholder="Please provide details (e.g., where from, how many seats)"
+                                className="mt-2 w-full px-3 py-2 bg-[var(--navy-primary)] text-white rounded border border-[var(--rust-light)]"
+                                rows={3}
+                              />
+                            )}
+                          </div>
+                        </>
+                      )}
                     </div>
                   )}
-
-                  {/* Moved "Can you offer a ride" question here */}
-                  <div>
-                    <label className="block text-[var(--rust-light)] mb-2">
-                      Can you offer a ride to either event?
-                    </label>
-                    <div className="space-x-4">
-                      <label className="inline-flex items-center">
-                        <input
-                          type="radio"
-                          checked={responses[guest.id]?.canOfferRide === true}
-                          onChange={() => handleResponseChange(guest.id, 'canOfferRide', true)}
-                          className="form-radio text-[var(--rust-primary)]"
-                        />
-                        <span className="ml-2 text-white">Yes</span>
-                      </label>
-                      <label className="inline-flex items-center">
-                        <input
-                          type="radio"
-                          checked={responses[guest.id]?.canOfferRide === false}
-                          onChange={() => handleResponseChange(guest.id, 'canOfferRide', false)}
-                          className="form-radio text-[var(--rust-primary)]"
-                        />
-                        <span className="ml-2 text-white">No</span>
-                      </label>
-                    </div>
-                    {responses[guest.id]?.canOfferRide && (
-                      <textarea
-                        value={responses[guest.id]?.rideOfferDetails || ''}
-                        onChange={(e) => handleResponseChange(guest.id, 'rideOfferDetails', e.target.value)}
-                        placeholder="Please provide details on where you\'re coming from and which event(s) you can offer rides to"
-                        className="mt-2 w-full px-3 py-2 bg-[var(--navy-primary)] text-white rounded border border-[var(--rust-light)]"
-                        rows={3}
-                      />
-                    )}
-                  </div>
 
                   {/* New Fields: Email, Physical Address, Other Comments */}
                   <div>

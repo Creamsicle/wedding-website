@@ -725,27 +725,24 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
 }
 
 @keyframes click-hint-animation {
-  0%, 100% {
-    transform: scale(1) translateY(0);
-    opacity: 0.7; /* Initial reduced opacity */
-  }
-  50% {
-    transform: scale(1.1) translateY(-5px); /* Slightly larger, moves up a bit */
-    opacity: 1; /* Full opacity at peak */
-  }
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); filter: drop-shadow(0 0 0 transparent); }
+  20% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.5)); }
+  40% { opacity: 1; transform: translate(-50%, -50%) scale(1);   filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.5)); }
+  60% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.5)); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); filter: drop-shadow(0 0 0 transparent); }
 }
 
 /* New subtle animation */
-@keyframes click-hint-animation-subtle {
+/* @keyframes click-hint-animation-subtle {
   0%, 100% {
     transform: scale(1);
-    opacity: 0.3; /* More transparent */
+    opacity: 0.3; More transparent
   }
   50% {
-    transform: scale(1.05); /* Smaller scale */
-    opacity: 0.5; /* Less opaque at peak */
+    transform: scale(1.05); Smaller scale
+    opacity: 0.5; Less opaque at peak
   }
-}
+} */
 
 .clickable-image-hint {
   position: absolute;
@@ -758,15 +755,15 @@ body { /* This body rule is part of the 'Mobile Gallery Specific Styles' section
 }
 
 /* New class for subtle animation */
-.clickable-image-hint-subtle {
+/* .clickable-image-hint-subtle {
   position: absolute;
-  bottom: 10px; /* Changed from 20px */
-  right: 10px;  /* Changed from 20px */
-  z-index: 10; /* Ensure it's above the image */
-  animation: click-hint-animation-subtle 1s 2; /* Duration to 1s, iteration to 2 */
-  opacity: 0; /* Start fully transparent, animation handles fade-in */
-  pointer-events: none; /* Make sure it doesn't interfere with image click */
-}
+  bottom: 10px; Changed from 20px
+  right: 10px;  Changed from 20px
+  z-index: 10; Ensure it's above the image
+  animation: click-hint-animation-subtle 1s 2; Duration to 1s, iteration to 2
+  opacity: 0; Start fully transparent, animation handles fade-in
+  pointer-events: none; Make sure it doesn't interfere with image click
+} */
 
 .event-image-clickable:hover .clickable-image-hint {
   opacity: 1;

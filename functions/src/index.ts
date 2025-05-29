@@ -377,10 +377,12 @@ function generateEmailHtml(partyMembers: Guest[], isAnyPartyMemberAttendingHindu
     greeting = `<p style='${paragraphStyle}'>Dear ${partyMembers[0].firstName},</p>`;
   } else {
     const names = partyMembers.map(member => member.firstName);
-    if (names.length > 1) {
+    if (names.length === 2) {
+      greeting = `<p style='${paragraphStyle}'>Dear ${names[0]} and ${names[1]},</p>`;
+    } else if (names.length > 1) {
       const lastPerson = names.pop();
       greeting = `<p style='${paragraphStyle}'>Dear ${names.join(', ')}, and ${lastPerson},</p>`;
-    } else if (names.length === 1) { // Should not happen if isSinglePersonParty is false, but good to handle
+    } else if (names.length === 1) {
       greeting = `<p style='${paragraphStyle}'>Dear ${names[0]},</p>`;
     }
   }

@@ -473,7 +473,7 @@ export default function StoryNewPage() {
                             alt="Click for details" 
                             width={50} 
                             height={50} 
-                            className={currentIndex === 0 ? "clickable-image-hint" : "clickable-image-hint-subtle"}
+                            className={"clickable-image-hint"}
                           />
                       </div>
                   )}

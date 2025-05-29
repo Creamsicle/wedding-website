@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { collection, onSnapshot, query } from 'firebase/firestore';
+import { collection, onSnapshot, query, doc, updateDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase/config';
 import { Guest, RSVPResponse } from '@/lib/firebase/rsvp';
 import {
@@ -38,10 +38,13 @@ type SortableKey =
   | 'rsvpResponse.hinduCeremonyAttending' 
   | 'rsvpResponse.weddingReceptionAttending' 
   | 'rsvpResponse.mealPreference' 
-  | 'rsvpResponse.dietaryRestrictions' 
+  | 'rsvpResponse.dietaryRestrictionsHindu'
+  | 'rsvpResponse.dietaryRestrictionsWedding'
   | 'rsvpResponse.needsRideToHinduCeremony' 
   | 'rsvpResponse.needsRideToWedding' 
-  | 'rsvpResponse.canOfferRide' 
+  | 'rsvpResponse.canOfferRideHindu'
+  | 'rsvpResponse.canOfferRideWedding'
+  | 'showRideQuestions'
   | 'none';
 
 interface GuestWithResponse extends Guest {
@@ -211,7 +214,7 @@ export default function Dashboard() {
           case 'needs-wedding':
             return guest.rsvpResponse?.needsRideToWedding;
           case 'offering':
-            return guest.rsvpResponse?.canOfferRide;
+            return guest.rsvpResponse?.canOfferRideHindu || guest.rsvpResponse?.canOfferRideWedding;
           default:
             return true;
         }
@@ -264,7 +267,7 @@ export default function Dashboard() {
         hinduCeremony: filtered.filter(g => g.rsvpResponse?.needsRideToHinduCeremony).length,
         weddingReception: filtered.filter(g => g.rsvpResponse?.needsRideToWedding).length
       },
-      canOfferRide: filtered.filter(g => g.rsvpResponse?.canOfferRide).length
+      canOfferRide: filtered.filter(g => g.rsvpResponse?.canOfferRideHindu || g.rsvpResponse?.canOfferRideWedding).length
     };
     setStats(newStats);
   }, [guests, filters]);
@@ -332,10 +335,12 @@ export default function Dashboard() {
       'Hindu Ceremony',
       'Wedding Reception',
       'Meal Preference',
-      'Dietary Restrictions',
+      'Dietary (Fri)',
+      'Dietary (Sat)',
       'Need Ride (Fri)',
       'Need Ride (Sat)',
-      'Can Offer Ride'
+      'Offer Ride (Fri)',
+      'Offer Ride (Sat)'
     ];
 
     const csvContent = [
@@ -359,10 +364,12 @@ export default function Dashboard() {
           rsvp ? (rsvp.hinduCeremonyAttending ? 'Yes' : 'No') : '-',
           rsvp ? (rsvp.weddingReceptionAttending ? 'Yes' : 'No') : '-',
           mealPreferenceDisplay,
-          `"${rsvp?.dietaryRestrictions || ''}"`,
+          `"${rsvp?.dietaryRestrictionsHindu || ''}"`,
+          `"${rsvp?.dietaryRestrictionsWedding || ''}"`,
           rsvp?.needsRideToHinduCeremony ? 'Yes' : 'No',
           rsvp?.needsRideToWedding ? 'Yes' : 'No',
-          rsvp?.canOfferRide ? 'Yes' : 'No'
+          rsvp?.canOfferRideHindu ? 'Yes' : 'No',
+          rsvp?.canOfferRideWedding ? 'Yes' : 'No'
         ].join(',');
       })
     ].join('\n');
@@ -457,10 +464,12 @@ export default function Dashboard() {
                 <th>Hindu Ceremony</th>
                 <th>Wedding</th>
                 <th>Meal</th>
-                <th>Dietary Restrictions</th>
+                <th>Dietary (Fri)</th>
+                <th>Dietary (Sat)</th>
                 <th>Need Ride (Fri)</th>
                 <th>Need Ride (Sat)</th>
-                <th>Can Offer Ride</th>
+                <th>Offer Ride (Fri)</th>
+                <th>Offer Ride (Sat)</th>
               </tr>
             </thead>
             <tbody>
@@ -483,10 +492,12 @@ export default function Dashboard() {
                   <td>${rsvp ? (rsvp.hinduCeremonyAttending ? '✓ Yes' : '✗ No') : '-'}</td>
                   <td>${rsvp ? (rsvp.weddingReceptionAttending ? '✓ Yes' : '✗ No') : '-'}</td>
                   <td>${mealPreferenceDisplayPDF}</td>
-                  <td>${rsvp?.dietaryRestrictions || '-'}</td>
+                  <td>${rsvp?.dietaryRestrictionsHindu || '-'}</td>
+                  <td>${rsvp?.dietaryRestrictionsWedding || '-'}</td>
                   <td>${rsvp ? (rsvp.needsRideToHinduCeremony ? '✓ Yes' : '✗ No') : '-'}</td>
                   <td>${rsvp ? (rsvp.needsRideToWedding ? '✓ Yes' : '✗ No') : '-'}</td>
-                  <td>${rsvp ? (rsvp.canOfferRide ? '✓ Yes' : '✗ No') : '-'}</td>
+                  <td>${rsvp ? (rsvp.canOfferRideHindu ? '✓ Yes' : '✗ No') : '-'}</td>
+                  <td>${rsvp ? (rsvp.canOfferRideWedding ? '✓ Yes' : '✗ No') : '-'}</td>
                 </tr>
               `;
               }).join('')}
@@ -620,6 +631,21 @@ export default function Dashboard() {
         return { ...prev, sortBy: key, sortDirection: 'asc' };
       }
     });
+  };
+
+  // Function to toggle the 'showRideQuestions' field for a guest
+  const toggleShowRideQuestions = async (guestId: string, currentValue: boolean | undefined) => {
+    const guestRef = doc(db, 'guests', guestId);
+    try {
+      await updateDoc(guestRef, {
+        showRideQuestions: !currentValue
+      });
+      // Optionally, refetch or update local state to reflect the change immediately
+      // For now, relying on onSnapshot to update, or a manual refresh
+      console.log(`Toggled showRideQuestions for guest ${guestId} to ${!currentValue}`);
+    } catch (error) {
+      console.error("Error updating showRideQuestions: ", error);
+    }
   };
 
   return (
@@ -814,11 +840,14 @@ export default function Dashboard() {
                     { label: 'Hindu Ceremony', key: 'rsvpResponse.hinduCeremonyAttending' },
                     { label: 'Wedding Reception', key: 'rsvpResponse.weddingReceptionAttending' },
                     { label: 'Meal', key: 'rsvpResponse.mealPreference' },
-                    { label: 'Dietary Restrictions', key: 'rsvpResponse.dietaryRestrictions'},
+                    { label: 'Dietary (Fri)', key: 'rsvpResponse.dietaryRestrictionsHindu' },
+                    { label: 'Dietary (Sat)', key: 'rsvpResponse.dietaryRestrictionsWedding' },
                     { label: 'Needs Ride (Fri)', key: 'rsvpResponse.needsRideToHinduCeremony'},
                     { label: 'Needs Ride (Sat)', key: 'rsvpResponse.needsRideToWedding'},
-                    { label: 'Can Offer Ride', key: 'rsvpResponse.canOfferRide'},
-                    { label: 'Address?', key: 'physicalAddressPresent' }
+                    { label: 'Offer Ride (Fri)', key: 'rsvpResponse.canOfferRideHindu'},
+                    { label: 'Offer Ride (Sat)', key: 'rsvpResponse.canOfferRideWedding'},
+                    { label: 'Address?', key: 'physicalAddressPresent' },
+                    { label: 'Rides?', key: 'showRideQuestions' }
                   ].map((header, index) => (
                     <th 
                       key={header.key}
@@ -867,8 +896,11 @@ export default function Dashboard() {
                         {rsvp ? (rsvp.weddingReceptionAttending ? '✓ Yes' : '✗ No') : '-'}
                       </td>
                       <td className="px-4 py-3 whitespace-nowrap text-sm">{mealPreferenceDisplay}</td>
-                      <td className="px-4 py-3 text-sm max-w-xs overflow-hidden text-ellipsis whitespace-nowrap" title={rsvp?.dietaryRestrictions}>
-                        {rsvp?.dietaryRestrictions || '-'}
+                      <td className="px-4 py-3 text-sm max-w-xs overflow-hidden text-ellipsis whitespace-nowrap" title={rsvp?.dietaryRestrictionsHindu}>
+                        {rsvp?.dietaryRestrictionsHindu || '-'}
+                      </td>
+                      <td className="px-4 py-3 text-sm max-w-xs overflow-hidden text-ellipsis whitespace-nowrap" title={rsvp?.dietaryRestrictionsWedding}>
+                        {rsvp?.dietaryRestrictionsWedding || '-'}
                       </td>
                       <td className="px-4 py-3 whitespace-nowrap text-sm">
                         {rsvp ? (rsvp.needsRideToHinduCeremony ? '✓ Yes' : '✗ No') : '-'}
@@ -877,7 +909,10 @@ export default function Dashboard() {
                         {rsvp ? (rsvp.needsRideToWedding ? '✓ Yes' : '✗ No') : '-'}
                       </td>
                       <td className="px-4 py-3 whitespace-nowrap text-sm">
-                        {rsvp ? (rsvp.canOfferRide ? '✓ Yes' : '✗ No') : '-'}
+                        {rsvp ? (rsvp.canOfferRideHindu ? '✓ Yes' : '✗ No') : '-'}
+                      </td>
+                      <td className="px-4 py-3 whitespace-nowrap text-sm">
+                        {rsvp ? (rsvp.canOfferRideWedding ? '✓ Yes' : '✗ No') : '-'}
                       </td>
                       <td className="px-4 py-3 whitespace-nowrap text-sm text-center">
                         {rsvp?.physicalAddress?.street ? (
@@ -885,6 +920,14 @@ export default function Dashboard() {
                         ) : (
                           ''
                         )}
+                      </td>
+                      <td className="px-4 py-3 whitespace-nowrap text-sm text-center">
+                        <input
+                          type="checkbox"
+                          className="form-checkbox h-5 w-5 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500"
+                          checked={!!guest.showRideQuestions}
+                          onChange={() => toggleShowRideQuestions(guest.id, guest.showRideQuestions)}
+                        />
                       </td>
                     </tr>
                   );
@@ -913,27 +956,33 @@ const getSortableValue = (guest: GuestWithResponse, key: SortableKey): string | 
   const rsvp = guest.rsvpResponse;
   switch (key) {
     case 'fullName':
-      return `${guest.firstName} ${guest.lastName}`.toLowerCase();
+      return `${guest.firstName} ${guest.lastName}`;
     case 'physicalAddressPresent':
-      return !!(rsvp?.physicalAddress?.street);
+      return !!(rsvp?.physicalAddress && rsvp.physicalAddress.street && rsvp.physicalAddress.city);
     case 'responseTimestamp':
-      return rsvp?.timestamp ? rsvp.timestamp.toMillis() : null;
+      return rsvp?.timestamp?.toDate().toISOString() || null;
     case 'rsvpResponse.email':
       return rsvp?.email?.toLowerCase() || null;
     case 'rsvpResponse.hinduCeremonyAttending':
-      return rsvp?.hinduCeremonyAttending ? 1 : 0;
+      return rsvp?.hinduCeremonyAttending ?? null;
     case 'rsvpResponse.weddingReceptionAttending':
-      return rsvp?.weddingReceptionAttending ? 1 : 0;
+      return rsvp?.weddingReceptionAttending ?? null;
     case 'rsvpResponse.mealPreference':
       return rsvp?.mealPreference?.toLowerCase() || null;
-    case 'rsvpResponse.dietaryRestrictions':
-      return rsvp?.dietaryRestrictions?.toLowerCase() || null;
+    case 'rsvpResponse.dietaryRestrictionsHindu':
+      return rsvp?.dietaryRestrictionsHindu?.toLowerCase() || null;
+    case 'rsvpResponse.dietaryRestrictionsWedding':
+      return rsvp?.dietaryRestrictionsWedding?.toLowerCase() || null;
     case 'rsvpResponse.needsRideToHinduCeremony':
-      return rsvp?.needsRideToHinduCeremony ? 1 : 0;
+      return rsvp?.needsRideToHinduCeremony ?? null;
     case 'rsvpResponse.needsRideToWedding':
-      return rsvp?.needsRideToWedding ? 1 : 0;
-    case 'rsvpResponse.canOfferRide':
-      return rsvp?.canOfferRide ? 1 : 0;
+      return rsvp?.needsRideToWedding ?? null;
+    case 'rsvpResponse.canOfferRideHindu':
+      return rsvp?.canOfferRideHindu ?? null;
+    case 'rsvpResponse.canOfferRideWedding':
+      return rsvp?.canOfferRideWedding ?? null;
+    case 'showRideQuestions':
+      return guest.showRideQuestions ?? null;
     default:
       return null;
   }

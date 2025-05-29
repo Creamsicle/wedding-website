@@ -12,6 +12,7 @@ export interface Guest {
   lastName: string;
   partyId: string;
   isPlusOne?: boolean;
+  showRideQuestions?: boolean;
   rsvpResponse?: RSVPResponse;
 }
 
@@ -19,13 +20,16 @@ export interface RSVPResponse {
   hinduCeremonyAttending: boolean;
   weddingReceptionAttending: boolean;
   mealPreference?: 'Chicken' | 'Steak' | 'Vegetarian Risotto';
-  dietaryRestrictions: string;
+  dietaryRestrictionsHindu?: string;
+  dietaryRestrictionsWedding?: string;
   needsRideToHinduCeremony: boolean;
   hinduCeremonyRideDetails?: string;
   needsRideToWedding: boolean;
   weddingRideDetails?: string;
-  canOfferRide: boolean;
-  rideOfferDetails?: string;
+  canOfferRideHindu?: boolean;
+  rideOfferDetailsHindu?: string;
+  canOfferRideWedding?: boolean;
+  rideOfferDetailsWedding?: string;
   email?: string;
   physicalAddress?: {
     street: string;
@@ -144,13 +148,16 @@ export async function exportToCSV(): Promise<string> {
     'Hindu Ceremony Attending',
     'Wedding/Reception Attending',
     'Meal Preference',
-    'Dietary Restrictions',
+    'Dietary Restrictions (Fri)',
+    'Dietary Restrictions (Sat)',
     'Needs Ride (Hindu)',
     'Hindu Ride Details',
     'Needs Ride (Wedding)',
     'Wedding Ride Details',
-    'Can Offer Ride',
-    'Ride Offer Details',
+    'Can Offer Ride (Fri)',
+    'Ride Offer Details (Fri)',
+    'Can Offer Ride (Sat)',
+    'Ride Offer Details (Sat)',
     'RSVP Timestamp'
   ];
   
@@ -166,13 +173,16 @@ export async function exportToCSV(): Promise<string> {
       response?.hinduCeremonyAttending ? 'Yes' : 'No',
       response?.weddingReceptionAttending ? 'Yes' : 'No',
       response?.mealPreference || 'Not Selected',
-      response?.dietaryRestrictions || '',
+      response?.dietaryRestrictionsHindu || '',
+      response?.dietaryRestrictionsWedding || '',
       response?.needsRideToHinduCeremony ? 'Yes' : 'No',
       response?.hinduCeremonyRideDetails || '',
       response?.needsRideToWedding ? 'Yes' : 'No',
       response?.weddingRideDetails || '',
-      response?.canOfferRide ? 'Yes' : 'No',
-      response?.rideOfferDetails || '',
+      response?.canOfferRideHindu ? 'Yes' : 'No',
+      response?.rideOfferDetailsHindu || '',
+      response?.canOfferRideWedding ? 'Yes' : 'No',
+      response?.rideOfferDetailsWedding || '',
       response?.timestamp ? response.timestamp.toDate().toISOString() : ''
     ]);
   });
