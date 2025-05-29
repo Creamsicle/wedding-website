@@ -203,34 +203,12 @@ export default function NewFaqPage() {
                   </AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="photos" className="border-b border-white/50 py-4">
+                <AccordionItem value="photos" className="py-4"> {/* New last item, no bottom border */}
                   <AccordionTrigger className="hover:no-underline text-white/90 text-lg justify-between w-full">
                     Should I take photos during the wedding ceremony?
                   </AccordionTrigger>
                   <AccordionContent className="pt-4 text-white/80 text-base">
                     We kindly ask that you refrain from taking photos during the ceremonies. We have professional photographers who will capture these special moments, ideally without phones in them! We encourage you to be present with us during the ceremonies and enjoy taking tons of photos during the reception.
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="poems" className="py-4"> {/* New last item, no bottom border */}
-                  <AccordionTrigger className="hover:no-underline text-white/90 text-lg justify-between w-full">
-                    What are some of your favourite poems?
-                  </AccordionTrigger>
-                  <AccordionContent className="pt-4 text-white/80 text-base">
-                    <Accordion type="single" collapsible className="w-full">
-                      {/* Chelsea's poem AccordionItem removed as per user request */}
-                      <AccordionItem value="neil-poem" className="py-3"> {/* Last sub-item */}
-                        <AccordionTrigger className="hover:no-underline text-white/85 text-md justify-between w-full">
-                          Neil
-                        </AccordionTrigger>
-                        <AccordionContent className="pt-3 text-white/75 text-sm">
-                          <h4 className="font-semibold text-white/100 mb-2">WHAT I DIDN&apos;T KNOW BEFORE</h4>
-                          <p>This is a test line for Neil&apos;s poem to see if Vercel cache is the issue. This line is intentionally short.</p>
-                          <p className="italic text-white/80 mt-2 mb-2"><em>Ada Limon</em></p>
-                          <p className="mt-3 text-white/75">Another personal favourite (that&apos;s slightly less fitting for the occasion) is &quot;<a href="https://www.poetryfoundation.org/poems/47993/famous" target="_blank" rel="noopener noreferrer" className="underline hover:text-white">Famous</a>&quot; by Naomi Shihab Nye</p>
-                        </AccordionContent>
-                      </AccordionItem>
-                    </Accordion>
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
