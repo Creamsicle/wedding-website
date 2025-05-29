@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-// The secret password
-const PASSWORD = 'artgallery';
+// The secret password constant is no longer needed here
+// const PASSWORD = 'artgallery';
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
