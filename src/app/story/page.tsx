@@ -97,7 +97,7 @@ I was already in love with Neil, but this was clear progress... and seemingly mu
 
 At 3 AM she turns to me and says "It's time." Delightedly lost, I tell our friends we're leaving. They look at me, and then look at her, and then smile. Man, if only she was into me too. 
 
-We start walking. And running. And talking. And holding hands. Barefoot, no less, through High Park in the middle of the night. Somehow, without quite noticing, we've crossed half of Toronto, ending up at Lake Ontario. Chels' master plan in motion!
+We start walking. And running. And talking. And holding hands. Barefoot, no less, through High Park in the middle of the night. Somehow, without quite noticing, we've crossed most of Toronto! Now at Lake Ontario. Chels' master plan reveals itself.
 
 We take a quick dip, and afterwards we're curled up together for warmth as the sun rises. It's… deeply romantic. Look, I'm a firm believer in separating your work and personal life but maybe at this point, somehow, she feels even a fraction of the way that I do about her. I tentatively, hesitantly ask her out; she responds with an enthusiasm that makes me giggle to this day.`,
   },
