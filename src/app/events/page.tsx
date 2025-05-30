@@ -58,7 +58,7 @@ const eventDetails: EventDetail[] = [
   },
   {
     id: 'wedding-reception',
-    photo: '/images/events/Events-photo2.png',
+    photo: '/images/events/Events-photo3.png',
     plaque: '/images/events/events-plaque2.png',
     altPhoto: 'Wedding + Reception photo',
     altPlaque: 'Wedding + Reception plaque',
