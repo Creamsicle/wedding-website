@@ -63,7 +63,7 @@ Before the end of the night, Neil said he had to leave for a birthday party and 
     details: 'Michael Sousa\n3/10',
     originalWidth: 1170,
     originalHeight: 880,
-    description: `<b>NG:</b> The very next Wednesday after the rave, Chels tracked me down at Pub Chess. Well that's where we'd met, <i>nothing</i> suspicious there. She mentioned she was looking for a job at a tech startup: <i>oddly</i> convenient, because I had just co-founded one with two close friends. We even had a booth at the biggest tech conference in North America the following week. How delightfully serendipitous! No way she could've possibly uncovered that info from, say, my LinkedIn over the past few days. 
+    description: `<b>NG:</b> The very next Wednesday after the rave, Chels tracked me down at Pub Chess. That's where we'd met, <i>nothing</i> suspicious there. She mentioned she was looking for a job at a tech startup: <i>oddly</i> convenient, because I had just co-founded one with two close friends. We even had a booth at the biggest tech conference in North America the following week. How delightfully serendipitous! No way she could've <i>possibly</i> uncovered that info from, say, my LinkedIn over the past few days. 
 
 Well, if Chels was job hunting, the least I could do was help her network. About 30 minutes before a "networking boat cruise," I texted her saying it was probably too late for this one, but she should come to the evening events after. She instantly replied, "I'll make the boat," jumped in an Uber, read half our pitch deck en route, and snuck on board as "my co-founder who just landed and definitely, totally has a real admission wristband."
 
@@ -97,7 +97,7 @@ I was already in love with Neil, but this was clear progress... and seemingly mu
 
 At 3 AM she turns to me and says "It's time." Delightedly lost, I tell our friends we're leaving. They look at me, and then look at her, and then smile. Man, if only she was into me too. 
 
-We start walking. And running. And talking. And holding hands. Barefoot, no less, through High Park in the middle of the night. Somehow, without quite noticing, I've crossed half of Toronto with my favourite person in the world — ending up at the edge of Lake Ontario. All part of Chels' master plan!
+We start walking. And running. And talking. And holding hands. Barefoot, no less, through High Park in the middle of the night. Somehow, without quite noticing, we've crossed half of Toronto, ending up at Lake Ontario. Chels' master plan in motion!
 
 We take a quick dip, and afterwards we're curled up together for warmth as the sun rises. It's… deeply romantic. Look, I'm a firm believer in separating your work and personal life but maybe at this point, somehow, she feels even a fraction of the way that I do about her. I tentatively, hesitantly ask her out; she responds with an enthusiasm that makes me giggle to this day.`,
   },
@@ -164,7 +164,7 @@ After signing, Neil convinced me we should paint our walls. A celebration of no 
     details: 'Caitlin Baker\n10/10',
     originalWidth: 1170,
     originalHeight: 1525,
-    description: `<b>NG:</b> In January 2024, we were chatting about resolutions. Chels immediately made one specific goal clear. Honestly? I was thrilled. Clear expectations <i>and</i> a green light to propose? Sign me up.
+    description: `<b>NG:</b> In January 2024, we were chatting about resolutions. Chels immediately made one specific goal clear. Honestly? I was thrilled. Clear expectations <i>and</i> a green light to propose to my favourite person in the world? Sign me up.
 
     <b>Step 1:</b> Learn everything there is to know about engagement rings. Discover padparadscha sapphires (AKA lotus sapphires) and realize they'd be the perfect fusion of cultures when paired with a Dutch tulip-inspired setting. Find an award-winning lapidary (and learn what a lapidary is) who could cut a custom petal pattern into the stone to tie it all together. 
 
@@ -174,7 +174,7 @@ After signing, Neil convinced me we should paint our walls. A celebration of no 
 
     <b>Step 4:</b> Tell Chels to pack her passport, who knows how far we'll go? Drive to Niagara. Walk her to the exact pre-scouted spot… which, currently, is the only place in the entire city where it's raining. Buy time for the photographer while getting soaked for ostensibly no reason. Pop the question, Chels somehow says "yes" (I'm so lucky!)
 
-    <b>Step 5:</b> Today is where our book begins, the rest is still unwritten! Thanks for coming to our special day and being a part of our unfurling story <3 `,
+    <b>Step 5:</b> Today is where our book begins, the rest is still unwritten! Thanks for being a part of our unfurling story <3 `,
   },
 ];
 
