@@ -39,7 +39,7 @@ const eventDetails: EventDetail[] = [
   {
     id: 'hindu-ceremony',
     photo: '/images/events/Events-photo1.png',
-    plaque: '/images/events/events-plaque1.png',
+    plaque: '/images/events/events-plaque4.png',
     altPhoto: 'Hindu Ceremony photo',
     altPlaque: 'Hindu Ceremony plaque',
     title: 'Hindu Ceremony',
@@ -64,11 +64,11 @@ const eventDetails: EventDetail[] = [
     altPlaque: 'Wedding + Reception plaque',
     title: 'Wedding and Reception',
     date: 'Saturday, October 11, 2025',
-    time: '3:40 PM',
+    time: '3:30 PM',
     locationName: 'Art Gallery of Hamilton',
     locationAddress: '123 King Street West, Hamilton, Ontario L8P 4S8',
     schedule: [
-      '3:40 PM: Arrive and settle in, find a seat!',
+      '3:30 PM: Arrive and settle in, find a seat!',
       '4:00 PM: Ceremony',
       '5:00 PM: Cocktail hour & explore the art gallery!',
       '6:00 PM: Reception, dinner, dancing 🎉',

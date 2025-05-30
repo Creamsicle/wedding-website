@@ -93,7 +93,7 @@ const weddingReceptionDetails = {
   title: "Wedding Ceremony & Reception - Chelsea & Neil",
   description: "Celebrate with Chelsea and Neil at their wedding ceremony, followed by cocktail hour, dinner, and dancing!",
   location: "Art Gallery of Hamilton, 123 King Street West, Hamilton, Ontario L8P 4S8",
-  start: [2025, 10, 11, 16, 0],
+  start: [2025, 10, 11, 15, 30],
   end: [2025, 10, 12, 1, 0],
   startInputType: "local",
   endInputType: "local",
