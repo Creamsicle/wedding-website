@@ -29,6 +29,8 @@ ChartJS.register(
   Legend
 );
 
+const TAGS = ['friend', 'family', 'temple', 'child'];
+
 // Define the keys that can be sorted
 type SortableKey = 
   | 'fullName' 
@@ -45,10 +47,12 @@ type SortableKey =
   | 'rsvpResponse.canOfferRideHindu'
   | 'rsvpResponse.canOfferRideWedding'
   | 'showRideQuestions'
+  | 'tag'
   | 'none';
 
 interface GuestWithResponse extends Guest {
   rsvpResponse?: RSVPResponse;
+  tag?: string;
 }
 
 interface PartyStats {
@@ -116,6 +120,7 @@ export default function Dashboard() {
     },
     canOfferRide: 0
   });
+  const [activeTags, setActiveTags] = useState<string[]>(['friend', 'family', 'temple', 'child']);
 
   // Refs for synchronized scrolling and table
   const tableContainerRef = useRef<HTMLDivElement>(null);
@@ -221,6 +226,14 @@ export default function Dashboard() {
       });
     }
 
+    // Apply tag filters
+    if (activeTags.length < TAGS.length) { // Only filter if not all tags are active
+      filtered = filtered.filter(guest => {
+        if (!guest.tag) return true; // Always show guests without a tag
+        return activeTags.includes(guest.tag);
+      });
+    }
+
     // Apply sorting
     if (filters.sortBy !== 'none') {
       filtered.sort((a, b) => {
@@ -270,7 +283,7 @@ export default function Dashboard() {
       canOfferRide: filtered.filter(g => g.rsvpResponse?.canOfferRideHindu || g.rsvpResponse?.canOfferRideWedding).length
     };
     setStats(newStats);
-  }, [guests, filters]);
+  }, [guests, filters, activeTags]);
 
   // Effect for synchronizing scrollbars and setting top scrollbar width
   useEffect(() => {
@@ -648,6 +661,33 @@ export default function Dashboard() {
     }
   };
 
+  const handleTagFilterClick = (tag: string) => {
+    setActiveTags(prevTags => {
+      if (prevTags.includes(tag)) {
+        return prevTags.filter(t => t !== tag);
+      } else {
+        return [...prevTags, tag];
+      }
+    });
+  };
+
+  const handleTagChange = async (guestId: string, tag: string) => {
+    // Implementation to update Firestore will go here
+    console.log(`Updating guest ${guestId} with tag ${tag}`);
+    const guestRef = doc(db, 'guests', guestId);
+    try {
+      await updateDoc(guestRef, { tag: tag });
+      // Optionally, you can update the local state immediately 
+      // for a more responsive UI, or rely on the onSnapshot listener.
+      setGuests(prevGuests => 
+        prevGuests.map(g => g.id === guestId ? { ...g, tag } : g)
+      );
+    } catch (error) {
+      console.error("Error updating tag: ", error);
+      // Handle error (e.g., show a notification to the user)
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[var(--navy-primary)] text-white p-8">
       <div className="max-w-7xl mx-auto">
@@ -759,6 +799,22 @@ export default function Dashboard() {
               value={filters.party}
               onChange={(e) => setFilters(prev => ({ ...prev, party: e.target.value }))}
             />
+            {/* Tag Filter Buttons - Placed after party search, before other dropdowns */}
+            <div className="col-span-full lg:col-span-4 flex flex-wrap gap-2 mb-2 lg:mb-0">
+              {TAGS.map(tag => (
+                <button
+                  key={tag}
+                  onClick={() => handleTagFilterClick(tag)}
+                  className={`px-3 py-1 rounded text-sm font-medium transition-colors
+                    ${activeTags.includes(tag)
+                      ? 'bg-[var(--rust-primary)] hover:bg-[var(--rust-secondary)] text-white' 
+                      : 'bg-gray-600 hover:bg-gray-500 text-gray-300'}
+                  `}
+                >
+                  {tag.charAt(0).toUpperCase() + tag.slice(1)} {activeTags.includes(tag) ? '✓' : '✗'}
+                </button>
+              ))}
+            </div>
             <select
               className="bg-[var(--navy-light)] text-white border border-[var(--rust-light)] rounded px-3 py-1"
               value={filters.hinduCeremony}
@@ -847,7 +903,8 @@ export default function Dashboard() {
                     { label: 'Offer Ride (Fri)', key: 'rsvpResponse.canOfferRideHindu'},
                     { label: 'Offer Ride (Sat)', key: 'rsvpResponse.canOfferRideWedding'},
                     { label: 'Address?', key: 'physicalAddressPresent' },
-                    { label: 'Rides?', key: 'showRideQuestions' }
+                    { label: 'Rides?', key: 'showRideQuestions' },
+                    { label: 'Tag', key: 'tag' }
                   ].map((header, index) => (
                     <th 
                       key={header.key}
@@ -921,13 +978,27 @@ export default function Dashboard() {
                           ''
                         )}
                       </td>
-                      <td className="px-4 py-3 whitespace-nowrap text-sm text-center">
-                        <input
-                          type="checkbox"
-                          className="form-checkbox h-5 w-5 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500"
-                          checked={!!guest.showRideQuestions}
-                          onChange={() => toggleShowRideQuestions(guest.id, guest.showRideQuestions)}
-                        />
+                      <td className="px-4 py-3 whitespace-nowrap text-sm">
+                        {guest.showRideQuestions === undefined ? '-' : (guest.showRideQuestions ? '✓ Yes' : '✗ No')}
+                        <button 
+                          onClick={() => toggleShowRideQuestions(guest.id, guest.showRideQuestions)}
+                          className="ml-2 px-2 py-1 text-xs bg-gray-600 hover:bg-gray-500 rounded"
+                        >
+                          Toggle
+                        </button>
+                      </td>
+                      <td className="px-4 py-3 whitespace-nowrap text-sm">
+                        <select 
+                          value={guest.tag || ''} 
+                          onChange={(e) => handleTagChange(guest.id, e.target.value)}
+                          className="bg-[var(--navy-light)] text-white border border-[var(--rust-light)] rounded px-3 py-1 w-full"
+                        >
+                          <option value="">Select Tag</option>
+                          <option value="friend">Friend</option>
+                          <option value="family">Family</option>
+                          <option value="temple">Temple</option>
+                          <option value="child">Child</option>
+                        </select>
                       </td>
                     </tr>
                   );
@@ -983,6 +1054,8 @@ const getSortableValue = (guest: GuestWithResponse, key: SortableKey): string | 
       return rsvp?.canOfferRideWedding ?? null;
     case 'showRideQuestions':
       return guest.showRideQuestions ?? null;
+    case 'tag':
+      return guest.tag || null;
     default:
       return null;
   }
