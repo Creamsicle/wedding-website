@@ -49,6 +49,7 @@ const eventDetails: EventDetail[] = [
     locationAddress: '2 Auction Lane, Brampton, Ontario L6T 0C4',
     schedule: [
       '8:00 AM: Breakfast',
+      '8:30 AM: Arrival of the Baraat (see below for more details)',
       '9:00 AM: Hindu Wedding Ceremony',
       '11:00 AM: Celebration continues with music and lunch',
     ],

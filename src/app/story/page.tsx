@@ -152,7 +152,7 @@ So, so, psyched that we weren't just coworkers.`,
     details: 'NG\n9/10',
     originalWidth: 1170,
     originalHeight: 1540,
-    description: `<b>CV:</b> We talked about moving in, and realized — wait, what if we buy it??!! I sat on the floor of Neil's old apartment, in SHOCK after signing the contract for the most money I've ever seen in my life. A mortgage is crazy, and it's hilarious that we can have one (together). 
+    description: `<b>CV:</b> We talked about getting a place, and realized — wait, what if we buy it??!! I sat on the floor of Neil's old apartment, in SHOCK after signing the contract for the most money I've ever seen in my life. A mortgage is crazy, and it's hilarious that we can have one (together). 
 
 After signing, Neil convinced me we should paint our walls. A celebration of no longer renting! He started bartering with, <i>oh maybe, one wall</i>. After countless trips to Ikea (where you MUST go as you make a home (because of the $1 hot dogs)), a beautiful, vibrant, warm terracotta on their walls inspired me to decide… let's paint ALL of our walls! Orange! My past experience as a <i>College-Pro</i> painter (shout-out to my boss, my sister Heidi) was serendipitously exercised as we cut allllll those lines and corners. I love our orange home. But also, I love that even if we did not have it, I know who is my home.`,
   },
