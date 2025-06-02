@@ -11,7 +11,8 @@ interface RSVPResponse {
   hinduCeremonyAttending: boolean;
   weddingReceptionAttending: boolean;
   mealPreference?: "Chicken" | "Steak" | "Vegetarian Risotto";
-  dietaryRestrictions?: string;
+  dietaryRestrictionsHindu?: string;
+  dietaryRestrictionsWedding?: string;
   needsRideToHinduCeremony?: boolean;
   hinduCeremonyRideDetails?: string;
   needsRideToWedding?: boolean;
@@ -420,9 +421,16 @@ function generateEmailHtml(partyMembers: Guest[], isAnyPartyMemberAttendingHindu
           `<p style='${summaryParagraphStyle}'><strong style='${strongStyle}'>Meal Preference:</strong> ${rsvp.mealPreference || "Not selected"}</p>`
         );
       }
-      memberRsvpDetails.push(
-        `<p style='${summaryParagraphStyle}'><strong style='${strongStyle}'>Dietary Restrictions:</strong> ${rsvp.dietaryRestrictions || notProvided}</p>`
-      );
+      if (rsvp.hinduCeremonyAttending) {
+        memberRsvpDetails.push(
+          `<p style='${summaryParagraphStyle}'><strong style='${strongStyle}'>Dietary Restrictions (Friday):</strong> ${rsvp.dietaryRestrictionsHindu || notProvided}</p>`
+        );
+      }
+      if (rsvp.weddingReceptionAttending) {
+        memberRsvpDetails.push(
+          `<p style='${summaryParagraphStyle}'><strong style='${strongStyle}'>Dietary Restrictions (Saturday):</strong> ${rsvp.dietaryRestrictionsWedding || notProvided}</p>`
+        );
+      }
 
       if (rsvp.needsRideToHinduCeremony || rsvp.needsRideToWedding || rsvp.canOfferRide) {
         memberRsvpDetails.push(`<p style='${summaryParagraphStyle}'><strong style='${strongStyle}'>Transportation Notes:</strong></p>`);
