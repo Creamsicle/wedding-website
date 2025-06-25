@@ -189,7 +189,9 @@ export default function NewFaqPage() {
                     Where should I stay?
                   </AccordionTrigger>
                   <AccordionContent className="pt-4 text-white/80 text-base">
-                    We&apos;ll be staying at the <a href="https://www.marriott.com/en-us/hotels/yhmsi-sheraton-hamilton-hotel/overview/" target="_blank" rel="noopener noreferrer" className="underline hover:text-white">Sheraton Hamilton Hotel</a> located steps away from the venue. We&apos;re not doing a fixed block of rooms, but we get a preferred rate through the Art Gallery of Hamilton. If you&apos;d be interested in staying there as well we certainly encourage all efforts to party with us late! Reach out for details.
+                    <p className="mb-4">We&apos;ll be staying at the <a href="https://www.marriott.com/en-us/hotels/yhmsi-sheraton-hamilton-hotel/overview/" target="_blank" rel="noopener noreferrer" className="underline hover:text-white">Sheraton Hamilton Hotel</a> located steps away from the venue. We&apos;re not doing a fixed block of rooms, but we get a preferred rate through the Art Gallery of Hamilton. If you&apos;d be interested in staying there as well we certainly encourage all efforts to party with us until late!</p>
+                    <p className="mb-4">Guests can reserve a room in our hotel block for the days they&apos;d like to stay <a href="https://www.marriott.com/event-reservations/reservation-link.mi?id=1750262690273&key=GRP&app=resvlink" target="_blank" rel="noopener noreferrer" className="underline hover:text-white">here</a></p>
+                    <p className="mb-4">Reservations can also be made by contacting the Sheraton Hamilton&apos;s 24 hour, toll-free reservations at 1-888-627-8161 and asking for the &quot;Goel &amp; Vandermeer&quot; wedding block. Guests are able to reserve in the block until Sept 8, 2025.</p> 
                   </AccordionContent>
                 </AccordionItem>
 

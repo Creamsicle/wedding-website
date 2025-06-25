@@ -140,20 +140,20 @@ export const sendRsvpConfirmationEmail = functions.firestore
     const partyId = newData.partyId;
 
     // Determine if this specific update warrants an email attempt
-    const oldRsvpTimestamp = oldData?.rsvpResponse?.timestamp;
-    const newRsvpTimestamp = rsvpOfTriggeringGuest.timestamp;
-    const oldEmailForTriggeringGuest = oldData?.rsvpResponse?.email;
-    const isNewRsvp = !oldRsvpTimestamp;
-    const rsvpTimestampChanged = newRsvpTimestamp && oldRsvpTimestamp && !newRsvpTimestamp.isEqual(oldRsvpTimestamp);
-    const emailAddressChangedForTriggeringGuest = rsvpOfTriggeringGuest.email !== oldEmailForTriggeringGuest;
-    const shouldAttemptEmailForThisUpdate = isNewRsvp || rsvpTimestampChanged || emailAddressChangedForTriggeringGuest;
+    // const oldRsvpTimestamp = oldData?.rsvpResponse?.timestamp;
+    // const newRsvpTimestamp = rsvpOfTriggeringGuest.timestamp;
+    // const oldEmailForTriggeringGuest = oldData?.rsvpResponse?.email;
+    // const isNewRsvp = !oldRsvpTimestamp;
+    // const rsvpTimestampChanged = newRsvpTimestamp && oldRsvpTimestamp && !newRsvpTimestamp.isEqual(oldRsvpTimestamp);
+    // const emailAddressChangedForTriggeringGuest = rsvpOfTriggeringGuest.email !== oldEmailForTriggeringGuest;
+    // const shouldAttemptEmailForThisUpdate = isNewRsvp || rsvpTimestampChanged || emailAddressChangedForTriggeringGuest;
 
-    if (!shouldAttemptEmailForThisUpdate) {
-      console.log(
-        `RSVP for triggering guest ${guestId} (${nameOfTriggeringGuest}) has not changed significantly enough to warrant an email check.`
-      );
-      return null;
-    }
+    // if (!shouldAttemptEmailForThisUpdate) {
+    //   console.log(
+    //     `RSVP for triggering guest ${guestId} (${nameOfTriggeringGuest}) has not changed significantly enough to warrant an email check.`
+    //   );
+    //   return null;
+    // }
     
     const functionInvocationTime = admin.firestore.Timestamp.now(); // Time this function instance started relevant checks
     console.log(`[${functionInvocationTime.toDate().toISOString()}] Guest update for ${nameOfTriggeringGuest} (Party ID: ${partyId}) is significant. Attempting to acquire email lock via transaction.`);
