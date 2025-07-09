@@ -19,7 +19,7 @@ export interface Guest {
 export interface RSVPResponse {
   hinduCeremonyAttending: boolean;
   weddingReceptionAttending: boolean;
-  mealPreference?: 'Chicken' | 'Steak' | 'Vegetarian Risotto';
+  mealPreference?: 'Chicken' | 'Beef' | 'Vegetarian Risotto';
   dietaryRestrictionsHindu?: string;
   dietaryRestrictionsWedding?: string;
   needsRideToHinduCeremony: boolean;

@@ -62,7 +62,7 @@ interface PartyStats {
   weddingReceptionAttending: number;
   mealPreferences: {
     Chicken: number;
-    Steak: number;
+    Beef: number;
     'Vegetarian Risotto': number;
   };
   needsTransportation: {
@@ -111,7 +111,7 @@ export default function Dashboard() {
     weddingReceptionAttending: 0,
     mealPreferences: {
       Chicken: 0,
-      Steak: 0,
+      Beef: 0,
       'Vegetarian Risotto': 0
     },
     needsTransportation: {
@@ -273,7 +273,7 @@ export default function Dashboard() {
       weddingReceptionAttending: filtered.filter(g => g.rsvpResponse?.weddingReceptionAttending).length,
       mealPreferences: {
         Chicken: filtered.filter(g => g.rsvpResponse?.weddingReceptionAttending && g.rsvpResponse?.mealPreference === 'Chicken').length,
-        Steak: filtered.filter(g => g.rsvpResponse?.weddingReceptionAttending && g.rsvpResponse?.mealPreference === 'Steak').length,
+        Beef: filtered.filter(g => g.rsvpResponse?.weddingReceptionAttending && g.rsvpResponse?.mealPreference === 'Beef').length,
         'Vegetarian Risotto': filtered.filter(g => g.rsvpResponse?.weddingReceptionAttending && g.rsvpResponse?.mealPreference === 'Vegetarian Risotto').length
       },
       needsTransportation: {
@@ -456,8 +456,8 @@ export default function Dashboard() {
               <p>${stats.mealPreferences.Chicken}</p>
             </div>
             <div class="stat-card">
-              <h3>Steak</h3>
-              <p>${stats.mealPreferences.Steak}</p>
+              <h3>Beef</h3>
+              <p>${stats.mealPreferences.Beef}</p>
             </div>
             <div class="stat-card">
               <h3>Vegetarian Risotto</h3>
@@ -553,7 +553,7 @@ export default function Dashboard() {
       {
         data: [
           stats.mealPreferences.Chicken,
-          stats.mealPreferences.Steak,
+          stats.mealPreferences.Beef,
           stats.mealPreferences['Vegetarian Risotto'],
         ],
         backgroundColor: [
@@ -767,9 +767,9 @@ export default function Dashboard() {
               subtext={`${((stats.mealPreferences.Chicken / stats.weddingReceptionAttending) * 100 || 0).toFixed(1)}%`}
             />
             <StatCard
-              title="Steak"
-              value={stats.mealPreferences.Steak}
-              subtext={`${((stats.mealPreferences.Steak / stats.weddingReceptionAttending) * 100 || 0).toFixed(1)}%`}
+              title="Beef"
+              value={stats.mealPreferences.Beef}
+              subtext={`${((stats.mealPreferences.Beef / stats.weddingReceptionAttending) * 100 || 0).toFixed(1)}%`}
             />
             <StatCard
               title="Vegetarian Risotto"

@@ -492,7 +492,7 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
                           className="w-full px-3 py-2 bg-[var(--navy-primary)] text-white rounded border border-[var(--rust-light)]"
                         >
                           <option value="Chicken">Chicken</option>
-                          <option value="Steak">Steak</option>
+                          <option value="Beef">Beef</option>
                           <option value="Vegetarian Risotto">Vegetarian Risotto</option>
                         </select>
                       </div>
