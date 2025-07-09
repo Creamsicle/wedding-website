@@ -46,6 +46,7 @@ type SortableKey =
   | 'rsvpResponse.needsRideToWedding' 
   | 'rsvpResponse.canOfferRideHindu'
   | 'rsvpResponse.canOfferRideWedding'
+  | 'rsvpResponse.otherComments'
   | 'showRideQuestions'
   | 'tag'
   | 'none';
@@ -353,7 +354,8 @@ export default function Dashboard() {
       'Need Ride (Fri)',
       'Need Ride (Sat)',
       'Offer Ride (Fri)',
-      'Offer Ride (Sat)'
+      'Offer Ride (Sat)',
+      'Other Comments'
     ];
 
     const csvContent = [
@@ -382,7 +384,8 @@ export default function Dashboard() {
           rsvp?.needsRideToHinduCeremony ? 'Yes' : 'No',
           rsvp?.needsRideToWedding ? 'Yes' : 'No',
           rsvp?.canOfferRideHindu ? 'Yes' : 'No',
-          rsvp?.canOfferRideWedding ? 'Yes' : 'No'
+          rsvp?.canOfferRideWedding ? 'Yes' : 'No',
+          `"${rsvp?.otherComments || ''}"`
         ].join(',');
       })
     ].join('\n');
@@ -483,6 +486,7 @@ export default function Dashboard() {
                 <th>Need Ride (Sat)</th>
                 <th>Offer Ride (Fri)</th>
                 <th>Offer Ride (Sat)</th>
+                <th>Other Comments</th>
               </tr>
             </thead>
             <tbody>
@@ -511,6 +515,7 @@ export default function Dashboard() {
                   <td>${rsvp ? (rsvp.needsRideToWedding ? '✓ Yes' : '✗ No') : '-'}</td>
                   <td>${rsvp ? (rsvp.canOfferRideHindu ? '✓ Yes' : '✗ No') : '-'}</td>
                   <td>${rsvp ? (rsvp.canOfferRideWedding ? '✓ Yes' : '✗ No') : '-'}</td>
+                  <td>${rsvp?.otherComments || '-'}</td>
                 </tr>
               `;
               }).join('')}
@@ -902,6 +907,7 @@ export default function Dashboard() {
                     { label: 'Needs Ride (Sat)', key: 'rsvpResponse.needsRideToWedding'},
                     { label: 'Offer Ride (Fri)', key: 'rsvpResponse.canOfferRideHindu'},
                     { label: 'Offer Ride (Sat)', key: 'rsvpResponse.canOfferRideWedding'},
+                    { label: 'Other Comments', key: 'rsvpResponse.otherComments'},
                     { label: 'Address?', key: 'physicalAddressPresent' },
                     { label: 'Rides?', key: 'showRideQuestions' },
                     { label: 'Tag', key: 'tag' }
@@ -970,6 +976,9 @@ export default function Dashboard() {
                       </td>
                       <td className="px-4 py-3 whitespace-nowrap text-sm">
                         {rsvp ? (rsvp.canOfferRideWedding ? '✓ Yes' : '✗ No') : '-'}
+                      </td>
+                      <td className="px-4 py-3 text-sm max-w-xs overflow-hidden text-ellipsis whitespace-nowrap" title={rsvp?.otherComments}>
+                        {rsvp?.otherComments || '-'}
                       </td>
                       <td className="px-4 py-3 whitespace-nowrap text-sm text-center">
                         {rsvp?.physicalAddress?.street ? (
@@ -1052,6 +1061,8 @@ const getSortableValue = (guest: GuestWithResponse, key: SortableKey): string | 
       return rsvp?.canOfferRideHindu ?? null;
     case 'rsvpResponse.canOfferRideWedding':
       return rsvp?.canOfferRideWedding ?? null;
+    case 'rsvpResponse.otherComments':
+      return rsvp?.otherComments || null;
     case 'showRideQuestions':
       return guest.showRideQuestions ?? null;
     case 'tag':
