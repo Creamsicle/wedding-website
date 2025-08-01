@@ -243,7 +243,7 @@ export function RSVPForm({ onPartySelectStateChange }: RSVPFormProps) {
     if (searchResults.length > 0) {
       instructionalText = "Please select your party";
     } else {
-      instructionalText = "Please enter your name to find your invitation and RSVP for your party before July 15.";
+      instructionalText = "Please enter your name to find your invitation and RSVP for your party.";
     }
   }
   // No specific text needed if a party is selected, as that section has its own heading
