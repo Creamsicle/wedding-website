@@ -358,8 +358,8 @@ function generateEmailHtml(partyMembers: Guest[], isAnyPartyMemberAttendingHindu
   }
 
   const changeInstructions = isSinglePersonParty ? 
-    `<p style='${paragraphStyle}'>If you need to make any changes before July 15th, please resubmit the RSVP form on our website. Otherwise, please contact us directly ASAP.</p>`:
-    `<p style='${paragraphStyle}'>If any changes are needed for your party before July 15th, please have any member resubmit the RSVP form on our website. Otherwise, please contact us directly ASAP.</p>`;
+    `<p style='${paragraphStyle}'>If you need to make any changes before August 15th, please resubmit the RSVP form on our website. Otherwise, please contact us directly ASAP.</p>`:
+    `<p style='${paragraphStyle}'>If any changes are needed for your party before August 15th, please have any member resubmit the RSVP form on our website. Otherwise, please contact us directly ASAP.</p>`;
 
   let closingRemarksArr = [changeInstructions];
   if (isAnyPartyMemberAttendingHindu || isAnyPartyMemberAttendingWedding) {

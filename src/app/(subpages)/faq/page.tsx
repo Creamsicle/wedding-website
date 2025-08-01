@@ -138,16 +138,7 @@ export default function NewFaqPage() {
                     <p><b>Saturday:</b> For our wedding at the Art Gallery of Hamilton, the dress code is formal and VIBRANT! What &quot;vibrant&quot; means is entirely up to the wearer. Again, no need to purchase anything specific or push your comfort zone. We simply hope that in fitting the art gallery theme, you wear something fun, bold and bright  – anything that makes you feel vivacious! We&apos;ll check the weather leading up to the day to adjust if needed, but note that we&apos;re hoping the daytime ceremony will be outside, reception inside. There will be an inside rain plan if needed.</p>
                   </AccordionContent>
                 </AccordionItem>
-
-                <AccordionItem value="rsvp-deadline" className="border-b border-white/50 py-4">
-                  <AccordionTrigger className="hover:no-underline text-white/90 text-lg justify-between w-full">
-                    When should I RSVP by?
-                  </AccordionTrigger>
-                  <AccordionContent className="pt-4 text-white/80 text-base">
-                    Please RSVP by July 15. If you need to make any changes to your RSVP before then, simply resubmit the RSVP form. If you need to make changes after July 15 please contact Chelsea or Neil ASAP.
-                  </AccordionContent>
-                </AccordionItem>
-
+                
                 <AccordionItem value="dietary" className="border-b border-white/50 py-4">
                   <AccordionTrigger className="hover:no-underline text-white/90 text-lg justify-between w-full">
                     What if I have allergies / dietary restrictions?
@@ -189,7 +180,7 @@ export default function NewFaqPage() {
                     Where should I stay?
                   </AccordionTrigger>
                   <AccordionContent className="pt-4 text-white/80 text-base">
-                    <p className="mb-4">We&apos;ll be staying at the <a href="https://www.marriott.com/en-us/hotels/yhmsi-sheraton-hamilton-hotel/overview/" target="_blank" rel="noopener noreferrer" className="underline hover:text-white">Sheraton Hamilton Hotel</a> located steps away from the venue. We&apos;re not doing a fixed block of rooms, but we get a preferred rate through the Art Gallery of Hamilton. If you&apos;d be interested in staying there as well we certainly encourage all efforts to party with us until late!</p>
+                    <p className="mb-4">We&apos;ll be staying at the <a href="https://www.marriott.com/en-us/hotels/yhmsi-sheraton-hamilton-hotel/overview/" target="_blank" rel="noopener noreferrer" className="underline hover:text-white">Sheraton Hamilton Hotel</a> located steps away from the venue. We have a flexible block of rooms where we get a preferred rate through the Art Gallery of Hamilton. If you&apos;d be interested in staying at the Sheraton as well we certainly encourage all efforts to party with us until late!</p>
                     <p className="mb-4">Guests can reserve a room in our hotel block for the days they&apos;d like to stay <a href="https://www.marriott.com/event-reservations/reservation-link.mi?id=1750262690273&key=GRP&app=resvlink" target="_blank" rel="noopener noreferrer" className="underline hover:text-white">here</a></p>
                     <p className="mb-4">Reservations can also be made by contacting the Sheraton Hamilton&apos;s 24 hour, toll-free reservations at 1-888-627-8161 and asking for the &quot;Goel &amp; Vandermeer&quot; wedding block. Guests are able to reserve in the block until Sept 8, 2025.</p> 
                   </AccordionContent>
