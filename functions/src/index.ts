@@ -126,7 +126,6 @@ export const sendRsvpConfirmationEmail = functions.firestore
     console.log("Function triggered: sendRsvpConfirmationEmail V2.5");
     const guestId = context.params.guestId;
     const newData = change.after.data() as Guest | undefined;
-    const oldData = change.before.data() as Guest | undefined;
 
     if (!newData?.rsvpResponse?.email || !newData.partyId) {
       console.log(
@@ -135,7 +134,7 @@ export const sendRsvpConfirmationEmail = functions.firestore
       return null;
     }
 
-    const rsvpOfTriggeringGuest = newData.rsvpResponse;
+    // Note: We no longer need to compare old vs new RSVP fields here due to the cooldown guard.
     const nameOfTriggeringGuest = `${newData.firstName} ${newData.lastName}`;
     const partyId = newData.partyId;
 
@@ -358,8 +357,8 @@ function generateEmailHtml(partyMembers: Guest[], isAnyPartyMemberAttendingHindu
   }
 
   const changeInstructions = isSinglePersonParty ? 
-    `<p style='${paragraphStyle}'>If you need to make any changes before August 15th, please resubmit the RSVP form on our website. Otherwise, please contact us directly ASAP.</p>`:
-    `<p style='${paragraphStyle}'>If any changes are needed for your party before August 15th, please have any member resubmit the RSVP form on our website. Otherwise, please contact us directly ASAP.</p>`;
+    `<p style='${paragraphStyle}'>If you need to make any changes please contact us directly ASAP.</p>`:
+    `<p style='${paragraphStyle}'>If any changes are needed for your party please contact us directly ASAP.</p>`;
 
   let closingRemarksArr = [changeInstructions];
   if (isAnyPartyMemberAttendingHindu || isAnyPartyMemberAttendingWedding) {

@@ -352,9 +352,13 @@ export default function Dashboard() {
       'Dietary (Fri)',
       'Dietary (Sat)',
       'Need Ride (Fri)',
+      'Need Ride Details (Fri)',
       'Need Ride (Sat)',
+      'Need Ride Details (Sat)',
       'Offer Ride (Fri)',
+      'Offer Ride Details (Fri)',
       'Offer Ride (Sat)',
+      'Offer Ride Details (Sat)',
       'Other Comments'
     ];
 
@@ -382,9 +386,13 @@ export default function Dashboard() {
           `"${rsvp?.dietaryRestrictionsHindu || ''}"`,
           `"${rsvp?.dietaryRestrictionsWedding || ''}"`,
           rsvp?.needsRideToHinduCeremony ? 'Yes' : 'No',
+          `"${rsvp?.hinduCeremonyRideDetails || ''}"`,
           rsvp?.needsRideToWedding ? 'Yes' : 'No',
+          `"${rsvp?.weddingRideDetails || ''}"`,
           rsvp?.canOfferRideHindu ? 'Yes' : 'No',
+          `"${rsvp?.rideOfferDetailsHindu || ''}"`,
           rsvp?.canOfferRideWedding ? 'Yes' : 'No',
+          `"${rsvp?.rideOfferDetailsWedding || ''}"`,
           `"${rsvp?.otherComments || ''}"`
         ].join(',');
       })
